@@ -1,0 +1,12 @@
+**************************
+v0.0.1
+d20180325
+
+Features:
+	Cors installed
+	Migration files user created
+	table for User and UserDetails created
+	Created index on employee
+	Created store on employee
+
+**************************
