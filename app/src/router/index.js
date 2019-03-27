@@ -9,6 +9,8 @@ import auth from '@/components/layouts/auth'
 
 // Authenticated Components
 import home from '@/components/pages/app/home'
+import hello from '@/components/HelloWorld'
+import employeesIndex from '@/components/pages/app/employees/index'
 
 
 
@@ -41,6 +43,12 @@ let web_routes = [
 	*/
 	{
 		path: '/app/home', name: 'home', component: home,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/employees', name: 'employees.index', component: employeesIndex,
 		meta: {
 			auth: true
 		},
