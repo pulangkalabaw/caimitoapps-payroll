@@ -3,6 +3,7 @@ import Vue from 'vue';
 export default Vue.mixin({
     methods: {
 
+
         now () {
             const toTwoDigits = num => num < 10 ? '0' + num : num;
             let today = new Date();

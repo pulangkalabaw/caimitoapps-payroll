@@ -4,10 +4,52 @@
 			<h3 class="title">
 				{{ $store.state.project_name }}
 			</h3>
-			<a class="active" href="#home">Home</a>
-			<a href="#news">News</a>
-			<a href="#contact">Contact</a>
-			<a href="#about">About</a>
+			<hr>
+			<ul class="mainmenu">
+				<li>
+					<span class="span-link" :class="{ 'active': $route.name.includes('home')}">
+						<i class="fa fa-home"></i> &nbsp;
+						Home
+					</span>
+				</li>
+				<li>
+					<span @click="redirect('employees.index')" class="span-link" :class="{ 'active': $route.name.includes('employees.index')}">
+						<i class="fa fa-users"></i> &nbsp;
+						Employees
+					</span>
+				</li>
+				<li>
+					<span class="span-link text-left">
+						<i class="fa fa-th-list"></i> &nbsp;
+						Products &nbsp;
+						<i class="float-right fa fa-chevron-down"></i>
+					</span>
+
+					<ul class="submenu">
+						<li>
+							<span class="span-link">Home</span>
+						</li>
+						<li>
+							<span class="span-link">Home</span>
+						</li>
+						<li>
+							<span class="span-link">Home</span>
+						</li>
+						<li>
+							<span class="span-link">Home</span>
+						</li>
+						<li>
+							<span class="span-link">Home</span>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<span class="span-link">
+						<i class="fa fa-home"></i> &nbsp;
+						Home
+					</span>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -23,10 +65,25 @@ export default {
 }
 </script>
 <style media="screen">
-	.title {
-		display: block;
-		color: #fff;
-		padding: 16px;
-		text-decoration: none;
-	}
+.title {
+	display: block;
+	color: #fff;
+	padding: 16px;
+	text-decoration: none;
+}
+.mainmenu, .submenu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.mainmenu li:hover .submenu {
+	display: block;
+	max-height: 300px;
+	padding-left: 50px;
+}
+.submenu {
+	overflow: hidden;
+	max-height: 0;
+	-webkit-transition: all 0.5s ease-out;
+}
 </style>

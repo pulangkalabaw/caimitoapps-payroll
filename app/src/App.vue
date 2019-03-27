@@ -28,33 +28,39 @@ export default {
 </script>
 
 <style>
+
 body {
 	margin: 0;
 	font-family: "Lato", sans-serif;
 }
+.span-link {
+	cursor: pointer;
+}
 .content-header {
-	background: #f1f1f1;
-	padding: 1px 210px;
+	padding: 10px 240px;
 	width: 100%;
+	background: #EDEDED;
+	border-bottom: 1px solid #D9DEE4;
 }
 .sidebar {
 	margin: 0;
 	padding: 0;
-	width: 200px;
+	width: 230px;
 	background-color: #2A3F54;
-	position: fixed;
+	position: absolute;
 	height: 100%;
 	overflow: auto;
+	font-size: 15px;
 }
 
-.sidebar a {
+.sidebar span {
 	display: block;
 	color: #fff;
 	padding: 16px;
 	text-decoration: none;
 }
 
-.sidebar a.active {
+.sidebar span.active {
 	color: white;
 	text-shadow: rgba(0,0,0,0.25) 0 -1px 0;
 	background: linear-gradient(#334556, #2C4257),#2A3F54;
@@ -62,9 +68,8 @@ body {
 }
 
 div.content #content {
-	margin-left: 200px;
+	margin-left: 230px;
 	padding: 1px 16px;
-	height: 1000px;
 }
 
 @media screen and (max-width: 700px) {
@@ -73,15 +78,20 @@ div.content #content {
 		height: auto;
 		position: relative;
 	}
-	.sidebar a {float: left;}
+	.sidebar span {float: left;}
 	div.content #content {margin-left: 0;}
-	.content-header {margin-left: 0;}
+	.content-header {
+		padding: 10px 10px;
+	}
 }
 
 @media screen and (max-width: 400px) {
-	.sidebar a {
+	.sidebar span {
 		text-align: center;
 		float: none;
+	}
+	.content-header {
+		padding: 10px 10px;
 	}
 }
 </style>

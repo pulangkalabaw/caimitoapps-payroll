@@ -5,11 +5,16 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
-			<div class="card">
-				<div class="card-header">Homepage</div>
-				<div class="card-body">
-					a homepage for everybody
-				</div>
+			<div v-if="!employees_loading">
+				<ul v-for="employee in employees">
+					<li>
+						{{ employee }}
+					</li>
+				</ul>
+			</div>
+			<div v-else>
+				<span class="fa fa-refresh fa-spin"></span>
+				Loading please wait ..
 			</div>
 		</div>
 	</div>

@@ -8,6 +8,10 @@ import mixins from './mixins'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Navdir
+import navdir from '@/components/pages/includes/navdir.vue'
+Vue.component('navdir', navdir);
+
 Vue.config.productionTip = false
 Vue.prototype.$axios = Axios
 

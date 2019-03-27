@@ -19,7 +19,7 @@ const store =  new Vuex.Store({
 		 * Employees Details API Tunnel
 		 *
 		 */
-        empdtls: 'http://192.168.1.49/caimitoapps-payroll/dev/laravel55-template/api/',
+        empdtls: 'http://10.155.128.210/caimitoapps-payroll/dev/laravel55-template/api/',
 
 
 
