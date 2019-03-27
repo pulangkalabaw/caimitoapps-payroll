@@ -97,7 +97,7 @@ class EmployeeController extends Controller
                 // Insertion to user_details table only do this if userdata is a success( if is for catching errors)
                 $request['user_id'] = $user_id;
                 $userdetails = $UserDetails->insert($request->only([
-                    'user_id','mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','date_hired'
+                    'user_id','mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','department_id','date_hired'
                 ]));
 
                 // Insertion to UserPayrollDetails
@@ -160,7 +160,7 @@ class EmployeeController extends Controller
 
 
         $userdata = $UserDetails->where('user_id', $id)->update([
-            'mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','date_hired'
+            'mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','department_id','date_hired'
         ]);
 
         if(!empty($request->file('image')) && $userdata){
