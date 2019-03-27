@@ -1,16 +1,36 @@
 **************************
+v0.0.2
+d20180326
+
+Features:
+
+	Employees
+		List of Employees
+		Create new Employee
+
+	Nav bar
+		Updated side bar
+
+Install:
+	laravel-vue-pagination
+	vue-notification
+
+**************************
+
 v0.0.1
 d20180325
 
 Features:
-	Install
-		Axios
-		Bootstrap
-		Moment
-		Vuex
-		Session
 	Login page
 		Static
 	Nav bar
 		Not yet finish!
+
+Install:
+	Axios
+	Bootstrap
+	Moment
+	Vuex
+	Session
+
 **************************

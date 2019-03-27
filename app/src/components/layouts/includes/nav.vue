@@ -7,47 +7,29 @@
 			<hr>
 			<ul class="mainmenu">
 				<li>
-					<span class="span-link" :class="{ 'active': $route.name.includes('home')}">
+					<span @click="redirect('home')" class="span-link" :class="{ 'active': $route.name.includes('home')}">
 						<i class="fa fa-home"></i> &nbsp;
 						Home
 					</span>
 				</li>
 				<li>
-					<span @click="redirect('employees.index')" class="span-link" :class="{ 'active': $route.name.includes('employees.index')}">
+					<span class="span-link" :class="{ 'active': $route.name.includes('employees.index')}">
 						<i class="fa fa-users"></i> &nbsp;
 						Employees
-					</span>
-				</li>
-				<li>
-					<span class="span-link text-left">
-						<i class="fa fa-th-list"></i> &nbsp;
-						Products &nbsp;
 						<i class="float-right fa fa-chevron-down"></i>
 					</span>
-
 					<ul class="submenu">
 						<li>
-							<span class="span-link">Home</span>
+							<span @click="redirect('employees.index')" class="span-link">
+								View all Employees
+							</span>
 						</li>
 						<li>
-							<span class="span-link">Home</span>
-						</li>
-						<li>
-							<span class="span-link">Home</span>
-						</li>
-						<li>
-							<span class="span-link">Home</span>
-						</li>
-						<li>
-							<span class="span-link">Home</span>
+							<span @click="redirect('employees.create')" class="span-link">
+								Create new Employee
+							</span>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<span class="span-link">
-						<i class="fa fa-home"></i> &nbsp;
-						Home
-					</span>
 				</li>
 			</ul>
 		</div>
@@ -79,7 +61,7 @@ export default {
 .mainmenu li:hover .submenu {
 	display: block;
 	max-height: 300px;
-	padding-left: 50px;
+	padding-left: 30px;
 }
 .submenu {
 	overflow: hidden;

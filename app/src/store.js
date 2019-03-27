@@ -11,15 +11,15 @@ const store =  new Vuex.Store({
 		 */
 		app_url: 'http://localhost:8080',
 		project_name: 'Payroll Application',
-		version: '0.0.1',
-		d: '20180325',
+		version: '0.0.2',
+		d: '20180326',
 
 
 		/**
 		 * Employees Details API Tunnel
 		 *
 		 */
-        empdtls: 'http://10.155.128.210/caimitoapps-payroll/dev/laravel55-template/api/',
+        empdtls: 'http://10.155.128.210/caimitoapps-payroll/dev/empdtls/api/',
 
 
 

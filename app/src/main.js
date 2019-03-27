@@ -8,21 +8,32 @@ import mixins from './mixins'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Custom notication (Alert)
+import notif from '@/components/pages/includes/notif.vue'
+Vue.component('notif', notif);
+
+
 // Navdir
 import navdir from '@/components/pages/includes/navdir.vue'
 Vue.component('navdir', navdir);
-
-Vue.config.productionTip = false
-Vue.prototype.$axios = Axios
 
 // Moment
 var moment = require('moment');
 Vue.prototype.$moment = moment
 
-//
+// Toastr
+import Notifications  from 'vue-notification'
+Vue.use(Notifications)
+
+// Pagination Tag
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+// Session
 import VueSession from 'vue-session'
 Vue.use(VueSession)
 
+Vue.config.productionTip = false
+Vue.prototype.$axios = Axios
 
 /* eslint-disable no-new */
 new Vue({
