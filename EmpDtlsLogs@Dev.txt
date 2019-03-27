@@ -1,4 +1,21 @@
 **************************
+v0.0.2
+d20180327
+
+Features:
+	Cors installed
+	Migration files user created
+	table for User and UserDetails created
+	Created index on employee
+	Created store on employee
+
+	pagination on index of employee
+	included payrolldetails and userdetails on table
+	update, store and show are functioning and working on this version
+	department_id is included on this store and update of employee
+**************************
+
+**************************
 v0.0.1
 d20180325
 

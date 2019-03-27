@@ -8,6 +8,7 @@ class UserDetails extends Model
 {
     //
     protected $table = "user_details";
+    protected $guarded = [];
 
     public function User(){
       return $this->belongsTo('App\User', 'user_id', 'user_id');

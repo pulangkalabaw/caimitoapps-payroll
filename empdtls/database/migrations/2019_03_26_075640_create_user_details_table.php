@@ -33,16 +33,11 @@ class CreateUserDetailsTable extends Migration
             // Company details
             $table->string('department_id')->nullable();
             $table->string('job_id')->nullable();
-            $table->string('hiring_date')->nullable();
+            $table->string('date_hired')->nullable();        
 
-            // Government UserDetails
-            $table->string('tax_computation')->default('none');
-            $table->string('tin_number')->nullable();
-            $table->string('sss_number')->nullable();
-            $table->string('philhealth_number')->nullable();
-            $table->string('hdmf_number')->nullable();
-
-            $table->timestamps();
+            // $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
