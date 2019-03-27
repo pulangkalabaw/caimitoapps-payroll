@@ -1,0 +1,137 @@
+/**
+ * Author: Tunechi aka Pulang Kalabaw
+ * @type {[type]}
+ */
+
+.required {
+	color: red
+}
+
+ .tabs {
+ 	position: relative;
+ 	margin: 0 auto;
+ }
+
+ .tabs__item {
+ 	display: inline-block;
+ 	margin: 0 5px;
+ 	padding: 10px;
+ 	padding-bottom: 8px;
+ 	font-size: 14px;
+ 	letter-spacing: 0.8px;
+ 	color: gray;
+ 	text-decoration: none;
+ 	border: none;
+ 	background-color: transparent;
+ 	border-bottom: 2px solid transparent;
+ 	cursor: pointer;
+ 	transition: all 0.25s;
+ }
+
+ .tabs__item_active {
+ 	color: black;
+ }
+
+ .tabs__item:hover {
+ 	border-bottom: 2px solid gray;
+ 	color: black;
+ }
+
+ .tabs__item:focus {
+ 	outline: none;
+ 	border-bottom: 2px solid gray;
+ 	color: black;
+ }
+
+ .tabs__item:first-child {
+ 	margin-left: 0;
+ }
+
+ .tabs__item:last-child {
+ 	margin-right: 0;
+ }
+
+ .tabs__active-line {
+ 	position: absolute;
+ 	bottom: 0;
+ 	left: 0;
+ 	height: 2px;
+ 	background-color: black;
+ 	transition: transform 0.4s ease, width 0.4s ease;
+ }
+
+
+.table {
+	font-size: 14px;
+}
+.card-header {
+	font-size: 15px;
+}
+.card-body {
+	font-size: 14px;
+}
+.span-link {
+	cursor: pointer;
+}
+.span-link-underline {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.content-header {
+	padding: 10px 240px;
+	background: #EDEDED;
+	border-bottom: 1px solid #D9DEE4;
+}
+.sidebar {
+	margin: 0;
+	padding: 0;
+	width: 230px;
+	background-color: #2A3F54;
+	position: fixed;
+	height: 100%;
+	overflow: auto;
+	font-size: 15px;
+}
+
+.sidebar span {
+	display: block;
+	color: #fff;
+	padding: 16px;
+	text-decoration: none;
+}
+
+.sidebar span.active {
+	color: white;
+	text-shadow: rgba(0,0,0,0.25) 0 -1px 0;
+	background: linear-gradient(#334556, #2C4257),#2A3F54;
+	box-shadow: rgba(0,0,0,0.25) 0 1px 0, inset rgba(255,255,255,0.16) 0 1px 0;
+}
+
+div.content #content {
+	margin-left: 230px;
+	height: 100px;
+	padding: 1px 16px;
+}
+
+@media screen and (max-width: 700px) {
+	.sidebar {
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
+	.sidebar span {float: left;}
+	div.content #content {margin-left: 0;}
+	.content-header {
+		padding: 10px 10px;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.sidebar span {
+		text-align: center;
+		float: none;
+	}
+	.content-header {
+		padding: 10px 10px;
+	}
+}
