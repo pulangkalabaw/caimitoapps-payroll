@@ -24,6 +24,11 @@ export default Vue.mixin({
         // method, url, params, options
         axiosRequest (method, url, params, headers, api_token = true) {
 
+			//  CHECK GET PARAMS
+            url =  (url.includes('?') ? url + '&' : url + '?')
+            // CHECK API TOKEN
+            url = (api_token == true ? url + 'at=' + this.$session.get('at') : url)
+
             // ***************
             const instance = this.$axios({
                 method: method,

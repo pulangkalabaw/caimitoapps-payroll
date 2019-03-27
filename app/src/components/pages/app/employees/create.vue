@@ -14,7 +14,7 @@
 
 
 					<notif :notif="notif"></notif>
-					<div class="clearfix"></div><br />
+					<div class="clearfix"></div>
 
 					<tabs
 					:tabs="tabs"
@@ -225,7 +225,7 @@
 
 										<div class="row">
 											<div class="col-md-12">
-												Date<br />
+												Date hired<br />
 												<input type="date" v-model="employee.date_hired" class="form-control form-control-sm">
 											</div>
 										</div>
@@ -247,6 +247,53 @@
 											</span>
 										</button>
 										<span @click="currentTab ='bi'" class="btn btn-primary btn-sm">
+											<span class="fa fa-chevron-left"></span>
+											Back
+										</span>
+										<span @click="currentTab ='pd'" class="btn btn-primary btn-sm">
+											Next Step
+											<span class="fa fa-chevron-right"></span>
+										</span>
+									</div>
+								</div>
+								<div class="clearfix"></div><br />
+
+							</div>
+
+							<!-- Other Information -->
+							<div v-if="currentTab == 'de'">
+								<br />
+								<b>Department</b><br /><br />
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-12" v-if="!departments_loading">
+												Department<br />
+												<select class="form-control form-control-sm" v-model="employee.department_id" required>
+													<option :value="department.department_id" v-for="department in departments.data">
+														{{ department.department_name }}
+													</option>
+												</select>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12 text-right">
+										<button class="btn btn-success btn-sm" :disabled="create_employee_loading">
+											<span v-if="create_employee_loading">
+												Submiting..
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+											</span>
+											<span v-else>
+												Skip and Submit
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+											</span>
+										</button>
+										<span @click="currentTab ='oi'" class="btn btn-primary btn-sm">
 											<span class="fa fa-chevron-left"></span>
 											Back
 										</span>
@@ -377,7 +424,7 @@
 
 								<div class="row">
 									<div class="col-md-12 text-right">
-										<span @click="currentTab ='oi'" class="btn btn-primary btn-sm">
+										<span @click="currentTab ='de'" class="btn btn-primary btn-sm">
 											<span class="fa fa-chevron-left"></span>
 											Back
 										</span>
@@ -420,6 +467,10 @@ export default {
 				password_confirmation: 'kllopez@iplusonline.com',
 			},
 			create_employee_loading: false,
+
+			departments: [],
+			departments_loading: false,
+
 			submit_button_label: 'Skip and Submit',
 			notif: '',
 
@@ -438,6 +489,7 @@ export default {
 			tabs: [
 				{ title: 'Basic Information', value: 'bi' },
 				{ title: 'Other Information', value: 'oi' },
+				{ title: 'Department', value: 'de' },
 				{ title: 'Payroll Details', value: 'pd' },
 			],
 			currentTab: 'bi',
@@ -445,13 +497,27 @@ export default {
 	},
 
 	created () {
-
+		this.departmentIndex()
 	},
 
 	methods: {
 
 		handleClick(newTab) {
 			this.currentTab = newTab;
+		},
+
+		departmentIndex () {
+
+			this.departments_loading = true
+			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?show=all')
+			.then (res => {
+				this.departments = res.data.data
+				this.departments_loading = false
+			})
+			.catch(err => {
+				console.log(err)
+			})
+				this.departments_loading = false
 		},
 
 		employeeCreate () {

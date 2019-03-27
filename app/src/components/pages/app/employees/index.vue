@@ -17,7 +17,7 @@
 								<tr>
 									<th>Full name</th>
 									<th>Email</th>
-									<th>Date created</th>
+									<th>Date hired</th>
 								</tr>
 							</thead>
 
@@ -31,7 +31,19 @@
 										</span>
 									</td>
 									<td>{{ employee.email }}</td>
-									<td>{{ $moment(employee.created_at).format('LL') }}</td>
+									<td>
+										<span v-if="employee.user_details != null">
+											<span v-if="employee.user_details.date_hired != null">
+												{{ $moment(employee.user_details.date_hired).format('LL') }}
+											</span>
+											<span v-else>
+												No date selected
+											</span>
+										</span>
+										<span v-else>
+											No date selected
+										</span>
+									</td>
 								</tr>
 							</tbody>
 
