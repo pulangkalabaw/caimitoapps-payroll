@@ -33,7 +33,9 @@ class CreateUserDetailsTable extends Migration
             // Company details
             $table->string('department_id')->nullable();
             $table->string('job_id')->nullable();
-            $table->string('date_hired')->nullable();        
+            $table->string('date_hired')->nullable();
+            $table->string('employment_type')->nullable();
+            $table->string('employment_status')->nullable();    
 
             // $table->timestamps();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
