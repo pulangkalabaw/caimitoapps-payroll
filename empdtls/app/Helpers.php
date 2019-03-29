@@ -25,15 +25,15 @@ function generateToken ($length = 32) {
 
 function zencrypt ($string) {
 	$salt = 'zolvere6969';
-	$pepper = 69696969;
-	return base64_encode($string.$salt.$pepper);
+	$pepper = 696923;
+	return base64_encode($salt.$pepper.$string);
 }
 
 function zdecrypt ($string) {
 	$salt = 'zolvere6969';
-	$pepper = 69696969;
+	$pepper = 696923;
 
-	if (!base64_decode($string, true)) return json_encode(['status' => 'failed', 'message' => 'USERNAME_DECODING_FAILED!']);
+	if (!base64_decode($string, true)) return json_encode(['status' => 'failed', 'message' => 'EMAIL_DECODING_FAILED!']);
 
 	$decoded_string = base64_decode($string);
 	$string = str_replace($salt, '', $decoded_string);

@@ -24,7 +24,7 @@
 							<tbody v-for="employee in employees.data.data" :key="employee.id">
 								<tr>
 									<td>
-										<span class="span-link-underline" @click="redirect('employees.show', {id:employee.user_id})">
+										<span class="span-link-underline">
 											{{ employee.lname }},
 											{{ employee.fname }}
 											{{ employee.mname }}
@@ -80,6 +80,12 @@ export default {
 
 	created () {
 		this.employeeIndex ();
+		this.$notify({
+			group: 'notif',
+			title: 'Important message',
+			text: 'Hello user! This is a notification!',
+			type: 'success',
+		});
 	},
 
 	methods: {

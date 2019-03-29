@@ -5,12 +5,38 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
-			<div class="card">
+			<div class="card" :class="{ 'border-warning ': edit_mode }">
 				<div class="card-header">
 					<span class="fa fa-users"></span>
-					Create new Employee
+					<span v-if="!show_employee_loading">
+						{{ employee.fname }}
+						{{ employee.mname }}
+						{{ employee.lname }}
+					</span>
 				</div>
 				<div class="card-body">
+
+					<div>
+						<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
+							<span class="fa fa-warning"></span>
+							Go to Edit mode
+						</button>
+						<button v-else @click="editMode(false)" class="btn btn-sm btn-default">
+							<span class="fa fa-times-circle"></span>
+							Exit Edit mode
+						</button>
+					</div>
+
+					<div class="alert alert-warning" v-if="edit_mode">
+						<span class="fa fa-warning"></span>
+						<b>Warning!</b> You are in
+						<b>Edit Mode</b>
+					</div>
+					<div class="alert alert-info" v-else>
+						<span class="fa fa-info-circle"></span>
+						You are in
+						<b>View mode</b>
+					</div>
 
 
 					<notif :notif="notif"></notif>
@@ -26,7 +52,8 @@
 					@onClick="handleClick"
 					/>
 					<div class="content">
-						<form @submit.prevent="employeeCreate()" method="POST">
+
+						<form @submit.prevent="employeeUpdate()" method="POST">
 
 							<!-- Basic Information -->
 							<div v-if="currentTab === 'bi'"><br />
@@ -37,7 +64,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												First name <span class="required">*</span><br />
-												<input type="text" v-model="employee.fname" class="form-control form-control-sm" required>
+												<input :disabled="!edit_mode" type="text" v-model="employee.fname" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -45,7 +72,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Middle name <span class="required">*</span><br />
-												<input type="text" v-model="employee.mname" class="form-control form-control-sm" required>
+												<input :disabled="!edit_mode" type="text" v-model="employee.mname" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -53,7 +80,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Last name <span class="required">*</span><br />
-												<input type="text" v-model="employee.lname" class="form-control form-control-sm" required>
+												<input :disabled="!edit_mode" type="text" v-model="employee.lname" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -61,7 +88,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Suffix <span class="required">*</span><br />
-												<select class="form-control form-control-sm" v-model="employee.suffix" required>
+												<select  :disabled="!edit_mode"class="form-control form-control-sm" v-model="employee.suffix" required>
 													<option value="mr">Mr.</option>
 													<option value="mrs">Mrs.</option>
 													<option value="ms">Ms.</option>
@@ -73,7 +100,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employee code <span class="required">*</span><br />
-												<input type="text" v-model="employee.employee_code" class="form-control form-control-sm" required>
+												<input :disabled="!edit_mode" type="text" v-model="employee.employee_code" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -84,43 +111,49 @@
 										<div class="row">
 											<div class="col-md-12">
 												Email <span class="required">*</span><br />
-												<input type="email" v-model="employee.email" class="form-control form-control-sm" required>
+												<input :disabled="!edit_mode" type="email" v-model="employee.email" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
 
 
-										<div class="row">
-											<div class="col-md-12">
-												Password <span class="required">*</span><br />
-												<input type="password" v-model="employee.password" class="form-control form-control-sm" required>
+										<div v-if="edit_mode">
+											<div class="row">
+												<div class="col-md-12">
+													Password <br />
+													<input :disabled="!edit_mode" type="password" v-model="employee.password" class="form-control form-control-sm">
+													<small class="">
+														<span class="fa fa-info-circle"></span>
+														Leave it blank, if no change
+													</small>
+												</div>
 											</div>
-										</div>
-										<div class="clearfix"></div><br />
+											<div class="clearfix"></div><br />
 
-										<div class="row">
-											<div class="col-md-12">
-												Confirm Password <span class="required">*</span><br />
-												<input type="password" v-model="employee.password_confirmation" class="form-control form-control-sm" required>
+											<div class="row">
+												<div class="col-md-12">
+													Confirm Password <br />
+													<input :disabled="!edit_mode" type="password" v-model="employee.password_confirmation" class="form-control form-control-sm">
+												</div>
 											</div>
+											<div class="clearfix"></div><br />
 										</div>
-										<div class="clearfix"></div><br />
 									</div>
 								</div>
-								<div class="row">
+								<div class="row" v-if="edit_mode">
 									<div class="col-md-12 text-right">
-										<button class="btn btn-success btn-sm" :disabled="create_employee_loading">
-											<span v-if="create_employee_loading">
+										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
+											<span v-if="update_employee_loading">
 												Submiting..
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 											<span v-else>
-												Skip and Submit
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												Skip and Update
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 										</button>
 										<span @click="currentTab ='oi'" class="btn btn-primary btn-sm">
-											Next Step
+											Next
 											<span class="fa fa-chevron-right"></span>
 										</span>
 									</div>
@@ -139,7 +172,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Mobile number<br />
-												<input type="text" v-model="employee.mobile_number" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.mobile_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -147,7 +180,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Present Address<br />
-												<textarea name="name" v-model="employee.present_address" class="form-control form-control-sm" rows="4"></textarea>
+												<textarea :disabled="!edit_mode" name="name" v-model="employee.user_details.present_address" class="form-control form-control-sm" rows="4"></textarea>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -155,7 +188,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Province Address<br />
-												<textarea name="name" v-model="employee.province_address" class="form-control form-control-sm" rows="4"></textarea>
+												<textarea :disabled="!edit_mode" name="name" v-model="employee.user_details.province_address" class="form-control form-control-sm" rows="4"></textarea>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -163,7 +196,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Birth date<br />
-												<input type="text" v-model="employee.birth_date" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.birth_date" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -171,7 +204,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Birth place<br />
-												<input type="text" v-model="employee.birth_place" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.birth_place" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -183,7 +216,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Religion<br />
-												<input type="text" v-model="employee.religion" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.religion" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -191,7 +224,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Marital Status<br />
-												<input type="text" v-model="employee.marital_status" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.marital_status" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -199,7 +232,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Gender<br />
-												<select class="form-control form-control-sm" v-model="employee.gender">
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.gender">
 													<option value="male">Male</option>
 													<option value="female">Female</option>
 												</select>
@@ -210,7 +243,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Height<br />
-												<input type="text" v-model="employee.height" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.height" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -218,7 +251,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Weight<br />
-												<input type="text" v-model="employee.weight" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.weight" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -226,7 +259,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Date hired<br />
-												<input type="date" v-model="employee.date_hired" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="date" v-model="employee.user_details.date_hired" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -234,16 +267,16 @@
 									</div>
 								</div>
 
-								<div class="row">
+								<div class="row" v-if="edit_mode">
 									<div class="col-md-12 text-right">
-										<button class="btn btn-success btn-sm" :disabled="create_employee_loading">
-											<span v-if="create_employee_loading">
+										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
+											<span v-if="update_employee_loading">
 												Submiting..
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 											<span v-else>
-												Skip and Submit
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												Skip and Update
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 										</button>
 										<span @click="currentTab ='bi'" class="btn btn-primary btn-sm">
@@ -251,7 +284,7 @@
 											Back
 										</span>
 										<span @click="currentTab ='co'" class="btn btn-primary btn-sm">
-											Next Step
+											Next
 											<span class="fa fa-chevron-right"></span>
 										</span>
 									</div>
@@ -271,7 +304,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employment type<br />
-												<select class="form-control form-control-sm" v-model="employee.employment_type" required>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_type" required>
 													<option value="probational">Probational</option>
 													<option value="project_based">Project Based</option>
 													<option value="regular">Regular</option>
@@ -283,7 +316,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employment type<br />
-												<select class="form-control form-control-sm" v-model="employee.employment_status" required>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_status" required>
 													<option value="hired" selected>Hired</option>
 													<option value="resigned">Resigned</option>
 												</select>
@@ -295,7 +328,7 @@
 										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
 												Department<br />
-												<select class="form-control form-control-sm" v-model="employee.department_id" required>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.department.department_id" required>
 													<option :value="department.department_id" v-for="department in departments.data">
 														{{ department.department_name }}
 													</option>
@@ -306,16 +339,16 @@
 									</div>
 								</div>
 
-								<div class="row">
+								<div class="row" v-if="edit_mode">
 									<div class="col-md-12 text-right">
-										<button class="btn btn-success btn-sm" :disabled="create_employee_loading">
-											<span v-if="create_employee_loading">
+										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
+											<span v-if="update_employee_loading">
 												Submiting..
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 											<span v-else>
-												Skip and Submit
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												Skip and Update
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 										</button>
 										<span @click="currentTab ='oi'" class="btn btn-primary btn-sm">
@@ -323,7 +356,7 @@
 											Back
 										</span>
 										<span @click="currentTab ='pd'" class="btn btn-primary btn-sm">
-											Next Step
+											Next
 											<span class="fa fa-chevron-right"></span>
 										</span>
 									</div>
@@ -342,7 +375,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Basic Salary<br />
-												<input type="text" v-model="employee.basic_salary" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.basic_salary" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -350,7 +383,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Allowance<br />
-												<select class="form-control form-control-sm" disabled>
+												<select :disabled="!edit_mode" v-model="employee.user_payroll_details.allowance" class="form-control form-control-sm" disabled>
 												</select>
 											</div>
 										</div>
@@ -359,7 +392,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Loans<br />
-												<select class="form-control form-control-sm" disabled>
+												<select :disabled="!edit_mode" v-model="employee.user_payroll_details.loans" class="form-control form-control-sm" disabled>
 												</select>
 											</div>
 										</div>
@@ -368,7 +401,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Wage type<br />
-												<select class="form-control form-control-sm" v-model="employee.wage_type">
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_payroll_details.wage_type">
 													<option value="daily">Daily</option>
 													<option value="monthly">Monthly</option>
 													<option value="fixed">Fixed</option>
@@ -380,7 +413,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Bank Details<br />
-												<input type="text" v-model="employee.bank_details" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.bank_details" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -388,7 +421,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Payout type<br />
-												<select class="form-control form-control-sm" v-model="employee.payout_type">
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_payroll_details.payout_type">
 													<option value="cash">Cash</option>
 													<option value="check">Check</option>
 													<option value="atm">ATM</option>
@@ -400,7 +433,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Tax Computataion<br />
-												<select class="form-control form-control-sm" v-model="employee.tax_computation">
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_payroll_details.tax_computation">
 													<option value="none">None</option>
 													<option value="annually">Annually</option>
 													<option value="table">Table</option>
@@ -415,7 +448,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Tin number<br />
-												<input type="text" v-model="employee.tin_number" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.tin_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -423,7 +456,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												SSS number<br />
-												<input type="text" v-model="employee.sss_number" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.sss_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -431,7 +464,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												PhilHealth number<br />
-												<input type="text" v-model="employee.philhealth_number" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.philhealth_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -439,7 +472,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												HMDF number<br />
-												<input type="text" v-model="employee.hdmf_number" class="form-control form-control-sm">
+												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.hdmf_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -447,20 +480,20 @@
 									</div>
 								</div>
 
-								<div class="row">
+								<div class="row" v-if="edit_mode">
 									<div class="col-md-12 text-right">
 										<span @click="currentTab ='co'" class="btn btn-primary btn-sm">
 											<span class="fa fa-chevron-left"></span>
 											Back
 										</span>
-										<button class="btn btn-success btn-sm" :disabled="create_employee_loading">
-											<span v-if="create_employee_loading">
+										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
+											<span v-if="update_employee_loading">
 												Submiting..
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 											<span v-else>
 												Submit
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_employee_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_employee_loading }"></span>
 											</span>
 										</button>
 									</div>
@@ -470,6 +503,7 @@
 							</div>
 
 						</form>
+
 					</div>
 				</div>
 			</div>
@@ -487,13 +521,14 @@ export default {
 	data () {
 		return {
 			employee: {},
-
-			create_employee_loading: false,
+			show_employee_loading: false,
+			update_employee_loading: false,
 
 			departments: [],
 			departments_loading: false,
 
-			submit_button_label: 'Skip and Submit',
+			edit_mode: false,
+
 			notif: '',
 
 			links: [
@@ -503,8 +538,8 @@ export default {
 					'params': {}
 				},
 				{
-					'label': 'Add',
-					'route': 'employees.create',
+					'label': 'View',
+					'route': '',
 					'params': {}
 				}
 			],
@@ -520,9 +555,30 @@ export default {
 
 	created () {
 		this.departmentIndex()
+		this.employeeShow()
 	},
 
 	methods: {
+
+		editMode (des){
+			this.edit_mode = des
+			if (des == true) {
+				this.$notify({
+					group: 'notif',
+					title: 'Employee',
+					text: 'You are in Edit Mode',
+					type: 'warn',
+				});
+			}
+			else {
+				this.$notify({
+					group: 'notif',
+					title: 'Employee',
+					text: 'You are in View Mode',
+					type: 'info',
+				});
+			}
+		},
 
 		handleClick(newTab) {
 			this.currentTab = newTab;
@@ -542,21 +598,39 @@ export default {
 			})
 		},
 
-		employeeCreate () {
+		employeeShow () {
 
-			this.create_employee_loading = true
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'employee', this.employee)
+			this.show_employee_loading = true
+			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee/' + this.$route.params.id)
 			.then (res => {
 
-				this.notif = res.data
-				this.tnotif (res)
-				this.create_employee_loading = false
+				this.employee = res.data.data.data
+				this.show_employee_loading = false
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.create_employee_loading = false
+				this.show_employee_loading = false
 			})
+
+		},
+
+		employeeUpdate () {
+
+			this.update_employee_loading = true
+			this.employee._method = 'PUT'
+			this.axiosRequest ('POST', this.$store.state.empdtls + 'employee/' + this.$route.params.id, this.employee)
+			.then (res => {
+
+				this.update_employee_loading = false
+				this.tnotif (res)
+
+			})
+			.catch (err => {
+				console.log(err)
+				this.update_employee_loading = false
+			})
+
 		}
 	}
 }

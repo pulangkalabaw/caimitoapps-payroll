@@ -31,6 +31,25 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<span class="span-link" :class="{ 'active': $route.name.includes('department.index')}">
+						<i class="fa fa-folder"></i> &nbsp;
+						Department
+						<i class="float-right fa fa-chevron-down"></i>
+					</span>
+					<ul class="submenu">
+						<li>
+							<span @click="redirect('department.index')" class="span-link">
+								View all Deparments
+							</span>
+						</li>
+						<li>
+							<span @click="redirect('department.create')" class="span-link">
+								Create new Department
+							</span>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>

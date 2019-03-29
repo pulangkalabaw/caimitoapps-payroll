@@ -3,6 +3,14 @@ import Vue from 'vue';
 export default Vue.mixin({
     methods: {
 
+		tnotif (res) {
+			this.$notify({
+				group: 'notif',
+				title: 'Employee',
+				text: res.data.message,
+				type: res.data.status == 'success' ? 'success' : 'error',
+			});
+		},
 
         now () {
             const toTwoDigits = num => num < 10 ? '0' + num : num;
