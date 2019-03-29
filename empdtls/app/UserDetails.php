@@ -11,7 +11,11 @@ class UserDetails extends Model
     protected $guarded = [];
 
     public function User(){
-      return $this->belongsTo('App\User', 'user_id', 'user_id');
+        return $this->belongsTo('App\User', 'user_id', 'user_id');
+    }
+
+    public function Department(){
+        return $this->belongsTo('App\Department', 'department_id', 'department_id');
     }
 
 }

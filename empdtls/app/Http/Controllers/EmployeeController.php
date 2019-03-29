@@ -17,16 +17,30 @@ class EmployeeController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function index()
+    public function index(Request $request)
     {
         //
         $User = new User();
-        // return response()->json($User->with(['UserDetails'])->get());
 
         $datareturn = [
             'data' => $User->with(['UserDetails', 'UserPayrollDetails'])->paginate(10),
             'total' => $User->count(),
         ];
+
+        if($request->has('show')){
+            if($request->get('show') == 'all'){
+                $datareturn = [
+                    'data' => User::with(['UserDetails', 'UserPayrollDetails'])->get(),
+                    'total' => $User->count(),
+                ];
+            }else{
+                $datareturn = [
+                    'data' => User::with(['UserDetails', 'UserPayrollDetails'])->paginate($request->get('show')),
+                    'total' => $User->count(),
+                ];
+            }
+        }
+
         return apiReturn($datareturn, 'Success', 'success');
     }
 
@@ -97,7 +111,7 @@ class EmployeeController extends Controller
                 // Insertion to user_details table only do this if userdata is a success( if is for catching errors)
                 $request['user_id'] = $user_id;
                 $userdetails = $UserDetails->insert($request->only([
-                    'user_id','mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','department_id','date_hired'
+                    'user_id','mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','department_id','employment_type','employemnt_status','date_hired'
                 ]));
 
                 // Insertion to UserPayrollDetails
@@ -124,7 +138,7 @@ class EmployeeController extends Controller
         //
         $User = new User();
 
-        $userdata = $User->with(['UserDetails', 'UserPayrollDetails'])->where('user_id', $id)->get();
+        $userdata['data'] = $User->with(['UserDetails.Department', 'UserPayrollDetails',])->where('user_id', $id)->first();
 
         if($userdata){
             return apiReturn($userdata, 'Success', 'success');
@@ -153,32 +167,61 @@ class EmployeeController extends Controller
     */
     public function update(Request $request, $id)
     {
-        //
+        // return $request->all();
         $User = new User();
         $UserDetails = new UserDetails();
         $UserPayrollDetails = new UserPayrollDetails();
-
-
-        $userdata = $UserDetails->where('user_id', $id)->update([
-            'mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','department_id','date_hired'
+        $request->merge([ 'email' => zencrypt($request->get('email'))]);
+        $validator = Validator::make($request->all(), [
+            'employee_code' => 'required|max:30|unique:users,employee_code,'.$id.',user_id',
+            'lname' => 'required',
+            'fname' => 'required',
+            'mname' => 'required',
+            'email' => 'required|unique:users,email,'.$id.',user_id',
+            'password' => 'nullable|confirmed|min:6',
+            // 'image' => 'nullable|mimes:jpeg,bmp,png,gif',
         ]);
 
-        if(!empty($request->file('image')) && $userdata){
-            $extension =  $request->file('image')->getClientOriginalExtension();
-            $path = $request->file('image')->storeAs('avatars',$id.'.'.$extension);
-            $User->where('user_id', $id)->update(['image' => $id.'.'.$extension]);
-        }
+        if(!$validator->fails()){
+            // if success on valdiation
 
-        if($userdata){
-            // Update PayrollDetails
-            $userdata = $UserPayrollDetails->where('user_id', $id)->update([
-                'basic_salary','allowances','loans','wage_type','bank_details','payout_type','tax_computation','tin_number','sss_number','philhealth_number','hdmf_number'
-            ]);
+            // Update of user table
+            $user_only = collect($request->except(['user_details', 'user_payroll_details']))->except(['_method','password_confirmation','at','id','user_id','created_at','updated_at'])->toArray();
+            // $user_only['email'] = zencrypt($user_only['email']);
+            if(isset($user_only['password'])){
+                $user_only['password'] = bcrypt($user_only['password']);
+            }
+            $userdata = $User->where('user_id', $id)->update($user_only);
 
-            return apiReturn($userdata, 'Successfull on updating of employee record!', 'success');
+
+            // Update of user_details table
+            $user_details_only = collect($request->only('user_details')['user_details'])->except(['id','user_id','department','created_at','updated_at'])->toArray();
+            $cont_proc = ($user_details_only == null) ? null : $user_details_only;
+            if($cont_proc){
+                 $userdata = $UserDetails->where('user_id', $id)->update($user_details_only);
+            }
+
+            if(!empty($request->file('image')) && $userdata){
+                $extension =  $request->file('image')->getClientOriginalExtension();
+                $path = $request->file('image')->storeAs('avatars',$id.'.'.$extension);
+                $User->where('user_id', $id)->update(['image' => $id.'.'.$extension]);
+            }
+
+            if($userdata){
+                // Update user_payroll_details table
+                $user_payroll_only = collect($request->only('user_payroll_details')['user_payroll_details'])->except(['id','user_id','created_at','updated_at'])->toArray();
+                $cont_proc = ($user_payroll_only == null) ? null :$user_payroll_only;
+                if($cont_proc){
+                    $userdata = $UserPayrollDetails->where('user_id', $id)->update($user_payroll_only);
+                }
+
+                return apiReturn($userdata, 'Successfull on updating of employee record!', 'success');
+            }else{
+                return apiReturn(null, 'Failure on updating of employee record!', 'failed');
+            }
         }else{
-            return apiReturn(null, 'Failure on updating of employee record!', 'error');
-
+            // Is not success on valdiation
+            return apiReturn(null, 'Failure on updating of employee record!', 'failed', $validator->errors());
         }
 
     }

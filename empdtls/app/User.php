@@ -10,6 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $guarded = [];
+    protected $hidden = ['password'];
 
     // Relationship to user_details
     public function UserDetails()

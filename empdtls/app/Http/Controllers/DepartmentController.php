@@ -61,6 +61,7 @@ class DepartmentController extends Controller
         //
         $validator = Validator::make($request->all(), [
             'department_name' => 'required',
+            'department_head' => 'required',
             'description' => 'required',
         ]);
 
@@ -69,6 +70,7 @@ class DepartmentController extends Controller
             $departmentdata = Department::create([
                 'department_id' => rand(111111, 999999),
                 'department_name' => $request->post('department_name'),
+                'department_head' => $request->post('department_head'),
                 'description' => $request->post('description'),
             ]);
 
@@ -87,7 +89,9 @@ class DepartmentController extends Controller
     public function show($id)
     {
         //
-        $departmentdata = Department::where('department_id', $id)->first();
+        $departmentdata = [
+            'data' => Department::where('department_id', $id)->first(),
+        ];
 
         if($departmentdata){
             return apiReturn($departmentdata, 'Success!', 'success');
@@ -119,6 +123,24 @@ class DepartmentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'department_name' => 'required',
+            'department_head' => 'required',
+            'description' => 'required',
+        ]);
+
+        if(!$validator->fails()){
+
+            $departmentdata = Department::where('department_id', $id)->update([
+                'department_name' => $request->post('department_name'),
+                'department_head' => $request->post('department_head'),
+                'description' => $request->post('description'),
+            ]);
+
+            return apiReturn($departmentdata, 'Success on adding of department', 'success');
+        }else{
+            return apiReturn(null, 'Failure on adding of department', 'failed', $validator->errors());
+        }
     }
 
     /**

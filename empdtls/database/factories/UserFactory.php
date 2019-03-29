@@ -16,14 +16,25 @@ use Faker\Generator as Faker;
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
 
+    // return [
+    //     'user_id' => $faker->bothify('***************##########'),
+    //     'employee_code' => $faker->bothify('##########'),
+    //     'lname' => $faker->firstNameMale,
+    //     'fname' => $faker->firstNameMale,
+    //     'mname' => $faker->firstNameFemale,
+    //     'email' => $faker->unique()->safeEmail,
+    //     'password' => $password ?: $password = bcrypt('secret'),
+    //     'remember_token' => str_random(10),
+    // ];
+
     return [
-        'user_id' => $faker->bothify('***************##########'),
-        'employee_code' => $faker->bothify('##########'),
-        'lname' => $faker->firstNameMale,
-        'fname' => $faker->firstNameMale,
-        'mname' => $faker->firstNameFemale,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'user_id' => '75892A75F973TG',
+        'employee_code' => 'AD309',
+        'lname' => 'Smith',
+        'fname' => 'John',
+        'mname' => 'Doe',
+        'email' => 'jsmith@payme.com',
+        'password' => bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });
