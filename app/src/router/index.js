@@ -10,8 +10,15 @@ import auth from '@/components/layouts/auth'
 // Authenticated Components
 import home from '@/components/pages/app/home'
 import hello from '@/components/HelloWorld'
+
+// Employee
 import employeesIndex from '@/components/pages/app/employees/index'
 import employeesCreate from '@/components/pages/app/employees/create'
+import employeesShow from '@/components/pages/app/employees/show'
+
+// Department
+import departmentIndex from '@/components/pages/app/department/index'
+import departmentCreate from '@/components/pages/app/department/create'
 
 
 
@@ -48,6 +55,8 @@ let web_routes = [
 			auth: true
 		},
 	},
+
+	// Employee Management
 	{
 		path: '/app/employees', name: 'employees.index', component: employeesIndex,
 		meta: {
@@ -60,6 +69,28 @@ let web_routes = [
 			auth: true
 		},
 	},
+	{
+		path: '/app/employees/:id', name: 'employees.show', component: employeesShow,
+		meta: {
+			auth: true
+		},
+	},
+
+
+	// Department Management
+	{
+		path: '/app/department', name: 'department.index', component: departmentIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/department/add', name: 'department.create', component: departmentCreate,
+		meta: {
+			auth: true
+		},
+	},
+
 
 ];
 
