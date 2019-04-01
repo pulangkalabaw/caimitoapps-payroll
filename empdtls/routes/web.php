@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// $router->get('foo', function () {
+//     return 'Hello World';
+// });
+
+$router->get('foo', 'JobsController@index');

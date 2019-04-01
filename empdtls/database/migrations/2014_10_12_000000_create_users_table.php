@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('image')->default('default.png');
             $table->string('password');
             $table->rememberToken();
+            $table->integer('status')->default(1);
             // $table->timestamps();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

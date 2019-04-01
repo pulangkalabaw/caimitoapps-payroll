@@ -19,23 +19,32 @@ class DepartmentController extends Controller
     public function index(Request $request)
     {
         //
-        $departments = Department::with(['DepartmentHead'])->where('status',1)->paginate(10);
+        $departments = Department::with(['DepartmentHead']);
 
-        if($request->has('show')){
+        // Number of rows
+        $rows = $request->get('show') ? $request->get('show') : 10;
 
-            if($request->get('show') == 'all'){
-                $departments = Department::with(['DepartmentHead'])->where('status',1)->get();
+
+        // Check filter
+        if ($request->has('filter')) {
+
+            // Show all from the table
+            if($request->get('filter') == 'all'){
+                $departments = $departments->get();
             }
 
-            else {
-                $departments = Department::with(['DepartmentHead'])->where('status',1)->paginate($request->get('show'));
+            // Filter all active only
+            else if($request->get('filter') == 'active'){
+                $departments = $departments->where('status',1)->get();
             }
-
+        }
+        else {
+            $departments = $departments->where('status',1)->paginate($rows);
         }
 
         $datareturn = [
             'data' => $departments,
-            'total' => Department::count(),
+            'total' => Department::where('status',1)->count(),
         ];
         return apiReturn($datareturn, 'Success', 'success');
     }
