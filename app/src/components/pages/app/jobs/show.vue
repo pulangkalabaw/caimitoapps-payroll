@@ -152,7 +152,6 @@ export default {
 				this.notif = res.data
 				this.tnotif (res)
 				this.update_jobs_loading = false
-				this.jobsShow ();
 
 			})
 			.catch (err => {
