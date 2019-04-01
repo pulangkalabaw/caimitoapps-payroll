@@ -31,7 +31,7 @@ class JobsController extends Controller
 
         $datatoreturn = [
             'data' => $jobs,
-            'count' => Jobs::where('status',1)->count(),
+            'total' => Jobs::where('status',1)->count(),
         ];
 
         return apiReturn($datatoreturn, 'Success', 'success');
@@ -86,6 +86,15 @@ class JobsController extends Controller
     public function show($id)
     {
         //
+        $jobdata = [
+            'data' => Jobs::where('job_id', $id)->where('status',1)->first(),
+        ];
+
+        if($jobdata['data']){
+            return apiReturn($jobdata, 'Success!', 'success');
+        }else{
+            return apiReturn(null, 'Job does not exist!', 'failed');
+        }
     }
 
     /**
@@ -121,7 +130,7 @@ class JobsController extends Controller
             ]);
 
             if($datatoreturn){
-                return apiReturn($datatoreturn, 'success', 'success');
+                return apiReturn($datatoreturn, 'Update Successful!', 'success');
             }else{
                 return apiReturn(null, 'Failure on insertion to db', 'failed');
             }

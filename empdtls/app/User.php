@@ -24,11 +24,13 @@ class User extends Authenticatable
 
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = zencrypt($value);
+        // $this->attributes['email'] = zencrypt($value);
+        $this->attributes['email'] = base64_encode($value);
     }
 
     public function getEmailAttribute($value)
     {
-        return zdecrypt($value);
+        // return zdecrypt($value);
+        return base64_decode($value);
     }
 }

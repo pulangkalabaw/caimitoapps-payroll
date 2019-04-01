@@ -74,6 +74,7 @@ class EmployeeController extends Controller
             'lname' => 'required',
             'fname' => 'required',
             'mname' => 'required',
+            'suffix' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
             'image' => 'mimes:jpeg,bmp,png,gif',
@@ -104,6 +105,7 @@ class EmployeeController extends Controller
                 'fname' => $request->post('fname'),
                 'mname' => $request->post('mname'),
                 'email' => $request->post('email'),
+                'suffix' => $request->post('suffix'),
                 'image' => ($filename == null) ? 'default.png' : $filename,
                 'password' => bcrypt($request->post('password')),
             ]);
@@ -172,7 +174,8 @@ class EmployeeController extends Controller
         $User = new User();
         $UserDetails = new UserDetails();
         $UserPayrollDetails = new UserPayrollDetails();
-        $request->merge([ 'email' => zencrypt($request->get('email'))]);
+        // $request->merge([ 'email' => zencrypt($request->get('email'))]);
+        $request->merge([ 'email' => base64_encode($request->get('email'))]);
         $validator = Validator::make($request->all(), [
             'employee_code' => 'required|max:30|unique:users,employee_code,'.$id.',user_id',
             'lname' => 'required',
@@ -188,12 +191,10 @@ class EmployeeController extends Controller
 
             // Update of user table
             $user_only = collect($request->except(['user_details', 'user_payroll_details']))->except(['_method','password_confirmation','at','id','user_id','created_at','updated_at'])->toArray();
-            // $user_only['email'] = zencrypt($user_only['email']);
             if(isset($user_only['password'])){
                 $user_only['password'] = bcrypt($user_only['password']);
             }
             $userdata = $User->where('user_id', $id)->update($user_only);
-
 
             // Update of user_details table
             $user_details_only = collect($request->only('user_details')['user_details'])->except(['id','user_id','department','created_at','updated_at'])->toArray();
