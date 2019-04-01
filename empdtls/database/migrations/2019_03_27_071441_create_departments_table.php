@@ -18,8 +18,10 @@ class CreateDepartmentsTable extends Migration
             $table->string('department_id')->unique();
             $table->string('department_name');
             $table->string('department_head')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('status')->default(1);
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

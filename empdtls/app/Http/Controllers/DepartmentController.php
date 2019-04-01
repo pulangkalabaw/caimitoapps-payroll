@@ -19,16 +19,16 @@ class DepartmentController extends Controller
     public function index(Request $request)
     {
         //
-        $departments = Department::paginate(10);
+        $departments = Department::with(['DepartmentHead'])->where('status',1)->paginate(10);
 
         if($request->has('show')){
 
             if($request->get('show') == 'all'){
-                $departments = Department::get();
+                $departments = Department::with(['DepartmentHead'])->where('status',1)->get();
             }
 
             else {
-                $departments = Department::paginate($request->get('show'));
+                $departments = Department::with(['DepartmentHead'])->where('status',1)->paginate($request->get('show'));
             }
 
         }
@@ -59,19 +59,22 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         //
+        $department_id = rand(111111, 999999);
         $validator = Validator::make($request->all(), [
-            'department_name' => 'required',
-            'department_head' => 'required',
-            'description' => 'required',
+            'department_name' => 'required|unique:departments,department_name,'.$department_id.',department_id,status,1',
+            'department_head' => 'nullable',
+            'description' => 'nullable',
+            'created_by' => 'nullable',
         ]);
 
         if(!$validator->fails()){
 
             $departmentdata = Department::create([
-                'department_id' => rand(111111, 999999),
+                'department_id' => $department_id,
                 'department_name' => $request->post('department_name'),
-                'department_head' => $request->post('department_head'),
-                'description' => $request->post('description'),
+                'department_head' => (!empty($request->post('department_head'))) ? $request->post('department_head') : null,
+                'description' => (!empty($request->post('description'))) ? $request->post('description') : null ,
+                'created_by' => (!empty($request->post('created_by'))) ? $request->post('created_by') : null,
             ]);
 
             return apiReturn($departmentdata, 'Success on adding of department', 'success');
@@ -90,13 +93,13 @@ class DepartmentController extends Controller
     {
         //
         $departmentdata = [
-            'data' => Department::where('department_id', $id)->first(),
+            'data' => Department::with(['DepartmentHead'])->where('department_id', $id)->where('status',1)->first(),
         ];
 
-        if($departmentdata){
+        if($departmentdata['data']){
             return apiReturn($departmentdata, 'Success!', 'success');
         }else{
-            return apiReturn(null, 'Deprtment does not exist!', 'failed');
+            return apiReturn(null, 'Department does not exist!', 'failed');
         }
 
 
@@ -124,9 +127,9 @@ class DepartmentController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'department_name' => 'required',
-            'department_head' => 'required',
-            'description' => 'required',
+            'department_name' => 'required|unique:departments,department_name,'.$id.',department_id,status,1',
+            'department_head' => 'nullable',
+            'description' => 'nullable',
         ]);
 
         if(!$validator->fails()){
@@ -137,7 +140,7 @@ class DepartmentController extends Controller
                 'description' => $request->post('description'),
             ]);
 
-            return apiReturn($departmentdata, 'Success on adding of department', 'success');
+            return apiReturn($departmentdata, 'Success on update of department', 'success');
         }else{
             return apiReturn(null, 'Failure on adding of department', 'failed', $validator->errors());
         }
@@ -149,9 +152,12 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
         //
+
+
+
         $departmentdata = Department::where('department_id',$id)->update(['status'=>0]);
 
         if($departmentdata){
@@ -160,5 +166,31 @@ class DepartmentController extends Controller
             return apiReturn(null, 'Failure at deletion of deparment!', 'failed');
         }
 
+
+
+    }
+
+    // For restoration of department
+    public function restore(Request $request, $id){
+        $department_name = Department::where('department_id',$id)->first()->department_name;
+
+        if(!empty($department_name)){
+            $request['department_name'] = $department_name;
+            $validator = Validator::make($request->all(), [
+                'department_name' => 'required|unique:departments,department_name,'.$id.',department_id,status,1',
+            ]);
+
+            if(!$validator->fails()){
+                $departmentdata = Department::where('department_id',$id)->update(['status'=>0]);
+
+                if($departmentdata){
+                    return apiReturn($departmentdata, 'Successful deletion of deparment!', 'success');
+                }else{
+                    return apiReturn(null, 'Failure at deletion of deparment!', 'failed');
+                }
+            }else{
+                return apiReturn(null, 'Failure at deletion of deparment!', 'failed', $validator->errors());
+            }
+        }
     }
 }

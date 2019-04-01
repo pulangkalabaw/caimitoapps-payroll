@@ -57,13 +57,13 @@ class JobsController extends Controller
     public function store(Request $request)
     {
         //
+        $job_id = rand(111111, 999999);
         $validator = Validator::make($request->all(),[
-            'job_name' => 'required|unique:jobs',
+            'job_name' => 'required|unique:jobs,job_name,'.$job_id.',job_id,status,1',
             'job_description' => 'required',
         ]);
 
         if(!$validator->fails()){
-            $job_id = rand(111111, 999999);
             $datatoreturn = Jobs::create([
                 'job_id' => $job_id,
                 'job_name' => $request->post('job_name'),
@@ -110,7 +110,7 @@ class JobsController extends Controller
     {
         //
         $validator = Validator::make($request->all(),[
-            'job_name' => 'required|unique:jobs,job_name,'.$id.',job_id',
+            'job_name' => 'required|unique:jobs,job_name,'.$id.',job_id,status,1',
             'job_description' => 'required',
         ]);
 
@@ -120,7 +120,11 @@ class JobsController extends Controller
                 'job_description' => $request->post('job_description'),
             ]);
 
-            return apiReturn($datatoreturn, 'success', 'success');
+            if($datatoreturn){
+                return apiReturn($datatoreturn, 'success', 'success');
+            }else{
+                return apiReturn(null, 'Failure on insertion to db', 'failed');
+            }
         }else{
             return apiReturn(null, 'failed', 'failed', $validator->errors());
         }
