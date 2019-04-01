@@ -22,6 +22,13 @@ const store =  new Vuex.Store({
         empdtls: 'http://10.155.128.210/caimitoapps-payroll/dev/empdtls/api/',
 
 
+		/**
+		 * Authentication API Tunnel
+		 *
+		 */
+        authenticator: 'http://10.155.128.210/caimitoapps-payroll/dev/authenticator/api/',
+
+
 
 
 		/**

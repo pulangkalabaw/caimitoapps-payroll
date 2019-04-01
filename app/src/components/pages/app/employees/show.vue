@@ -308,7 +308,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employment type<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_type" required>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_type">
 													<option value="probational">Probational</option>
 													<option value="project_based">Project Based</option>
 													<option value="regular">Regular</option>
@@ -320,7 +320,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employment type<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_status" required>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_status">
 													<option value="hired" selected>Hired</option>
 													<option value="resigned">Resigned</option>
 												</select>
@@ -332,11 +332,14 @@
 										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
 												Department<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.department.department_id" required>
+
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.department_id" required>
 													<option :value="department.department_id" v-for="department in departments.data">
 														{{ department.department_name }}
 													</option>
 												</select>
+
+
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -595,7 +598,7 @@ export default {
 		departmentIndex () {
 
 			this.departments_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?show=all')
+			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?filter=all')
 			.then (res => {
 				this.departments = res.data.data
 				this.departments_loading = false
