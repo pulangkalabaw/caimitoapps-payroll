@@ -4,28 +4,32 @@
 		<navdir :links='links'></navdir>
 		<div class="clearfix"></div><br />
 
-		<div id="content">
+		<div id="content" v-if="!show_employee_loading">
 			<div class="card" :class="{ 'border-warning ': edit_mode }">
 				<div class="card-header">
-					<span class="fa fa-users"></span>
-					<span v-if="!show_employee_loading">
-						{{ employee.fname }}
-						{{ employee.mname }}
-						{{ employee.lname }}
-					</span>
-				</div>
-				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+							<span class="fa fa-users"></span>
+							<span v-if="!show_employee_loading">
+								{{ employee.fname }}
+								{{ employee.mname }}
+								{{ employee.lname }}
+							</span>
+						</div>
+						<div class="col-md-6 text-right">
+							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
+								<span class="fa fa-warning"></span>
+								Go to Edit mode
+							</button>
+							<button v-else @click="editMode(false)" class="btn btn-sm btn-default">
+								<span class="fa fa-times-circle"></span>
+								Exit Edit mode
+							</button>
+						</div>
 
-					<div>
-						<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
-							<span class="fa fa-warning"></span>
-							Go to Edit mode
-						</button>
-						<button v-else @click="editMode(false)" class="btn btn-sm btn-default">
-							<span class="fa fa-times-circle"></span>
-							Exit Edit mode
-						</button>
 					</div>
+				</div>
+				<div class="card-body" v-if="valid">
 
 					<div class="alert alert-warning" v-if="edit_mode">
 						<span class="fa fa-warning"></span>
@@ -506,6 +510,9 @@
 
 					</div>
 				</div>
+				<div class="card-body" v-else>
+					This page either under maintenance or not exists!
+				</div>
 			</div>
 
 		</div>
@@ -523,6 +530,7 @@ export default {
 			employee: {},
 			show_employee_loading: false,
 			update_employee_loading: false,
+			valid: false,
 
 			departments: [],
 			departments_loading: false,
@@ -606,6 +614,7 @@ export default {
 
 				this.employee = res.data.data.data
 				this.show_employee_loading = false
+				this.valid = res.data.status == 'success' ? true : false
 
 			})
 			.catch (err => {

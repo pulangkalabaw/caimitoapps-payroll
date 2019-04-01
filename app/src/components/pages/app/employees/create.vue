@@ -531,7 +531,7 @@ export default {
 		departmentIndex () {
 
 			this.departments_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?show=all')
+			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?filter=active')
 			.then (res => {
 				this.departments = res.data.data
 				this.departments_loading = false
