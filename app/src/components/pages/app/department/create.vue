@@ -7,54 +7,64 @@
 		<div id="content">
 			<div class="card">
 				<div class="card-header">
-					<span class="fa fa-users"></span>
-					Employees
+					<span class="fa fa-folder"></span>
+					Create new Department
 				</div>
 				<div class="card-body">
-					<div v-if="!employees_loading">
-						<table class="table table-bordered table-hovered" style="width:100%">
-							<thead>
-								<tr>
-									<th>Full name</th>
-									<th>Email</th>
-									<th>Date hired</th>
-								</tr>
-							</thead>
 
-							<tbody v-for="employee in employees.data.data" :key="employee.id">
-								<tr>
-									<td>
-										<span class="span-link-underline">
-											{{ employee.lname }},
-											{{ employee.fname }}
-											{{ employee.mname }}
-										</span>
-									</td>
-									<td>{{ employee.email }}</td>
-									<td>
-										<span v-if="employee.user_details != null">
-											<span v-if="employee.user_details.date_hired != null">
-												{{ $moment(employee.user_details.date_hired).format('LL') }}
-											</span>
-											<span v-else>
-												No date selected
-											</span>
-										</span>
-										<span v-else>
-											No date selected
-										</span>
-									</td>
-								</tr>
-							</tbody>
+					<notif :notif="notif"></notif>
+					<div class="clearfix"></div>
 
-						</table>
+					<form @submit.prevent="departmentCreate()" method="POST">
 
-						<hr>
-						Total employees: <b>{{ employees.total }}</b>
-						<br /><br />
-						<pagination :data="employees.data" @pagination-change-page="employeeIndex"></pagination>
+						<div class="row" v-if="!employee_loading">
+							<div class="col-md-2">Department Head</div>
+							<div class="col-md-4">
+								<select v-model="department.department_head" class="form-control form-control-sm">
+									<option :value="employee.user_id" v-for="employee in employees">
+										{{ employee.lname }},
+										{{ employee.fname }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
 
-					</div>
+						<div class="row">
+							<div class="col-md-2">Department Name <span class="required">*</span></div>
+							<div class="col-md-4">
+								<input type="text" v-model="department.department_name" class="form-control form-control-sm" required>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+
+						<div class="row">
+							<div class="col-md-2">Description</div>
+							<div class="col-md-4">
+								<textarea v-model="department.description" class="form-control form-control-sm" cols="30" rows="10"></textarea>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+
+
+						<div class="row">
+							<div class="col-md-4 offset-md-2 text-right">
+								<button class="btn btn-success btn-sm" :disabled="create_department_loading">
+									<span v-if="create_department_loading">
+										Submiting..
+										<span class="fa fa-cog" :class="{ 'fa-spin': create_department_loading }"></span>
+									</span>
+									<span v-else>
+										Submit
+										<span class="fa fa-cog" :class="{ 'fa-spin': create_department_loading }"></span>
+									</span>
+								</button>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+					</form>
+
+
 				</div>
 			</div>
 
@@ -68,10 +78,15 @@ export default {
 		return {
 			employees: [],
 			employees_loading: true,
+
+			department: {},
+			create_department_loading: false,
+			notif: '',
+
 			links: [
 				{
-					'label': 'Employees',
-					'route': 'employees.index',
+					'label': 'Department',
+					'route': 'department.index',
 					'params': {}
 				}
 			]
@@ -80,23 +95,34 @@ export default {
 
 	created () {
 		this.employeeIndex ();
-		this.$notify({
-			group: 'notif',
-			title: 'Important message',
-			text: 'Hello user! This is a notification!',
-			type: 'success',
-		});
 	},
 
 	methods: {
 
-		employeeIndex (page = 1) {
-
-			this.employees_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee?page=' + page)
+		departmentCreate () {
+			this.create_department_loading = true
+			this.axiosRequest ('POST', this.$store.state.empdtls + 'department', this.department)
 			.then (res => {
 
-				this.employees  = res.data.data
+				this.notif = res.data
+				this.tnotif (res)
+				this.employees  = res.data.data.data
+				this.create_department_loading = false
+
+			})
+			.catch (err => {
+				console.log(err)
+				this.create_department_loading = false
+			})
+		},
+
+		employeeIndex () {
+
+			this.employees_loading = true
+			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee?show=all')
+			.then (res => {
+
+				this.employees  = res.data.data.data
 				this.employees_loading = false
 
 			})

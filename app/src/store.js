@@ -11,8 +11,8 @@ const store =  new Vuex.Store({
 		 */
 		app_url: 'http://10.155.128.148:3000',
 		project_name: 'Payroll Application',
-		version: '0.0.2',
-		d: '20180326',
+		version: '0.0.3',
+		d: '20180329',
 
 
 		/**

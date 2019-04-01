@@ -24,7 +24,7 @@ export default {
 			links: [
 				{
 					'label': 'Home',
-					'route': 'home1',
+					'route': 'home',
 					'params': {}
 				}
 			]

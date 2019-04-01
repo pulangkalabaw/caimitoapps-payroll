@@ -19,9 +19,11 @@ import employeesShow from '@/components/pages/app/employees/show'
 // Department
 import departmentIndex from '@/components/pages/app/department/index'
 import departmentCreate from '@/components/pages/app/department/create'
+import departmentShow from '@/components/pages/app/department/show'
 
 
 
+import page404 from '@/components/pages/extras/page404'
 
 
 /**
@@ -70,7 +72,7 @@ let web_routes = [
 		},
 	},
 	{
-		path: '/app/employees/:id', name: 'employees.show', component: employeesShow,
+		path: '/app/employee/:id', name: 'employees.show', component: employeesShow,
 		meta: {
 			auth: true
 		},
@@ -88,6 +90,18 @@ let web_routes = [
 		path: '/app/department/add', name: 'department.create', component: departmentCreate,
 		meta: {
 			auth: true
+		},
+	},
+	{
+		path: '/app/department/:id', name: 'department.show', component: departmentShow,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '*', name: 'page.404', component: page404,
+		meta: {
+			auth: false
 		},
 	},
 
@@ -114,6 +128,9 @@ router.beforeEach((to, from, next) => {
 			window.location.href = router.app.$store.state.app_url
 
 		}
+	}
+	else {
+		next()
 	}
 });
 

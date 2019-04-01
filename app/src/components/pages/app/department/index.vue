@@ -8,7 +8,7 @@
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-users"></span>
-					Employees
+					Departments
 				</div>
 				<div class="card-body">
 					<div v-if="!department_loading">
@@ -16,25 +16,33 @@
 							<thead>
 								<tr>
 									<th width="30%">Department name</th>
-									<th width="70%">Description</th>
+									<th width="70%">Department head</th>
 								</tr>
 							</thead>
 
 							<tbody v-for="dept in department.data.data" :key="dept.id">
 								<tr>
 									<td>
-										<span class="span-link-underline">
-											{{ dept.department_name }},
+										<span class="span-link-underline" @click="redirect('department.show', {id:dept.department_id})">
+											{{ dept.department_name }}
 										</span>
 									</td>
-									<td>{{ dept.description }}</td>
+									<td>
+										<label v-if="dept.department_head">
+											{{ dept.department_head.fname }}
+											{{ dept.department_head.lname }}
+										</label>
+										<label v-else>
+											No department head selected
+										</label>
+									</td>
 								</tr>
 							</tbody>
 
 						</table>
 
 						<hr>
-						Total employees: <b>{{ department.total }}</b>
+						Total departments: <b>{{ department.total }}</b>
 						<br /><br />
 						<pagination :data="department.data" @pagination-change-page="departmentIndex"></pagination>
 
@@ -54,7 +62,7 @@ export default {
 			department_loading: true,
 			links: [
 				{
-					'label': 'Employees',
+					'label': 'Departments',
 					'route': 'department.index',
 					'params': {}
 				}
@@ -64,12 +72,6 @@ export default {
 
 	created () {
 		this.departmentIndex ();
-		this.$notify({
-			group: 'notif',
-			title: 'Important message',
-			text: 'Hello user! This is a notification!',
-			type: 'success',
-		});
 	},
 
 	methods: {
