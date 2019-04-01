@@ -3,6 +3,16 @@ import Vue from 'vue';
 export default Vue.mixin({
     methods: {
 
+		str_limit (str, limit = 50) {
+
+			var r = str.substring(0,limit)
+
+			if (str.length > limit) {
+				r = r + '..'
+			}
+			return r
+		},
+
 		tnotif (res) {
 			this.$notify({
 				group: 'notif',

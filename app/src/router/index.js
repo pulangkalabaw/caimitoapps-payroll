@@ -21,6 +21,10 @@ import departmentIndex from '@/components/pages/app/department/index'
 import departmentCreate from '@/components/pages/app/department/create'
 import departmentShow from '@/components/pages/app/department/show'
 
+// Jobs
+import jobsIndex from '@/components/pages/app/jobs/index'
+import jobsCreate from '@/components/pages/app/jobs/create'
+import jobsShow from '@/components/pages/app/jobs/show'
 
 
 import page404 from '@/components/pages/extras/page404'
@@ -102,6 +106,26 @@ let web_routes = [
 		path: '*', name: 'page.404', component: page404,
 		meta: {
 			auth: false
+		},
+	},
+
+	// Jobs Management
+	{
+		path: '/app/jobs', name: 'jobs.index', component: jobsIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/jobs/add', name: 'jobs.create', component: jobsCreate,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/jobs/:id', name: 'jobs.show', component: jobsShow,
+		meta: {
+			auth: true
 		},
 	},
 

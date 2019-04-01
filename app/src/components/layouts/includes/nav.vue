@@ -50,6 +50,25 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<span class="span-link" :class="{ 'active': $route.name.includes('jobs.index')}">
+						<i class="fa fa-tasks"></i> &nbsp;
+						Jobs
+						<i class="float-right fa fa-chevron-down"></i>
+					</span>
+					<ul class="submenu">
+						<li>
+							<span @click="redirect('jobs.index')" class="span-link">
+								View all Jobs
+							</span>
+						</li>
+						<li>
+							<span @click="redirect('jobs.create')" class="span-link">
+								Create new Job
+							</span>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -80,7 +99,7 @@ export default {
 .mainmenu li:hover .submenu {
 	display: block;
 	max-height: 300px;
-	padding-left: 30px;
+	padding-left: 30px;outline: 0;
 }
 .submenu {
 	overflow: hidden;
