@@ -15,6 +15,9 @@ class CreateLeaveCreditsTable extends Migration
     {
         Schema::create('leave_credits', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('user_id');
+            $table->string('leave_id');
+            $table->float('credits');
             $table->timestamps();
         });
     }

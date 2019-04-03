@@ -13,7 +13,7 @@ class CreateLibLeaveTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('lib_leave');
+        // Schema::dropIfExists('lib_leave');
 
         Schema::create('lib_leave', function (Blueprint $table) {
           $table->increments('id');
@@ -23,6 +23,7 @@ class CreateLibLeaveTable extends Migration
           $table->string('leave_description')->nullable();
           $table->string('created_by')->nullable();
           $table->string('updated_by')->nullable();
+          $table->softDeletes();
           $table->timestamps();
         });
     }
