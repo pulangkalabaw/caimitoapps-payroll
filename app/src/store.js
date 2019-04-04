@@ -9,7 +9,7 @@ const store =  new Vuex.Store({
 		 * Global Variable
 		 *
 		 */
-		app_url: 'http://10.155.128.148:3000',
+		app_url: 'http://192.168.1.44:3000',
 		project_name: 'Payroll Application',
 		version: '0.0.3',
 		d: '20180329',
@@ -19,14 +19,14 @@ const store =  new Vuex.Store({
 		 * Employees Details API Tunnel
 		 *
 		 */
-        empdtls: 'http://10.155.128.210/caimitoapps-payroll/dev/empdtls/api/',
+        empdtls: 'http://192.168.1.49/caimitoapps-payroll/dev/empdtls/api/',
 
 
 		/**
 		 * Authentication API Tunnel
 		 *
 		 */
-        authenticator: 'http://10.155.128.210/caimitoapps-payroll/dev/authenticator/api/',
+        authenticator: 'http://192.168.1.49/caimitoapps-payroll/dev/authenticator/api/',
 
 
 
