@@ -71,14 +71,14 @@
 				</li>
 
 				<li>
-					<span class="span-link" :class="{ 'active': $route.name.includes('leave.index')}">
+					<span class="span-link" :class="{ 'active': $route.name.includes('leaves.index')}">
 						<i class="fa fa-tasks"></i> &nbsp;
 						Leaves
 						<i class="float-right fa fa-chevron-down"></i>
 					</span>
 					<ul class="submenu">
 						<li>
-							<span @click="redirect('jobs.index')" class="span-link">
+							<span @click="redirect('leaves.index')" class="span-link">
 								Leave Managment
 							</span>
 						</li>

@@ -19,14 +19,14 @@ const store =  new Vuex.Store({
 		 * Employees Details API Tunnel
 		 *
 		 */
-        empdtls: 'http://10.155.128.210/caimitoapps-payroll/dev/empdtls/api/',
+        empdtls: 'http://localhost/caimitoapps-payroll/dev/empdtls/api/',
 
 
 		/**
 		 * Authentication API Tunnel
 		 *
 		 */
-        authenticator: 'http://10.155.128.210/caimitoapps-payroll/dev/authenticator/api/',
+        authenticator: 'http://localhost/caimitoapps-payroll/dev/authenticator/api/',
 
 
 

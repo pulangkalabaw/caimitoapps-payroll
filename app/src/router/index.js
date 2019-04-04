@@ -26,6 +26,9 @@ import jobsIndex from '@/components/pages/app/jobs/index'
 import jobsCreate from '@/components/pages/app/jobs/create'
 import jobsShow from '@/components/pages/app/jobs/show'
 
+// Leaves (Leave management)
+import leaveIndex from '@/components/pages/app/leaves/index'
+
 
 import page404 from '@/components/pages/extras/page404'
 
@@ -124,6 +127,14 @@ let web_routes = [
 	},
 	{
 		path: '/app/jobs/:id', name: 'jobs.show', component: jobsShow,
+		meta: {
+			auth: true
+		},
+	},
+
+	// Leave Management
+	{
+		path: '/app/leaves', name: 'leaves.index', component: leaveIndex,
 		meta: {
 			auth: true
 		},

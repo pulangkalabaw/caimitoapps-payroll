@@ -107,8 +107,16 @@ class LeaveCreditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
+        $leave_credit = LeaveCredits::where(['user_id' => $id,'leave_id' => $request->post('leave_id')])->delete();
+
+        if($leave_credit){
+          return apiReturn($leave_credit, 'Successful on removal of leave of employee' ,'success');
+        }else{
+          return apiReturn(null, 'Failure on deletion' ,'failed');          
+        }
+
     }
 }

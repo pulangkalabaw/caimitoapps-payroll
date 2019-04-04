@@ -27,3 +27,4 @@ $router->get('leave_credit', 'LeaveCreditController@index');
 $router->post('leave_credit', 'LeaveCreditController@store');
 $router->get('leave_credit/{user_id}', 'LeaveCreditController@show');
 $router->put('leave_credit/{id}', 'LeaveCreditController@update');
+$router->delete('leave_credit/{user_id}', 'LeaveCreditController@destroy');

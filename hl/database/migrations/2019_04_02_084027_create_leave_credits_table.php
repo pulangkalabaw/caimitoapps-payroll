@@ -18,6 +18,7 @@ class CreateLeaveCreditsTable extends Migration
             $table->string('user_id');
             $table->string('leave_id');
             $table->float('credits');
+            $table->softDeletes();            
             $table->timestamps();
         });
     }
