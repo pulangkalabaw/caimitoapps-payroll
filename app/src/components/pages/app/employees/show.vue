@@ -332,11 +332,14 @@
 										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
 												Department<br />
+												{{ department_id }}
+												{{ departments }}
 
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.department_id" required>
-													<option :value="department.department_id" v-for="department in departments.data">
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="department_id" required>
+													<option :value="696969">Select none</option>
+													<!-- <option :value="department.department_id" v-for="department in departments.data">
 														{{ department.department_name }}
-													</option>
+													</option> -->
 												</select>
 
 
@@ -537,6 +540,7 @@ export default {
 
 			departments: [],
 			departments_loading: false,
+			department_id: '',
 
 			edit_mode: false,
 
@@ -565,7 +569,6 @@ export default {
 	},
 
 	created () {
-		this.departmentIndex()
 		this.employeeShow()
 	},
 
@@ -617,7 +620,14 @@ export default {
 
 				this.employee = res.data.data.data
 				this.show_employee_loading = false
+				if (this.employee.user_details.department_id != null) {
+					this.department_id = this.employee.user_details.department_id
+				}
+				else {
+					this.department_id = "696969"
+				}
 				this.valid = res.data.status == 'success' ? true : false
+				this.departmentIndex()
 
 			})
 			.catch (err => {
