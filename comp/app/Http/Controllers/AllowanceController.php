@@ -15,10 +15,10 @@ class AllowanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $allowance = new Allowance();
-
+        
         $data = [
             'allowance' => $allowance->paginate(10),
             'total' => $allowance->count()

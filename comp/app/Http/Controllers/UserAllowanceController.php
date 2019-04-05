@@ -29,10 +29,11 @@ class UserAllowanceController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
         $userallowance = new UserAllowance();
 
         $validator = Validator::make($request->all(), [
-            'user_id' => 'requird',
+            'user_id' => 'required',
             'allowance_id' => 'required',
             'amount' => 'required|numeric'
         ],[
@@ -55,6 +56,7 @@ class UserAllowanceController extends Controller
             return apiReturn(null, 'Failed adding allowance to user!', 'failed', $validator->errors());
 
         }
+
     }
 
     /**
