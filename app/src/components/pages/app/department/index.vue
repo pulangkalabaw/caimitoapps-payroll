@@ -28,9 +28,9 @@
 										</span>
 									</td>
 									<td>
-										<label v-if="dept.department_head">
-											{{ dept.department_head.fname }}
-											{{ dept.department_head.lname }}
+										<label v-if="dept.department_head_info">
+											{{ dept.department_head_info.fname }}
+											{{ dept.department_head_info.lname }}
 										</label>
 										<label v-else>
 											No department head selected
@@ -79,7 +79,7 @@ export default {
 		departmentIndex (page = 1) {
 
 			this.department_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?page=' + page)
+			this.axiosRequest ('GET', this.$store.state.pis + 'department?page=' + page)
 			.then (res => {
 
 				this.department  = res.data.data

@@ -531,7 +531,7 @@ export default {
 		departmentIndex () {
 
 			this.departments_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?filter=active')
+			this.axiosRequest ('GET', this.$store.state.pis + 'department?filter=active')
 			.then (res => {
 				this.departments = res.data.data
 				this.departments_loading = false
@@ -545,7 +545,7 @@ export default {
 		employeeCreate () {
 
 			this.create_employee_loading = true
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'employee', this.employee)
+			this.axiosRequest ('POST', this.$store.state.pis + 'employee', this.employee)
 			.then (res => {
 
 				this.notif = res.data

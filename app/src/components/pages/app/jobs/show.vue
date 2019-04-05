@@ -146,7 +146,7 @@ export default {
 
 			this.update_jobs_loading = true
 			this.job._method = 'PUT'
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'jobs/' + this.$route.params.id, this.job)
+			this.axiosRequest ('POST', this.$store.state.pis + 'jobs/' + this.$route.params.id, this.job)
 			.then (res => {
 
 				this.notif = res.data
@@ -163,7 +163,7 @@ export default {
 		jobsShow () {
 
 			this.jobs_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'jobs/' + this.$route.params.id)
+			this.axiosRequest ('GET', this.$store.state.pis + 'jobs/' + this.$route.params.id)
 			.then (res => {
 
 				this.job = res.data.data.data

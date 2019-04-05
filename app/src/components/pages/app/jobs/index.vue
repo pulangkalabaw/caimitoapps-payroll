@@ -73,7 +73,7 @@ export default {
 		jobsIndex (page = 1) {
 
 			this.jobs_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'jobs?page=' + page)
+			this.axiosRequest ('GET', this.$store.state.pis + 'jobs?page=' + page)
 			.then (res => {
 
 				this.jobs  = res.data.data

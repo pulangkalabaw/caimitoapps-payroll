@@ -69,6 +69,25 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<span class="span-link" :class="{ 'active': $route.name.includes('allowances.index')}">
+						<i class="fa fa-tasks"></i> &nbsp;
+						Allowances
+						<i class="float-right fa fa-chevron-down"></i>
+					</span>
+					<ul class="submenu">
+						<li>
+							<span @click="redirect('allowances.index')" class="span-link">
+								View all Allowances
+							</span>
+						</li>
+						<li>
+							<span @click="redirect('allowances.create')" class="span-link">
+								Create Allowance
+							</span>
+						</li>
+					</ul>
+				</li>
 
 				<li>
 					<span class="span-link" :class="{ 'active': $route.name.includes('leave.index')}">

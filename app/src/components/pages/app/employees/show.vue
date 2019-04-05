@@ -10,11 +10,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<span class="fa fa-users"></span>
-							<span v-if="!show_employee_loading">
-								{{ employee.fname }}
-								{{ employee.mname }}
-								{{ employee.lname }}
-							</span>
+							Employee
 						</div>
 						<div class="col-md-6 text-right">
 							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
@@ -601,7 +597,7 @@ export default {
 		departmentIndex () {
 
 			this.departments_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'department?filter=all')
+			this.axiosRequest ('GET', this.$store.state.pis + 'department?filter=all')
 			.then (res => {
 				this.departments = res.data.data
 				this.departments_loading = false
@@ -615,7 +611,7 @@ export default {
 		employeeShow () {
 
 			this.show_employee_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee/' + this.$route.params.id)
+			this.axiosRequest ('GET', this.$store.state.pis + 'employee/' + this.$route.params.id)
 			.then (res => {
 
 				this.employee = res.data.data.data
@@ -641,7 +637,7 @@ export default {
 
 			this.update_employee_loading = true
 			this.employee._method = 'PUT'
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'employee/' + this.$route.params.id, this.employee)
+			this.axiosRequest ('POST', this.$store.state.pis + 'employee/' + this.$route.params.id, this.employee)
 			.then (res => {
 
 				this.update_employee_loading = false

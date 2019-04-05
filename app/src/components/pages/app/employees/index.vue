@@ -87,7 +87,7 @@ export default {
 		employeeIndex (page = 1) {
 
 			this.employees_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee?page=' + page)
+			this.axiosRequest ('GET', this.$store.state.pis + 'employee?page=' + page)
 			.then (res => {
 
 				this.employees  = res.data.data

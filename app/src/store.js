@@ -19,7 +19,14 @@ const store =  new Vuex.Store({
 		 * Employees Details API Tunnel
 		 *
 		 */
-        empdtls: 'http://192.168.1.49/caimitoapps-payroll/dev/empdtls/api/',
+        pis: 'http://192.168.1.44/www/iplus/payroll/dev/pis/api/',
+
+
+		/**
+		 * Compensation API Tunnel
+		 *
+		 */
+        comp: 'http://192.168.1.44/www/iplus/payroll/dev/comp/',
 
 
 		/**
