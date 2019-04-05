@@ -85,7 +85,7 @@ export default {
 
 		jobsCreate () {
 			this.create_jobs_loading = true
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'jobs', this.job)
+			this.axiosRequest ('POST', this.$store.state.pis + 'jobs', this.job)
 			.then (res => {
 
 				this.notif = res.data

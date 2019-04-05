@@ -26,6 +26,12 @@ import jobsIndex from '@/components/pages/app/jobs/index'
 import jobsCreate from '@/components/pages/app/jobs/create'
 import jobsShow from '@/components/pages/app/jobs/show'
 
+// Compensation
+import compensationIndex from '@/components/pages/app/compensation/index'
+import compensationCreate from '@/components/pages/app/compensation/create'
+import compensationShow from '@/components/pages/app/compensation/show'
+
+
 
 import page404 from '@/components/pages/extras/page404'
 
@@ -124,6 +130,27 @@ let web_routes = [
 	},
 	{
 		path: '/app/jobs/:id', name: 'jobs.show', component: jobsShow,
+		meta: {
+			auth: true
+		},
+	},
+
+
+	// Compensation Management
+	{
+		path: '/app/allowances', name: 'allowances.index', component: compensationIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/allowances/add', name: 'allowances.create', component: compensationCreate,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/allowances/:id', name: 'allowances.show', component: compensationShow,
 		meta: {
 			auth: true
 		},
