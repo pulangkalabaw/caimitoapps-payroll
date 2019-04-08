@@ -97,12 +97,12 @@
 					</span>
 					<ul class="submenu">
 						<li>
-							<span @click="redirect('jobs.index')" class="span-link">
-								Leave Managment
+							<span @click="redirect('leaves.index')" class="span-link">
+								Leave Managment(Create muna)
 							</span>
 						</li>
 						<li>
-							<span @click="redirect('jobs.index')" class="span-link">
+							<span @click="redirect('leaves.index')" class="span-link">
 								Leave Credits
 							</span>
 						</li>

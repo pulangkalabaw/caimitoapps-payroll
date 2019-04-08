@@ -31,6 +31,9 @@ import compensationIndex from '@/components/pages/app/compensation/index'
 import compensationCreate from '@/components/pages/app/compensation/create'
 import compensationShow from '@/components/pages/app/compensation/show'
 
+// Leaves
+import leavesIndex from '@/components/pages/app/leaves/index'
+import leavesCreate from '@/components/pages/app/leaves/create'
 
 
 import page404 from '@/components/pages/extras/page404'
@@ -151,6 +154,20 @@ let web_routes = [
 	},
 	{
 		path: '/app/allowances/:id', name: 'allowances.show', component: compensationShow,
+		meta: {
+			auth: true
+		},
+	},
+
+	// Leave Management
+	{
+		path: '/app/leaves', name: 'leaves.index', component: leavesIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/createleaves', name: 'leaves.create', component: leavesCreate,
 		meta: {
 			auth: true
 		},
