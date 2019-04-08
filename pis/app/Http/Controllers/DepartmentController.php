@@ -19,24 +19,31 @@ class DepartmentController extends Controller
 	public function index(Request $request)
 	{
 		//
-		$departments = Department::with('department_head_info')->paginate(10);
+		$dept = new Department();
+		$rows = $request->get('show') ? $request->get('show') : 10;
 
-		if($request->has('show')){
 
-			if($request->get('show') == 'all'){
-				$departments = Department::with('department_head_info')->get();
+		if($request->has('filter')){
+
+			if($request->get('filter') == 'all'){
+				$dept = Department::with('department_head_info')->get();
 			}
-
-			else {
-				$departments = Department::with('department_head_info')->paginate($request->get('show'));
+			else if($request->get('filter') == 'active') {
+				$dept = Department::with('department_head_info')->where('status',1)->get();
 			}
-
+			else{
+				$dept = Department::with('department_head_info')->where('status',1)->get();
+			}
+		}
+		else{
+			$dept = $dept->paginate($rows);
 		}
 
 		$datareturn = [
-			'data' => $departments,
-			'total' => Department::count(),
+			'data' => $dept,
+			'total' => $dept->where('status',1)->count(),
 		];
+
 		return apiReturn($datareturn, 'Success', 'success');
 	}
 
@@ -61,7 +68,6 @@ class DepartmentController extends Controller
 		//
 		$validator = Validator::make($request->all(), [
 			'department_name' => 'required|unique:departments',
-			'description' => 'required',
 		]);
 
 		if(!$validator->fails()){
@@ -124,7 +130,6 @@ class DepartmentController extends Controller
 		//
 		$validator = Validator::make($request->all(), [
 			'department_name' => 'required',
-			'description' => 'required',
 		]);
 
 		if(!$validator->fails()){
