@@ -10,7 +10,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<span class="fa fa-folder"></span>
-							{{ department.department_name }}
+							Department
 						</div>
 						<div class="col-md-6 text-right">
 							<span @click="departmentArchive()" class="btn btn-danger btn-sm">
@@ -170,7 +170,7 @@ export default {
 
 			this.update_department_loading = true
 			let params = { _method: 'DELETE' }
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'department/' + this.$route.params.id, params)
+			this.axiosRequest ('POST', this.$store.state.pis + 'department/' + this.$route.params.id, params)
 			.then (res => {
 
 				this.notif = res.data
@@ -189,7 +189,7 @@ export default {
 
 			this.update_department_loading = true
 			this.department._method = 'PUT'
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'department/' + this.$route.params.id, this.department)
+			this.axiosRequest ('POST', this.$store.state.pis + 'department/' + this.$route.params.id, this.department)
 			.then (res => {
 
 				this.notif = res.data
@@ -208,7 +208,7 @@ export default {
 		departmentShow () {
 
 			this.show_department_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'department/' + this.$route.params.id)
+			this.axiosRequest ('GET', this.$store.state.pis + 'department/' + this.$route.params.id)
 			.then (res => {
 
 				let department  = res.data.data.data
@@ -216,7 +216,7 @@ export default {
 				this.department.department_name = department.department_name
 				this.department.description = department.description
 				if (department.department_head) {
-					this.department.department_head = department.department_head.user_id
+					this.department.department_head = department.department_head_info.user_id
 				}
 				else {
 					this.department.department_head = ''
@@ -237,7 +237,7 @@ export default {
 		employeeIndex () {
 
 			this.employees_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee?show=all')
+			this.axiosRequest ('GET', this.$store.state.pis + 'employee?show=all')
 			.then (res => {
 
 				this.employees  = res.data.data.data

@@ -10,7 +10,7 @@ class Department extends Model
     protected $table = 'departments';
     protected $guarded = [];
 
-    public function User(){
-        return $this->hasMany('App\User' ,'user_id', 'user_id');
+    public function department_head_info(){
+        return $this->hasOne('App\User' ,'user_id', 'department_head');
     }
 }

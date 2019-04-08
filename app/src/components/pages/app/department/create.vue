@@ -17,10 +17,11 @@
 
 					<form @submit.prevent="departmentCreate()" method="POST">
 
-						<div class="row" v-if="!employee_loading">
+						<div class="row" v-if="!employees_loading">
 							<div class="col-md-2">Department Head</div>
 							<div class="col-md-4">
 								<select v-model="department.department_head" class="form-control form-control-sm">
+									<option :value="null" selected>Select none</option>
 									<option :value="employee.user_id" v-for="employee in employees">
 										{{ employee.lname }},
 										{{ employee.fname }}
@@ -101,7 +102,7 @@ export default {
 
 		departmentCreate () {
 			this.create_department_loading = true
-			this.axiosRequest ('POST', this.$store.state.empdtls + 'department', this.department)
+			this.axiosRequest ('POST', this.$store.state.pis + 'department', this.department)
 			.then (res => {
 
 				this.notif = res.data
@@ -119,7 +120,7 @@ export default {
 		employeeIndex () {
 
 			this.employees_loading = true
-			this.axiosRequest ('GET', this.$store.state.empdtls + 'employee?show=all')
+			this.axiosRequest ('GET', this.$store.state.pis + 'employee?show=all')
 			.then (res => {
 
 				this.employees  = res.data.data.data

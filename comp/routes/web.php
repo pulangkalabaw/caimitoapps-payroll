@@ -20,12 +20,12 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->get('allowance', 'AllowanceController@index');
     $router->post('allowance','AllowanceController@store');
     $router->get('allowance/{id}','AllowanceController@show');
-    $router->put('allowance/{id}/update','AllowanceController@update');
+    $router->put('allowance/{id}','AllowanceController@update');
     $router->delete('allowance/{id}/delete','AllowanceController@destroy');
 
     // User Allowance
     $router->get('user_allowance', 'UserAllowanceController@index');
     $router->post('user_allowance', 'UserAllowanceController@store');
     $router->get('user_allowance/{id}', 'UserAllowanceController@show');
-    $router->put('user_allowance/{id}/update', 'UserAllowanceController@update');
+    $router->put('user_allowance/{id}', 'UserAllowanceController@update');
 });
