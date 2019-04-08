@@ -73,19 +73,19 @@ let web_routes = [
 
 	// Employee Management
 	{
-		path: '/app/employees', name: 'employees.index', component: employeesIndex,
+		path: '/app/pis', name: 'employees.index', component: employeesIndex,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/employees/add', name: 'employees.create', component: employeesCreate,
+		path: '/app/pis/add', name: 'employees.create', component: employeesCreate,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/employee/:id', name: 'employees.show', component: employeesShow,
+		path: '/app/pis/:id', name: 'employees.show', component: employeesShow,
 		meta: {
 			auth: true
 		},

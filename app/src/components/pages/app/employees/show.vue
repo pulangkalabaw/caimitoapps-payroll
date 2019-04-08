@@ -328,14 +328,17 @@
 										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
 												Department<br />
-												{{ department_id }}
-												{{ departments }}
-
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="department_id" required>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="dept_id" required v-if="dept_id != '696969'">
 													<option :value="696969">Select none</option>
-													<!-- <option :value="department.department_id" v-for="department in departments.data">
+													<option :value="department.department_id" v-for="department in departments.data">
 														{{ department.department_name }}
-													</option> -->
+													</option>
+												</select>
+												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="dept_id" v-else>
+													<option :value="696969">Select none</option>
+													<option :value="department.department_id" v-for="department in departments.data">
+														{{ department.department_name }}
+													</option>
 												</select>
 
 
@@ -536,7 +539,7 @@ export default {
 
 			departments: [],
 			departments_loading: false,
-			department_id: '',
+			dept_id: '696969',
 
 			edit_mode: false,
 
@@ -597,7 +600,7 @@ export default {
 		departmentIndex () {
 
 			this.departments_loading = true
-			this.axiosRequest ('GET', this.$store.state.pis + 'department?filter=all')
+			this.axiosRequest ('GET', this.$store.state.pis + 'department?filter=active')
 			.then (res => {
 				this.departments = res.data.data
 				this.departments_loading = false
@@ -617,10 +620,10 @@ export default {
 				this.employee = res.data.data.data
 				this.show_employee_loading = false
 				if (this.employee.user_details.department_id != null) {
-					this.department_id = this.employee.user_details.department_id
+					this.dept_id = this.employee.user_details.department_id
 				}
 				else {
-					this.department_id = "696969"
+					this.dept_id = "696969"
 				}
 				this.valid = res.data.status == 'success' ? true : false
 				this.departmentIndex()
@@ -637,6 +640,10 @@ export default {
 
 			this.update_employee_loading = true
 			this.employee._method = 'PUT'
+
+			let dept_id_value = this.dept_id == '696969' ? null : this.dept_id
+			this.employee.user_details.department_id = dept_id_value
+			alert(dept_id_value)
 			this.axiosRequest ('POST', this.$store.state.pis + 'employee/' + this.$route.params.id, this.employee)
 			.then (res => {
 
