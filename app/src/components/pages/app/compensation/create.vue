@@ -8,7 +8,7 @@
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
-					Create Allowance
+					Create new Allowance
 				</div>
 				<div class="card-body">
 
