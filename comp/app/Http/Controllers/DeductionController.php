@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-//Models
-use App\Allowance;
-use App\UserAllowance;
+// Models
+use App\Deduction;
 
-class UserAllowanceController extends Controller
+class DeductionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,34 +28,22 @@ class UserAllowanceController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
-        $userallowance = new UserAllowance();
-
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
-            'allowance_id' => 'required',
-            'amount' => 'required|numeric'
-        ],[
-            'user_id.required' => 'Select a user!',
-            'allowance_id.required' => 'Select a compensation!'
+        // Deduction table
+        // * deduction_id
+        // * name
+        // * total_amount
+        // * timeframe
+        // * interest
+        // * deduction
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'total_amount' => 'required|numeric',
+            'timeframe' => 'required'
         ]);
 
         if(!$validator->fails()){
-            $user_allowance = UserAllowance::create([
-                'user_id' => $request['user_id'],
-                'allowance_id' => $request['allowance_id'],
-                'amount' => $request['amount'],
-                'taxable' => $request['taxable']
-            ]);
-
-            return apiReturn($user_allowance, 'Added allowance to user!', 'success');
-
-        } else {
-
-            return apiReturn(null, 'Failed adding allowance to user!', 'failed', $validator->errors());
 
         }
-
     }
 
     /**

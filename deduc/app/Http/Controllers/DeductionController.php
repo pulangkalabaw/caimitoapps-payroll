@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Deductions;
 use Illuminate\Http\Request;
 
-class ToBeDelController extends Controller
+class DeductionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,15 @@ class ToBeDelController extends Controller
      */
     public function index()
     {
-        //
-    }
+		$allowance = new Deductions();
+
+		$data = [
+			'data' => $allowance->paginate(10),
+			'total' => $allowance->count()
+		];
+
+		return apiReturn($data, 'Success', 'success');
+	}
 
     /**
      * Store a newly created resource in storage.

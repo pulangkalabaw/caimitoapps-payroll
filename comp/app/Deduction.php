@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserAllowance extends Model
+class Deduction extends Model
 {
-    protected $table = 'user_allowance';
+    protected $table = 'deduction';
     protected $guarded = [];
     use SoftDeletes;
 }

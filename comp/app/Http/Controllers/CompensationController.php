@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Validator;
 // Models
 use App\Compensation;
 
-class AllowanceController extends Controller
+class CompensationController extends Controller
 {
 	/**
 	* Display a listing of the resource.
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function index(Request $request)
+	public function index()
 	{
 		$compensation = new Compensation();
 
@@ -24,30 +24,7 @@ class AllowanceController extends Controller
 			'total' => $compensation->count()
 		];
 
-      if($request->has('filter')) {
-
-            if($request->get('filter') == 'all') {
-                $allowance = Allowance::get();
-            }
-
-			else if($request->get('filter') == 'active') {
-                $allowance = Allowance::where('status',1)->get();
-            }
-
-			else {
-                $allowance = Allowance::where('status',1)->get();
-            }
-        }
-		else {
-            $allowance = $allowance->paginate($rows);
-        }
-
-        $datareturn = [
-			'data' => $allowance,
-            'total' => $allowance->where('status',1)->count(),
-        ];
-
-        return apiReturn($datareturn, 'Success', 'success');
+		return apiReturn($data, 'Success', 'success');
 	}
 
 	/**
