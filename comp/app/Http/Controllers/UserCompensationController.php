@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 // Models
-use App\Compensation;
+use App\Allowance;
 use App\UserCompensation;
 
 class UserCompensationController extends Controller
@@ -36,16 +36,16 @@ class UserCompensationController extends Controller
      */
     public function store(Request $request)
     {
-        $compensation = new Compensation();
+        $allowance = new Allowance();
         $user_compensation = new UserCompensation();
         // get the selected comepensation of the user
-        $compensation = $compensation->where('allowance_id', $request['allowance_id'])->firstOrFail();
+        $allowance = $allowance->where('allowance_id', $request['allowance_id'])->firstOrFail();
         foreach($request['user_ids'] as $user_id){
             $data = [
                 'user_id' => $user_id,
                 'allowance_id' => $request['allowance_id'],
-                'amount' => $compensation['amount'],
-                'taxable' => $compensation['taxable']
+                'amount' => $allowance['amount'],
+                'taxable' => $allowance['taxable']
             ];
             $user_compensation->insert($data);
         }
