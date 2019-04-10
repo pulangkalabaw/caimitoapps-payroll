@@ -30,7 +30,16 @@ import jobsShow from '@/components/pages/app/jobs/show'
 import compensationIndex from '@/components/pages/app/compensation/index'
 import compensationCreate from '@/components/pages/app/compensation/create'
 import compensationShow from '@/components/pages/app/compensation/show'
+import compensationAssign from '@/components/pages/app/compensation/assign'
 
+// Deductions
+import deductionIndex from '@/components/pages/app/deduction/index'
+import deductionCreate from '@/components/pages/app/deduction/create'
+import deductionShow from '@/components/pages/app/deduction/show'
+
+// Leaves
+import leavesIndex from '@/components/pages/app/leaves/index'
+import leavesCreate from '@/components/pages/app/leaves/create'
 
 
 import page404 from '@/components/pages/extras/page404'
@@ -70,19 +79,19 @@ let web_routes = [
 
 	// Employee Management
 	{
-		path: '/app/employees', name: 'employees.index', component: employeesIndex,
+		path: '/app/pis', name: 'employees.index', component: employeesIndex,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/employees/add', name: 'employees.create', component: employeesCreate,
+		path: '/app/pis/add', name: 'employees.create', component: employeesCreate,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/employee/:id', name: 'employees.show', component: employeesShow,
+		path: '/app/pis/:id', name: 'employees.show', component: employeesShow,
 		meta: {
 			auth: true
 		},
@@ -138,19 +147,60 @@ let web_routes = [
 
 	// Compensation Management
 	{
-		path: '/app/allowances', name: 'allowances.index', component: compensationIndex,
+		path: '/app/compensation', name: 'allowances.index', component: compensationIndex,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/allowances/add', name: 'allowances.create', component: compensationCreate,
+		path: '/app/compensation/add', name: 'allowances.create', component: compensationCreate,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/allowances/:id', name: 'allowances.show', component: compensationShow,
+		path: '/app/compensation/assign', name: 'allowances.assign', component: compensationAssign,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/compensation/:id', name: 'allowances.show', component: compensationShow,
+		meta: {
+			auth: true
+		},
+	},
+
+
+	// Deduction Management
+	{
+		path: '/app/deduction', name: 'deduction.index', component: deductionIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/deduction/add', name: 'deduction.create', component: deductionCreate,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/deduction/:id', name: 'deduction.show', component: deductionShow,
+		meta: {
+			auth: true
+		},
+	},
+
+	// Leave Management
+	{
+		path: '/app/leaves', name: 'leaves.index', component: leavesIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/createleaves', name: 'leaves.create', component: leavesCreate,
 		meta: {
 			auth: true
 		},

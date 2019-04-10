@@ -22,24 +22,25 @@ class EmployeeController extends Controller
         //
         $User = new User();
 
-        $datareturn = [
-            'data' => $User->with(['UserDetails', 'UserPayrollDetails'])->paginate(10),
-            'total' => $User->count(),
-        ];
+        $rows = $request->get('show') ? $request->get('show') : 10;
 
-        if($request->has('show')){
-            if($request->get('show') == 'all'){
-                $datareturn = [
-                    'data' => User::with(['UserDetails', 'UserPayrollDetails'])->get(),
-                    'total' => $User->count(),
-                ];
+
+        if($request->has('filter')){
+            if($request->get('filter') == 'all'){
+                $users = User::with(['UserDetails', 'UserPayrollDetails'])->get();
+            }else if($request->get('filter') == 'active'){
+                $users = User::with(['UserDetails', 'UserPayrollDetails'])->where('status',1)->get();
             }else{
-                $datareturn = [
-                    'data' => User::with(['UserDetails', 'UserPayrollDetails'])->paginate($request->get('show')),
-                    'total' => $User->count(),
-                ];
+                $users = User::with(['UserDetails', 'UserPayrollDetails'])->where('status',1)->get();
             }
+        }else{
+            $users = $User->with(['UserDetails', 'UserPayrollDetails'])->paginate($rows);
         }
+
+        $datareturn = [
+            'data' => $users,
+            'total' => $User->where('status',1)->count(),
+        ];
 
         return apiReturn($datareturn, 'Success', 'success');
     }
@@ -235,5 +236,12 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+        $users = User::where('user_id',$id)->update(['status'=>0]);
+
+        if($users){
+            return apiReturn($users, 'Successful resignation of employee!', 'success');
+        }else{
+            return apiReturn(null, 'Failure at resignation of employee!', 'failed');
+        }
     }
 }
