@@ -24,9 +24,16 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->put('compensation/{id}','CompensationController@update');
     $router->delete('compensation/{id}/delete','CompensationController@destroy');
 
-    // User Compensation
+
+    // User Allowance
+
     $router->get('user_compensation', 'UserCompensationController@index');
     $router->post('user_compensation', 'UserCompensationController@store');
     $router->get('user_compensation/{id}', 'UserCompensationController@show');
     $router->put('user_compensation/{id}', 'UserCompensationController@update');
+
+
+    // Deduction
+    $router->post('deduction','DeductionController@store');
+
 });
