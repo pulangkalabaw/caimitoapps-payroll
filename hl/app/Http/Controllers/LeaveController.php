@@ -43,7 +43,7 @@ class LeaveController extends Controller
         if(!$validator->fails()){
 
             $request['leave_id'] = $leave_id;
-            $leave = LibLeave::create($request->all());
+            $leave = LibLeave::create($request->except('at'));
 
             if($leave){
                 return apiReturn($leave, 'Success!', 'success');
@@ -83,18 +83,18 @@ class LeaveController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->except('at'),[
             'leave_code' => 'required|unique:lib_leave,leave_code,'.$id.',leave_id,deleted_at,NULL',
             'leave_name' => 'required',
             'leave_description' => 'nullable',
         ]);
 
         if(!$validator->fails()){
-            $leave = LibLeave::where('leave_id', $id)->update($request->except('_method'));
+            $leave = LibLeave::where('leave_id', $id)->update($request->except(['_method','at']));
 
             return apiReturn($leave, 'Success!', 'success', $validator->errors());
         }else{
-            return apiReturn(null, 'Success!', 'success', $validator->errors());
+            return apiReturn(null, 'failed!', 'failed', $validator->errors());
         }
     }
 

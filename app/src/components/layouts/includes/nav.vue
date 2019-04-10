@@ -131,7 +131,7 @@
 							</span>
 						</li>
 						<li>
-							<span @click="redirect('leaves.index')" class="span-link">
+							<span @click="redirect('leavecredit.index')" class="span-link">
 								Leave Credits
 							</span>
 						</li>

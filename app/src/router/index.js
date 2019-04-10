@@ -40,6 +40,10 @@ import deductionShow from '@/components/pages/app/deduction/show'
 // Leaves
 import leavesIndex from '@/components/pages/app/leaves/index'
 import leavesCreate from '@/components/pages/app/leaves/create'
+import leavesShow from '@/components/pages/app/leaves/show'
+
+// Leave Credit
+import leaveCreditIndex from '@/components/pages/app/leavecredits/index'
 
 
 import page404 from '@/components/pages/extras/page404'
@@ -201,6 +205,20 @@ let web_routes = [
 	},
 	{
 		path: '/app/createleaves', name: 'leaves.create', component: leavesCreate,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/leave/:id', name: 'leaves.show', component: leavesShow,
+		meta: {
+			auth: true
+		},
+	},
+
+	// Leave credit Management
+	{
+		path: '/app/leavecredits', name: 'leavecredit.index', component: leaveCreditIndex,
 		meta: {
 			auth: true
 		},
