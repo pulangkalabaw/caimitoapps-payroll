@@ -13,13 +13,6 @@ class CreateDeductionTable extends Migration
      */
     public function up()
     {
-        // Deduction table
-        // * deduction_id
-        // * name
-        // * total_amount
-        // * timeframe
-        // * interest
-        // * deduction
         Schema::create('deduction', function (Blueprint $table) {
             $table->increments('id');
             $table->string('deduction_id');

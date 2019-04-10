@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-//Models
+// Models
 use App\Compensation;
 use App\UserCompensation;
 
@@ -39,11 +39,11 @@ class UserCompensationController extends Controller
         $compensation = new Compensation();
         $user_compensation = new UserCompensation();
         // get the selected comepensation of the user
-        $compensation = $compensation->where('compensation_id', $request['compensation_id'])->firstOrFail();
+        $compensation = $compensation->where('allowance_id', $request['allowance_id'])->firstOrFail();
         foreach($request['user_ids'] as $user_id){
             $data = [
                 'user_id' => $user_id,
-                'compensation_id' => $request['compensation_id'],
+                'allowance_id' => $request['allowance_id'],
                 'amount' => $compensation['amount'],
                 'taxable' => $compensation['taxable']
             ];
@@ -65,7 +65,7 @@ class UserCompensationController extends Controller
 
         if(count($user_compensation) != 0) {
             $data['data'] = $user_compensation
-            ->where('compensation_id',$id)
+            ->where('allowance_id',$id)
             ->with(['getUser','getCompensation'])
             ->firstOrFail();
             $message = 'Success!';
@@ -93,16 +93,16 @@ class UserCompensationController extends Controller
         $compensation = new Compensation();
 
         $validator = Validatior::make($request->all(), [
-            'compensation_id' => 'required'
+            'allowance_id' => 'required'
         ],[
-            'compensation_id.required' => 'Please select a compensation!'
+            'allowance_id.required' => 'Please select a compensation!'
         ]);
 
         if(!$validator->fails()){
-            $compensation = $compensation->where('compensation_id',$request['compensation_id'])->firstOrFail();
+            $compensation = $compensation->where('allowance_id',$request['allowance_id'])->firstOrFail();
 
             $user_compensation->where('user_id',$id)->update([
-                'compensation_id' => $request['compensation_id']
+                'allowance_id' => $request['allowance_id']
             ]);
         } else {
             return apiReturn(null, 'Failed updating compensation to user!', 'failed', $validator->errors());

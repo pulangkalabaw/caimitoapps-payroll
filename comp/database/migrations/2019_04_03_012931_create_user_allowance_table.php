@@ -13,10 +13,10 @@ class CreateUserAllowanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_allowance', function (Blueprint $table) {
+        Schema::create('user_compensation', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id')->unique();
-            $table->string('allowance_id')->unique();
+            $table->string('user_id');
+            $table->string('allowance_id');
             $table->float('amount')->nullable();
             $table->boolean('taxable')->default(0);
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
