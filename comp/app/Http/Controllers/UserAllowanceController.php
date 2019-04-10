@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Compensation;
 use App\UserCompensation;
 
-class UserCompensationController extends Controller
+class UserAllowanceController extends Controller
 {
     /**
      * Display a listing of the resource.

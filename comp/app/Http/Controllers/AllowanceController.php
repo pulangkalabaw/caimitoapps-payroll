@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 // Models
 use App\Compensation;
 
-class CompensationController extends Controller
+class AllowanceController extends Controller
 {
 	/**
 	* Display a listing of the resource.
