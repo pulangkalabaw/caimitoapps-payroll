@@ -19,28 +19,28 @@ const store =  new Vuex.Store({
 		 * Employees Details API Tunnel
 		 *
 		 */
-        pis: 'http://localhost/caimitoapps-payroll/dev2/pis/api/',
+        pis: 'http://localhost/caimitoapps-payroll/dev/pis/api/',
 
 
 		/**
 		 * Compensation API Tunnel
 		 *
 		 */
-        comp: 'http://localhost/caimitoapps-payroll/dev2/comp/',
+        comp: 'http://localhost/caimitoapps-payroll/dev/comp/',
 
 
 		/**
 		 * Authentication API Tunnel
 		 *
 		 */
-        authenticator: 'http://localhost/caimitoapps-payroll/dev2/authenticator/api/',
+        authenticator: 'http://localhost/caimitoapps-payroll/dev/authenticator/api/',
 
 
         /**
          * Authentication API Tunnel
          *
          */
-        hl: 'http://localhost/caimitoapps-payroll/dev2/hl/',
+        hl: 'http://localhost/caimitoapps-payroll/dev/hl/',
 
 
 
