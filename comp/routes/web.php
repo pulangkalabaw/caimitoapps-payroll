@@ -24,10 +24,11 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->delete('allowance/{id}/delete','AllowanceController@destroy');
 
     // User Allowance
-    $router->get('user_allowance', 'UserAllowanceController@index');
-    $router->post('user_allowance', 'UserAllowanceController@store');
-    $router->get('user_allowance/{id}', 'UserAllowanceController@show');
-    $router->put('user_allowance/{id}', 'UserAllowanceController@update');
+    $router->get('user_compensation', 'UserCompensationController@index');
+    $router->post('user_compensation', 'UserCompensationController@store');
+    $router->get('user_compensation/{id}', 'UserCompensationController@show');
+    $router->put('user_compensation/{id}', 'UserCompensationController@update');
 
     // Deduction
+    $router->post('deduction','DeductionController@store');
 });

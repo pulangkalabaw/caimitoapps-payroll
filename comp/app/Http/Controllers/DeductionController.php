@@ -24,7 +24,7 @@ class DeductionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
