@@ -18,7 +18,7 @@
                         </div>
                         <div class="card-body">
 
-                            <div class="table table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Leave Code</th>
@@ -32,7 +32,7 @@
                                     </tr>
                                 </tbody>
 
-                            </div>
+                            </table>
 
                         </div>
                     </div>
