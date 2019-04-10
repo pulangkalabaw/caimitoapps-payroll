@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+// Models
+use App\Deduction;
 
 class DeductionController extends Controller
 {
@@ -24,7 +28,22 @@ class DeductionController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // Deduction table
+        // * deduction_id
+        // * name
+        // * total_amount
+        // * timeframe
+        // * interest
+        // * deduction
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'total_amount' => 'required|numeric',
+            'timeframe' => 'required'
+        ]);
+
+        if(!$validator->fails()){
+
+        }
     }
 
     /**
