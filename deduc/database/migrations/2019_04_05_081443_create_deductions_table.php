@@ -18,7 +18,7 @@ class CreateDeductionsTable extends Migration
 			$table->string('deduction_id')->unique();
 			$table->string('name')->nullable();
 			$table->float('amount')->nullable();
-			$table->tinyInteger('taxable')->default(0);
+			$table->tinyInteger('tax');
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
