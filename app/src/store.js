@@ -9,10 +9,10 @@ const store =  new Vuex.Store({
 		 * Global Variable
 		 *
 		 */
-		app_url: 'http://192.168.1.44:3000',
+		app_url: 'http://localhost:8080',
 		project_name: 'Payroll Application',
-		version: '0.0.3',
-		d: '20180329',
+		version: '0.0.7',
+		d: '20180410',
 
 
 		/**

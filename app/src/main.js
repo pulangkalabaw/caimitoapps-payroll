@@ -12,6 +12,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import notif from '@/components/pages/includes/notif.vue'
 Vue.component('notif', notif);
 
+// VModal
+import VModal from 'vue-js-modal'
+// Vue.use(VModal)
+Vue.use(VModal, { componentName: "foo-modal" })
 
 // Navdir
 import navdir from '@/components/pages/includes/navdir.vue'
