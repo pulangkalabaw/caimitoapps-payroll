@@ -5,6 +5,15 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub Menus -->
+			<span @click="redirect('employees.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearfix"></div><br />
+
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-users"></span>
@@ -503,7 +512,7 @@ export default {
 					'params': {}
 				},
 				{
-					'label': 'Add',
+					'label': 'Create',
 					'route': 'employees.create',
 					'params': {}
 				}

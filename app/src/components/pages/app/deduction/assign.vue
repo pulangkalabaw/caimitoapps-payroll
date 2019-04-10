@@ -4,37 +4,26 @@
 		<navdir :links='links'></navdir>
 		<div class="clearfix"></div><br />
 
+
+
 		<div id="content">
-
-			<!-- Sub Menus -->
-			<span @click="redirect('compensation.create')" class="btn btn-primary btn-sm btn-tunch">
-				<span class="fa fa-plus-circle"></span>
-				Create new
-			</span>
-			<span @click="redirect('compensation.index')" class="btn btn-default btn-sm btn-tunch-default">
-				<span class="fa fa-th-list"></span>
-				View all
-			</span>
-			<div class="clearfix"></div><br />
-
-
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
-					Assign Compensation
+					Assign Deduction
 				</div>
 				<div class="card-body">
 
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
-					<form @submit.prevent="compensationAssigning()" method="POST">
+					<form @submit.prevent="deductionAssigning()" method="POST">
 						<div class="row">
 
 							<!-- Left side -->
 							<div class="col-md-6">
 								<div class="row">
-									<div class="col-md-4">Select compensation <span class="required">*</span></div>
+									<div class="col-md-4">Select duduction <span class="required">*</span></div>
 									<div class="col-md-8">
 										<span v-if="!index_compensation_loading">
 											<select v-model="assign_compensation.allowance_id" class="form-control form-control-sm">
@@ -52,15 +41,15 @@
 								<div class="clearfix"></div><br />
 
 								<div class="row">
-									<div class="col-md-4">Tax option <span class="required">*</span></div>
+									<div class="col-md-4">Tax option<span class="required">*</span></div>
 									<div class="col-md-8">
 										<label>
-											<input type="radio" value="bp" name="tax" @click="taxOption(false)">
-											Non-Taxable
+											<input type="radio" value="bp" name="tax" @click="taxOption('bp')">
+											Before Payroll
 										</label>
 										<label>
-											<input type="radio" value="ap" name="tax" @click="taxOption(true)">
-											Taxable
+											<input type="radio" value="ap" name="tax" @click="taxOption('ap')">
+											After Payroll
 										</label>
 									</div>
 								</div>
@@ -174,8 +163,8 @@ export default {
 			search_show: false,
 			links: [
 				{
-					'label': 'Allowances',
-					'route': 'compensation.index',
+					'label': 'Deduction',
+					'route': 'deduction.index',
 					'params': {}
 				}
 			]
@@ -183,7 +172,7 @@ export default {
 	},
 
 	created () {
-		this.compensationIndex()
+		// this.deductionIndex()
 		this.employeesIndex()
 	},
 
@@ -241,7 +230,7 @@ export default {
 			}
 		},
 
-		compensationIndex () {
+		deductionIndex () {
 
 			this.index_compensation_loading = true
 			this.axiosRequest ('GET', this.$store.state.comp + 'compensation?filter=all')
@@ -271,7 +260,7 @@ export default {
 			})
 		},
 
-		compensationAssigning () {
+		deductionAssigning () {
 			this.create_assign_loading = true
 
 			// this.axiosRequest ('POST', this.$store.state.comp + 'compensation', this.compensation)

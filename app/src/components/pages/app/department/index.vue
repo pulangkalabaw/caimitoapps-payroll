@@ -5,6 +5,15 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub menus -->
+			<span @click="redirect('department.create')" class="btn btn-primary btn-sm btn-tunch">
+				<span class="fa fa-plus-circle"></span>
+				Create new
+			</span>
+			<div class="clearf"></div><br />
+
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-users"></span>

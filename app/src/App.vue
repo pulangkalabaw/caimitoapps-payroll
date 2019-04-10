@@ -34,4 +34,15 @@ body {
 	margin: 0;
 	font-family: "Lato", sans-serif;
 }
+
+.btn-tunch,.btn-tunch:hover {
+	background: #2A3F54;  border-color: #2A3F54;
+}
+
+.btn-tunch-default {
+	background: rgba(0,0,0,.09);
+	border-color: rgba(0,0,0,.1);
+}
+
+
 </style>

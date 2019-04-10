@@ -5,6 +5,18 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content" v-if="!jobs_loading">
+
+			<!-- Sub menus -->
+			<span @click="redirect('jobs.create')" class="btn btn-primary btn-sm btn-tunch">
+				<span class="fa fa-plus-circle"></span>
+				Create new
+			</span>
+			<span @click="redirect('jobs.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearf"></div><br />
+
 			<div class="card" :class="{ 'border-warning ': edit_mode }">
 				<div class="card-header">
 					<div class="row">

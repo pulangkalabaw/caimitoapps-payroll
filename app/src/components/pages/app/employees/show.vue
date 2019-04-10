@@ -5,6 +5,19 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content" v-if="!show_employee_loading">
+
+			<!-- Sub Menus -->
+			<span @click="redirect('employees.create')" class="btn btn-primary btn-sm btn-tunch">
+				<span class="fa fa-plus-circle"></span>
+				Create new
+			</span>
+			<span @click="redirect('employees.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearfix"></div><br />
+
+
 			<div class="card" :class="{ 'border-warning ': edit_mode }">
 				<div class="card-header">
 					<div class="row">
@@ -643,10 +656,9 @@ export default {
 
 			let dept_id_value = this.dept_id == '696969' ? null : this.dept_id
 			this.employee.user_details.department_id = dept_id_value
-			alert(dept_id_value)
 			this.axiosRequest ('POST', this.$store.state.pis + 'employee/' + this.$route.params.id, this.employee)
 			.then (res => {
-
+				this.notif = res.data
 				this.update_employee_loading = false
 				this.tnotif (res)
 
