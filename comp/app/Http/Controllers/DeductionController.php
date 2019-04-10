@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ToBeDelController extends Controller
+class DeductionController extends Controller
 {
     /**
      * Display a listing of the resource.

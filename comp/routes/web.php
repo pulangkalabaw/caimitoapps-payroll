@@ -28,4 +28,6 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->post('user_allowance', 'UserAllowanceController@store');
     $router->get('user_allowance/{id}', 'UserAllowanceController@show');
     $router->put('user_allowance/{id}', 'UserAllowanceController@update');
+
+    // Deduction
 });
