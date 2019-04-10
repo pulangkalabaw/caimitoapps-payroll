@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserAllowanceTable extends Migration
+class CreateUserCompensationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateUserAllowanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_allowance', function (Blueprint $table) {
+        Schema::create('user_compensation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id')->unique();
-            $table->string('allowance_id')->unique();
+            $table->string('compensation_id')->unique();
             $table->float('amount')->nullable();
-            $table->boolean('taxable')->default(0);
+            $table->boolean('taxable')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -32,6 +32,6 @@ class CreateUserAllowanceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_allowance');
+        Schema::dropIfExists('user_compensation');
     }
 }

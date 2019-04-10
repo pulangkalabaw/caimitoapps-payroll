@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 // Models
-use App\Allowance;
+use App\Compensation;
 
-class AllowanceController extends Controller
+class CompensationController extends Controller
 {
 	/**
 	* Display a listing of the resource.
@@ -17,11 +17,11 @@ class AllowanceController extends Controller
 	*/
 	public function index()
 	{
-		$allowance = new Allowance();
+		$compensation = new Compensation();
 
 		$data = [
-			'data' => $allowance->paginate(10),
-			'total' => $allowance->count()
+			'data' => $compensation->paginate(10),
+			'total' => $compensation->count()
 		];
 
 		return apiReturn($data, 'Success', 'success');
@@ -35,7 +35,7 @@ class AllowanceController extends Controller
 	*/
 	public function store(Request $request)
 	{
-		$allowance = new Allowance();
+		$compensation = new Compensation();
 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
@@ -44,16 +44,16 @@ class AllowanceController extends Controller
 
 		if(!$validator->fails()){
 
-			$allowance_id = str_random(15).rand(1111,9999);
+			$compensation_id = str_random(15).rand(1111,9999);
 
-			$allowance_data = Allowance::create([
-				'allowance_id' => $allowance_id,
+			$compensation_data = Compensation::create([
+				'compensation_id' => $compensation_id,
 				'name' => $request['name'],
 				'amount' => $request['amount'],
 				'taxable' => $request['taxable']
 			]);
 
-			return apiReturn($allowance_data, 'Successful on update of allowance!', 'success');
+			return apiReturn($compensation_data, 'Successful on update of allowance!', 'success');
 
 		} else {
 
@@ -71,12 +71,12 @@ class AllowanceController extends Controller
 	*/
 	public function show($id)
 	{
-		$allowance = new Allowance();
+		$compensation = new Compensation();
 
-		$allowance_data = $allowance->where('allowance_id',$id)->first();
+		$compensation_data['data'] = $compensation->where('compensation_id',$id)->first();
 
-		if ($allowance_data) {
-            return apiReturn($allowance_data, 'Success', 'success');
+		if ($compensation_data) {
+            return apiReturn($compensation_data, 'Success', 'success');
         }
 		else {
             return apiReturn(null, 'This allowance does not exists!', 'failed');
@@ -84,7 +84,7 @@ class AllowanceController extends Controller
 
 
 
-		return apiReturn($allowance_data, 'Success!', 'success');
+		return apiReturn($compensation_data, 'Success!', 'success');
 	}
 
 	/**
@@ -96,7 +96,9 @@ class AllowanceController extends Controller
 	*/
 	public function update(Request $request, $id)
 	{
-		$allowance = new Allowance();
+		// Note: this function will update the user compensation insatanlly
+		// if need be you can change the code to exclude an employee from updating their compensation
+		$compensation = new Compensation();
 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
@@ -105,15 +107,15 @@ class AllowanceController extends Controller
 
 		if(!$validator->fails()){
 
-			$allowance->where('allowance_id', $id)->update([
+			$compensation->where('compensation_id', $id)->update([
 				'name' => $request['name'],
 				'amount' => $request['amount'],
 				'taxable' => $request['taxable']
 			]);
 
-			$allowance_data = $allowance->where('allowance_id', $id)->first();
+			$compensation_data = $compensation->where('compensation_id', $id)->first();
 
-			return apiReturn($allowance_data, 'Update compete!', 'success');
+			return apiReturn($compensation_data, 'Update compete!', 'success');
 
 		} else {
 
@@ -130,12 +132,12 @@ class AllowanceController extends Controller
 	*/
 	public function destroy($id)
 	{
-		$allowance = new Allowance();
+		$compensation = new Compensation();
 
-		$allowance_data = $allowance->where('allowance_id',$id)->first();
+		$compensation_data = $compensation->where('compensation_id',$id)->first();
 
-		$allowance->where('allowance_id',$id)->delete();
+		$compensation->where('compensation_id',$id)->delete();
 
-		return apiReturn($allowance_data, 'Successfully Deleted!', 'success');
+		return apiReturn($compensation_data, 'Successfully Deleted!', 'success');
 	}
 }
