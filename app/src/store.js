@@ -9,32 +9,38 @@ const store =  new Vuex.Store({
 		 * Global Variable
 		 *
 		 */
-		app_url: 'http://192.168.1.44:3000',
+		app_url: 'http://localhost:8080',
 		project_name: 'Payroll Application',
-		version: '0.0.3',
-		d: '20180329',
+		version: '0.0.7',
+		d: '20180410',
 
 
 		/**
 		 * Employees Details API Tunnel
 		 *
 		 */
-        pis: 'http://192.168.1.44/www/iplus/payroll/dev/pis/api/',
+        pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
 
 
 		/**
 		 * Compensation API Tunnel
 		 *
 		 */
-        comp: 'http://192.168.1.44/www/iplus/payroll/dev/comp/',
+        comp: 'http://localhost/www/iplus/payroll/dev/comp/',
 
 
 		/**
 		 * Authentication API Tunnel
 		 *
 		 */
-        authenticator: 'http://192.168.1.49/caimitoapps-payroll/dev/authenticator/api/',
+        authenticator: 'http://localhost/www/iplus/payroll/dev/authenticator/api/',
 
+
+        /**
+         * Authentication API Tunnel
+         *
+         */
+        hl: 'http://localhost/www/iplus/payroll/dev/hl/',
 
 
 

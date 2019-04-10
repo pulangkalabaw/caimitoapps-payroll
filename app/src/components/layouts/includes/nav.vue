@@ -4,7 +4,6 @@
 			<h3 class="title">
 				{{ $store.state.project_name }}
 			</h3>
-			<hr>
 			<ul class="mainmenu">
 				<li>
 					<span @click="redirect('home')" class="span-link" :class="{ 'active': $route.name.includes('home')}">
@@ -15,18 +14,18 @@
 				<li>
 					<span class="span-link" :class="{ 'active': $route.name.includes('employees.index')}">
 						<i class="fa fa-users"></i> &nbsp;
-						Employees
+						PIS
 						<i class="float-right fa fa-chevron-down"></i>
 					</span>
 					<ul class="submenu">
 						<li>
 							<span @click="redirect('employees.index')" class="span-link">
-								View all Employees
+								View all
 							</span>
 						</li>
 						<li>
 							<span @click="redirect('employees.create')" class="span-link">
-								Create new Employee
+								Create new
 							</span>
 						</li>
 					</ul>
@@ -40,12 +39,12 @@
 					<ul class="submenu">
 						<li>
 							<span @click="redirect('department.index')" class="span-link">
-								View all Deparments
+								View all
 							</span>
 						</li>
 						<li>
 							<span @click="redirect('department.create')" class="span-link">
-								Create new Department
+								Create new
 							</span>
 						</li>
 					</ul>
@@ -59,12 +58,12 @@
 					<ul class="submenu">
 						<li>
 							<span @click="redirect('jobs.index')" class="span-link">
-								View all Jobs
+								View all
 							</span>
 						</li>
 						<li>
 							<span @click="redirect('jobs.create')" class="span-link">
-								Create new Job
+								Create new
 							</span>
 						</li>
 					</ul>
@@ -72,18 +71,48 @@
 				<li>
 					<span class="span-link" :class="{ 'active': $route.name.includes('allowances.index')}">
 						<i class="fa fa-tasks"></i> &nbsp;
-						Allowances
+						Compensation
 						<i class="float-right fa fa-chevron-down"></i>
 					</span>
 					<ul class="submenu">
 						<li>
 							<span @click="redirect('allowances.index')" class="span-link">
-								View all Allowances
+								View all
 							</span>
 						</li>
 						<li>
 							<span @click="redirect('allowances.create')" class="span-link">
-								Create Allowance
+								Create new
+							</span>
+						</li>
+						<li>
+							<span @click="redirect('allowances.assign')" class="span-link">
+								Assign
+							</span>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<span class="span-link" :class="{ 'active': $route.name.includes('deduction.index')}">
+						<i class="fa fa-tasks"></i> &nbsp;
+						Deductions
+						<i class="float-right fa fa-chevron-down"></i>
+					</span>
+					<ul class="submenu">
+						<li>
+							<span @click="redirect('deduction.index')" class="span-link">
+								View all
+							</span>
+						</li>
+						<li>
+							<span @click="redirect('deduction.create')" class="span-link">
+								Create new
+							</span>
+						</li>
+						<li>
+							<span @click="redirect('deduction.assign')" class="span-link">
+								Assign
 							</span>
 						</li>
 					</ul>
@@ -97,12 +126,12 @@
 					</span>
 					<ul class="submenu">
 						<li>
-							<span @click="redirect('jobs.index')" class="span-link">
-								Leave Managment
+							<span @click="redirect('leaves.index')" class="span-link">
+								Leave Managment(Create muna)
 							</span>
 						</li>
 						<li>
-							<span @click="redirect('jobs.index')" class="span-link">
+							<span @click="redirect('leaves.index')" class="span-link">
 								Leave Credits
 							</span>
 						</li>
