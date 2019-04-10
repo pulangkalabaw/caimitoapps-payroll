@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Compensation;
 use App\UserCompensation;
 
-class UserAllowanceController extends Controller
+class UserCompensationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,32 +37,19 @@ class UserAllowanceController extends Controller
     public function store(Request $request)
     {
         $compensation = new Compensation();
-
-        $validator = Validator::make($request->all(), [
-            'compensation_id' => 'required',
-        ],[
-            'compensation_id.required' => 'Select a compensation!'
-        ]);
-
+        $user_compensation = new UserCompensation();
         // get the selected comepensation of the user
         $compensation = $compensation->where('compensation_id', $request['compensation_id'])->firstOrFail();
-
-        if(!$validator->fails()){
-            $user_compensation = UserCompensation::create([
-                'user_id' => $request['user_id'],
+        foreach($request['user_ids'] as $user_id){
+            $data = [
+                'user_id' => $user_id,
                 'compensation_id' => $request['compensation_id'],
                 'amount' => $compensation['amount'],
                 'taxable' => $compensation['taxable']
-            ]);
-
-            return apiReturn($user_compensation, 'Added compensation to user!', 'success');
-
-        } else {
-
-            return apiReturn(null, 'Failed adding compensation to user!', 'failed', $validator->errors());
-
+            ];
+            $user_compensation->insert($data);
         }
-
+        return apiReturn(null, 'Added compensation to user!', 'success');
     }
 
     /**
