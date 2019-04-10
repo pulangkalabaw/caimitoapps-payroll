@@ -15,8 +15,8 @@ class CreateUserCompensationTable extends Migration
     {
         Schema::create('user_compensation', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id')->unique();
-            $table->string('compensation_id')->unique();
+            $table->string('user_id');
+            $table->string('compensation_id');
             $table->float('amount')->nullable();
             $table->boolean('taxable')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
