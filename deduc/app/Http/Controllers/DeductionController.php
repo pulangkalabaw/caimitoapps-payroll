@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
+// Models
 use App\Deductions;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DeductionController extends Controller
 {
@@ -12,16 +17,28 @@ class DeductionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-		$allowance = new Deductions();
+        $deduction = new Deductions();
 
-		$data = [
-			'data' => $allowance->paginate(10),
-			'total' => $allowance->count()
-		];
+        if($request->has('filter')){
+            if($request->get('filter') == 'all'){
+                $deduction_data = $deduction->withTrashed()->paginate(10);
+            } else if($request->get('filter') == 'active') {
+                $deduction_data = $deduction->paginate(10);
+            } else if ($request->get('filter') == 'inactive'){
+                $deduction_data = $deduction->onlyTrashed()->paginate(10);
+            }
+        } else {
+            $deduction_data = $deduction->paginate(10);
+        }
 
-		return apiReturn($data, 'Success', 'success');
+        $data = [
+            'data' => $deduction_data,
+            'total' => $deduction->count()
+        ];
+
+        return apiReturn($data, 'Success', 'success');
 	}
 
     /**
@@ -32,7 +49,33 @@ class DeductionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Deduction table
+        // * deduction_id
+        // * name
+        // * total_amount
+        // * timeframe
+        // * interest
+        // * deduction
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'total_amount' => 'required|numeric',
+            'timeframe' => 'required'
+        ]);
+
+        if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
+
+        $deduction_id = str_random(15).rand(1111,9999);
+
+        $deduction_data = Deductions::create([
+            'deduction_id' => $deduction_id,
+            'name' => $request['name'],
+            'total_amount' => $request['total_amount'],
+            'timeframe' => Carbon::parse($request['timeframe'])->format('Y-m-d'),
+            'interest' => $request['interest'],
+            'deduction' => $request['deduction']
+        ]);
+
+        return apiReturn($deduction_data, 'Successful in creating deduction', 'success');
     }
 
     /**
@@ -43,7 +86,11 @@ class DeductionController extends Controller
      */
     public function show($id)
     {
-        //
+        $deduction = new Deductions();
+
+        $deduction_data = $deduction->where('deduction_id',$id)->first();
+
+        return apiReturn($deduction_data, 'Success!', 'success');
     }
 
     /**
@@ -55,7 +102,25 @@ class DeductionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $deduction = new Deductions();
+
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'total_amount' => 'required|numeric',
+            'timeframe' => 'required'
+        ]);
+
+        if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
+
+        $deduction->where('deduction_id', $id)->update([
+            'name' => $request['name'],
+            'total_amount' => $request['total_amount'],
+            'timeframe' => Carbon::parse($request['timeframe'])->format('Y-m-d'),
+            'interest' => $request['interest'],
+            'deduction' => $request['deduction']
+        ]);
+
+        return apiReturn($request->all(), 'Successful in updating', 'success');
     }
 
     /**
@@ -66,6 +131,11 @@ class DeductionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deduction = new Deductions();
+
+        $deduction_data = $deduction->where('deduction_id',$id)->first();
+        $deduction->where('deduction_id',$id)->delete();
+
+        return apiReturn($deduction_data, 'Successful in Deleting', 'success');
     }
 }

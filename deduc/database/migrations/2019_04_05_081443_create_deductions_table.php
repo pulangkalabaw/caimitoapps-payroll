@@ -15,10 +15,12 @@ class CreateDeductionsTable extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('deduction_id')->unique();
-			$table->string('name')->nullable();
-			$table->float('amount')->nullable();
-			$table->tinyInteger('tax');
+            $table->string('deduction_id');
+            $table->string('name')->nullable();
+            $table->float('total_amount')->decimal('total_amount',2)->nullable();
+            $table->string('timeframe')->decimal('total_amount',2)->nullable();
+            $table->float('interest')->decimal('total_amount',2)->nullable();
+            $table->float('deduction')->decimal('total_amount',2)->nullable();
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
