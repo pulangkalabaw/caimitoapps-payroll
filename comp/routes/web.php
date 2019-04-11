@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['middleware' => ['cors']], function() use ($router){
-    
+
     // Compensation
     $router->get('compensation', 'CompensationController@index');
     $router->post('compensation','CompensationController@store');
@@ -27,10 +27,10 @@ $router->group(['middleware' => ['cors']], function() use ($router){
 
     // User Allowance
 
-    $router->get('user_compensation', 'UserCompensationController@index');
-    $router->post('user_compensation', 'UserCompensationController@store');
-    $router->get('user_compensation/{id}', 'UserCompensationController@show');
-    $router->put('user_compensation/{id}', 'UserCompensationController@update');
+    $router->get('assign-compensation', 'UserCompensationController@index');
+    $router->post('assign-compensation', 'UserCompensationController@store');
+    $router->get('assign-compensation/{id}', 'UserCompensationController@show');
+    $router->put('assign-compensation/{id}', 'UserCompensationController@update');
 
 
     // Deduction
