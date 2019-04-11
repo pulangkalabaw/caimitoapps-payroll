@@ -14,18 +14,21 @@
                             Create Leave Type
                         </div>
                         <div class="card-body">
+                            <div class="alert alert-danger" v-if="notif">
+                                <span v-for="err in notif">{{ err }} <br></span>
+                            </div>
                             <div class="row">
                                 <div class="col-md-2">
                                     <label for=""><b>Leave Code</b></label>
-                                    <input type="text" v-model="leave_code" class="form-control">
+                                    <input type="text" v-model="leave_code" class="form-control form-control-sm">
                                 </div>
                                 <div class="col-md-4">
                                     <label for=""><b>Leave Name</b></label>
-                                    <input type="text" v-model="leave_name" class="form-control">
+                                    <input type="text" v-model="leave_name" class="form-control form-control-sm">
                                 </div>
                                 <div class="col">
                                     <label for=""><b>Leave Description</b></label>
-                                    <input type="text" v-model="leave_desc" class="form-control">
+                                    <input type="text" v-model="leave_desc" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="row">
@@ -53,7 +56,7 @@
             return{
                 leave_code: '',
                 leave_name: '',
-                leave_desc: '',
+                leave_description: '',
                 links: [
                     {
                         'label': 'Leaves',
@@ -65,7 +68,9 @@
                         'route': 'leaves.create',
                         'params': {}
                     }
-                ]
+                ],
+
+                notif: '',
             }
         },
 
@@ -78,11 +83,17 @@
                     leave_desc: this.leave_desc,
                 };
 
-                this.axiosRequest ('POST', this.$store.state.pis + 'leave', params)
+                this.axiosRequest ('POST', this.$store.state.hl + 'leave', params)
     			.then (res => {
 
-                    console.log(res);
-
+                    console.log(res.data.status);
+                    if(res.data.status == 'success'){
+                        this.notif = '';
+                        this.tnotif (res)
+                    }else{
+                        this.notif = res.data.errors
+                        this.tnotif (res)
+                    }
     				// this.notif = res.data
     				// this.tnotif (res)
     				// this.employees  = res.data.data.data

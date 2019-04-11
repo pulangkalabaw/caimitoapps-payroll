@@ -5,6 +5,19 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content" v-if="!show_department_loading">
+
+			<!-- Sub menus -->
+			<span @click="redirect('department.create')" class="btn btn-primary btn-sm btn-tunch">
+				<span class="fa fa-plus-circle"></span>
+				Create new
+			</span>
+			<span @click="redirect('department.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearf"></div><br />
+
+
 			<div class="card" :class="{ 'border-warning ': edit_mode }">
 				<div class="card-header">
 					<div class="row">
@@ -237,7 +250,7 @@ export default {
 		employeeIndex () {
 
 			this.employees_loading = true
-			this.axiosRequest ('GET', this.$store.state.pis + 'employee?show=all')
+			this.axiosRequest ('GET', this.$store.state.pis + 'employee?filter=active')
 			.then (res => {
 
 				this.employees  = res.data.data.data

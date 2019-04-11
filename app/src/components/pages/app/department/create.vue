@@ -5,6 +5,15 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub menus -->
+			<span @click="redirect('department.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearf"></div><br />
+
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
@@ -89,6 +98,11 @@ export default {
 					'label': 'Department',
 					'route': 'department.index',
 					'params': {}
+				},
+				{
+					'label': 'Create',
+					'route': 'department.create',
+					'params': {}
 				}
 			]
 		}
@@ -120,7 +134,7 @@ export default {
 		employeeIndex () {
 
 			this.employees_loading = true
-			this.axiosRequest ('GET', this.$store.state.pis + 'employee?show=all')
+			this.axiosRequest ('GET', this.$store.state.pis + 'employee?filter=active')
 			.then (res => {
 
 				this.employees  = res.data.data.data
