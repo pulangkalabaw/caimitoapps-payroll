@@ -19,11 +19,6 @@ class AllowanceController extends Controller
 	{
 		$compensation = new Compensation();
 
-		$data = [
-			'data' => $compensation->paginate(10),
-			'total' => $compensation->count()
-		];
-
       if($request->has('filter')) {
 
             if($request->get('filter') == 'all') {
@@ -104,8 +99,6 @@ class AllowanceController extends Controller
 		else {
             return apiReturn(null, 'This allowance does not exists!', 'failed');
         }
-
-
 
 		return apiReturn($compensation_data, 'Success!', 'success');
 	}
