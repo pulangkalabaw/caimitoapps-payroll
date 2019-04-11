@@ -85,7 +85,15 @@ class JobsController extends Controller
      */
     public function show($id)
     {
-        //
+		$jobs_data = [
+			'data' => Jobs::where('job_id', $id)->first(),
+		];
+
+		if($jobs_data){
+			return apiReturn($jobs_data, 'Success!', 'success');
+		}else{
+			return apiReturn(null, 'This Jobs does not exist!', 'failed');
+		}
     }
 
     /**

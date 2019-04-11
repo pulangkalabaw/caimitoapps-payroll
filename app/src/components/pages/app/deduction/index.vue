@@ -5,6 +5,18 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub menus -->
+			<span @click="redirect('employees.create')" class="btn btn-primary btn-sm btn-tunch">
+				<span class="fa fa-plus-circle"></span>
+				Create new
+			</span>
+			<span @click="redirect('employees.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-tasks"></span>

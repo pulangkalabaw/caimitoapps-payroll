@@ -36,6 +36,7 @@ import compensationAssign from '@/components/pages/app/compensation/assign'
 import deductionIndex from '@/components/pages/app/deduction/index'
 import deductionCreate from '@/components/pages/app/deduction/create'
 import deductionShow from '@/components/pages/app/deduction/show'
+import deductionAssign from '@/components/pages/app/deduction/assign'
 
 // Leaves
 import leavesIndex from '@/components/pages/app/leaves/index'
@@ -151,25 +152,25 @@ let web_routes = [
 
 	// Compensation Management
 	{
-		path: '/app/compensation', name: 'allowances.index', component: compensationIndex,
+		path: '/app/compensation', name: 'compensation.index', component: compensationIndex,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/compensation/add', name: 'allowances.create', component: compensationCreate,
+		path: '/app/compensation/add', name: 'compensation.create', component: compensationCreate,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/compensation/assign', name: 'allowances.assign', component: compensationAssign,
+		path: '/app/compensation/assign', name: 'compensation.assign', component: compensationAssign,
 		meta: {
 			auth: true
 		},
 	},
 	{
-		path: '/app/compensation/:id', name: 'allowances.show', component: compensationShow,
+		path: '/app/compensation/:id', name: 'compensation.show', component: compensationShow,
 		meta: {
 			auth: true
 		},
@@ -185,6 +186,12 @@ let web_routes = [
 	},
 	{
 		path: '/app/deduction/add', name: 'deduction.create', component: deductionCreate,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/deduction/assign', name: 'deduction.assign', component: deductionAssign,
 		meta: {
 			auth: true
 		},

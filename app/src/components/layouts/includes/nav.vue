@@ -69,24 +69,24 @@
 					</ul>
 				</li>
 				<li>
-					<span class="span-link" :class="{ 'active': $route.name.includes('allowances.index')}">
+					<span class="span-link" :class="{ 'active': $route.name.includes('compensation.index')}">
 						<i class="fa fa-tasks"></i> &nbsp;
 						Compensation
 						<i class="float-right fa fa-chevron-down"></i>
 					</span>
 					<ul class="submenu">
-						<li>
-							<span @click="redirect('allowances.index')" class="span-link">
+						<li :class="{ 'active': $route.name.includes('compensation.index')}">
+							<span @click="redirect('compensation.index')" class="span-link">
 								View all
 							</span>
 						</li>
 						<li>
-							<span @click="redirect('allowances.create')" class="span-link">
+							<span @click="redirect('compensation.create')" class="span-link">
 								Create new
 							</span>
 						</li>
 						<li>
-							<span @click="redirect('allowances.assign')" class="span-link">
+							<span @click="redirect('compensation.assign')" class="span-link">
 								Assign
 							</span>
 						</li>
