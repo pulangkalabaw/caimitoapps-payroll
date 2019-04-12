@@ -16,11 +16,10 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['middleware' => ['cors']], function() use ($router){
-    // Allowance
-    // $router->get('allowance', 'AllowanceController@index');
-    // $router->post('allowance','AllowanceController@store');
-    // $router->get('allowance/{id}','AllowanceController@show');
-    // $router->put('allowance/{id}','AllowanceController@update');
-    // $router->delete('allowance/{id}/delete','AllowanceController@destroy');
-
+    // Deduction
+    $router->get('deduction','DeductionController@index');
+    $router->post('deduction','DeductionController@store');
+    $router->get('deduction/{id}','DeductionController@show');
+    $router->put('deduction/{id}','DeductionController@update');
+    $router->delete('deduction/{id}/delete','DeductionController@destroy');
 });

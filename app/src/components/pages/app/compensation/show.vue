@@ -10,7 +10,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<span class="fa fa-folder"></span>
-							Allowance
+							Compensation
 						</div>
 						<div class="col-md-6 text-right">
 							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
@@ -32,7 +32,7 @@
 					<form @submit.prevent="compensationUpdate()" method="POST">
 
 						<div class="row">
-							<div class="col-md-2">Allowance Name <span class="required">*</span></div>
+							<div class="col-md-2">Compensation Name <span class="required">*</span></div>
 							<div class="col-md-4">
 								<input type="text" v-model="compensation.name" :disabled="!edit_mode" class="form-control form-control-sm" required>
 							</div>
@@ -97,7 +97,7 @@ export default {
 
 			links: [
 				{
-					'label': 'Allowances',
+					'label': 'Compensation',
 					'route': 'compensation.index',
 					'params': {}
 				},
@@ -139,7 +139,7 @@ export default {
 		compensationShow () {
 
 			this.show_compensation_loading = true
-			this.axiosRequest ('GET', this.$store.state.comp + 'allowance/' + this.$route.params.id)
+			this.axiosRequest ('GET', this.$store.state.comp + 'compensation/' + this.$route.params.id)
 			.then (res => {
 
 				this.compensation = res.data.data
@@ -157,7 +157,7 @@ export default {
 			this.update_compensation_loading = true
 			this.compensation._method = "PUT"
 
-			this.axiosRequest ('POST', this.$store.state.comp + 'allowance/' + this.$route.params.id, this.compensation)
+			this.axiosRequest ('POST', this.$store.state.comp + 'compensation/' + this.$route.params.id, this.compensation)
 			.then (res => {
 
 				this.compensation = res.data.data

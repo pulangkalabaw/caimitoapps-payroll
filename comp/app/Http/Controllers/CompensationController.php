@@ -15,16 +15,34 @@ class CompensationController extends Controller
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function index()
+	public function index(Request $request)
 	{
 		$compensation = new Compensation();
 
-		$data = [
-			'data' => $compensation->paginate(10),
-			'total' => $compensation->count()
+		if($request->has('filter')) {
+
+			if($request->get('filter') == 'all') {
+				$compensation = Compensation::get();
+			}
+
+			else if($request->get('filter') == 'active') {
+				$compensation = Compensation::where('status',1)->get();
+			}
+
+			else {
+				$compensation = Compensation::where('status',1)->get();
+			}
+		}
+		else {
+			$compensation = $compensation->paginate($rows);
+		}
+
+		$datareturn = [
+			'data' => $compensation,
+			'total' => $compensation->where('status',1)->count(),
 		];
 
-		return apiReturn($data, 'Success', 'success');
+		return apiReturn($datareturn, 'Success', 'success');
 	}
 
 	/**
@@ -53,11 +71,11 @@ class CompensationController extends Controller
 				'taxable' => $request['taxable']
 			]);
 
-			return apiReturn($compensation_data, 'Successful on update of allowance!', 'success');
+			return apiReturn($compensation_data, 'Added Successful', 'success');
 
 		} else {
 
-			return apiReturn(null, 'Failure on update of allowance!', 'failed', $validator->errors());
+			return apiReturn([], 'Failure to add!', 'failed', $validator->errors());
 
 		}
 
@@ -76,11 +94,11 @@ class CompensationController extends Controller
 		$compensation_data['data'] = $compensation->where('compensation_id',$id)->first();
 
 		if ($compensation_data) {
-            return apiReturn($compensation_data, 'Success', 'success');
-        }
+			return apiReturn($compensation_data, 'Success', 'success');
+		}
 		else {
-            return apiReturn(null, 'This allowance does not exists!', 'failed');
-        }
+			return apiReturn(null, 'This allowance does not exists!', 'failed');
+		}
 
 
 

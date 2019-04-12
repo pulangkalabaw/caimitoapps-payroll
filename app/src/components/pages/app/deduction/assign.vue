@@ -4,42 +4,31 @@
 		<navdir :links='links'></navdir>
 		<div class="clearfix"></div><br />
 
+
+
 		<div id="content">
-
-			<!-- Sub Menus -->
-			<span @click="redirect('compensation.create')" class="btn btn-primary btn-sm btn-tunch">
-				<span class="fa fa-plus-circle"></span>
-				Create new
-			</span>
-			<span @click="redirect('compensation.index')" class="btn btn-default btn-sm btn-tunch-default">
-				<span class="fa fa-th-list"></span>
-				View all
-			</span>
-			<div class="clearfix"></div><br />
-
-
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
-					Assign Compensation
+					Assign Deduction
 				</div>
 				<div class="card-body">
 
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
-					<form @submit.prevent="compensationAssigning()" method="POST">
+					<form @submit.prevent="deductionAssigning()" method="POST">
 						<div class="row">
 
 							<!-- Left side -->
 							<div class="col-md-6">
 								<div class="row">
-									<div class="col-md-4">Select compensation <span class="required">*</span></div>
+									<div class="col-md-4">Select duduction <span class="required">*</span></div>
 									<div class="col-md-8">
 										<span v-if="!index_compensation_loading">
-											<select v-model="assign_compensation.compensation_id" class="form-control form-control-sm">
+											<select v-model="assign_compensation.allowance_id" class="form-control form-control-sm">
 												<option :value="null">Select one</option>
-												<option :value="comp.compensation_id" v-for="comp in compensation.data">
+												<option :value="comp.allowance_id" v-for="comp in compensation.data">
 													{{ comp.name }}
 												</option>
 											</select>
@@ -52,15 +41,15 @@
 								<div class="clearfix"></div><br />
 
 								<div class="row">
-									<div class="col-md-4">Tax option <span class="required">*</span></div>
+									<div class="col-md-4">Tax option<span class="required">*</span></div>
 									<div class="col-md-8">
 										<label>
-											<input type="radio" value="bp" name="tax" @click="taxOption(0)">
-											Non-Taxable
+											<input type="radio" value="bp" name="tax" @click="taxOption('bp')">
+											Before Payroll
 										</label>
 										<label>
-											<input type="radio" value="ap" name="tax" @click="taxOption(1)">
-											Taxable
+											<input type="radio" value="ap" name="tax" @click="taxOption('ap')">
+											After Payroll
 										</label>
 									</div>
 								</div>
@@ -113,41 +102,29 @@
 								<div class="row">
 									<div class="col-md-12">
 										<span v-if="!index_employees_loading">
-											<input placeholder="search employee" type="text" v-model="search_employee" id="" @keyup="filterEmployees()" class="form-control form-control-sm"><br />
+											<input placeholder="search employee" type="text" v-model="search_employee" id="" @keyup="searchEmployee()" class="form-control form-control-sm"><br />
 										</span>
 										<span v-else>
 											fetching..
 										</span>
 
 										<!-- Employees -->
-										<span v-if="!search_show_nothing">
-											<small>Employees</small><br />
-											<span v-if="!search_result_failed">
-												<span v-for="employee in employees_filtered">
-													<label>
-														<input :checked="assign_compensation.user_id.includes(employee.user_id)" type="checkbox" @click="appendEmployee(employee.user_id, employee.fname + ' ' + employee.lname)">
-														{{ employee.employee_code }}
-														{{ employee.fname }}
-														{{ employee.lname }}
-													</label>
-													&nbsp;
-												</span>
-											</span>
-											<span v-else>
-												No result
-											</span>
-										</span>
-										<span v-else>
-											<small>
-												Search for employee's first,last name and employee code
-											</small>
+										<small>Employees</small><br />
+										<span v-for="employee in employees_filtered"  v-if="!searching_employee">
+											<label>
+												<input :checked="assign_compensation.user_id.includes(employee.user_id)" type="checkbox" @click="appendEmployee(employee.user_id, employee.fname + ' ' + employee.lname)">
+												{{ employee.employee_code }}
+												{{ employee.fname }}
+												{{ employee.lname }}
+											</label>
+											&nbsp;
 										</span>
 									</div>
 								</div>
 
 							</div>
 						</div>
-						<div class="clearfix"></div><br />
+						<div class="clear"></div><br />
 
 					</form>
 
@@ -163,11 +140,10 @@
 export default {
 	data () {
 		return {
-
 			search_employee: '',
 			selected_employee_info: [],
 			search_result_failed: false,
-			search_show_nothing: true, // to not output all employee, user must search only
+			searching_employee: false,
 
 			compensation: [],
 			index_compensation_loading: false,
@@ -177,9 +153,9 @@ export default {
 			index_employees_loading: true,
 
 			assign_compensation: {
-				compensation_id: null,
+				allowance_id: null,
 				user_id: [],
-				taxable: null,
+				tax: null,
 			},
 			create_assign_loading: false,
 
@@ -187,8 +163,8 @@ export default {
 			search_show: false,
 			links: [
 				{
-					'label': 'Allowances',
-					'route': 'compensation.index',
+					'label': 'Deduction',
+					'route': 'deduction.index',
 					'params': {}
 				}
 			]
@@ -196,73 +172,42 @@ export default {
 	},
 
 	created () {
-		this.compensationIndex()
+		// this.deductionIndex()
 		this.employeesIndex()
 	},
 
 	methods: {
 
+		searchEmployee () {
 
-		filterEmployees () {
 			let employees = this.employees.data
 			let that = this
 			let arr = this.employees.data
-			let search_str = that.search_employee
-
-			if (search_str != '') {
-
-				this.search_show_nothing = false
-				this.employees_filtered = arr.filter(x => {
-					return x.fname.toLowerCase().includes(search_str) ||
-					x.lname.toLowerCase().includes(search_str) ||
-					x.employee_code.toLowerCase().includes(search_str)
+			let query = that.search_employee
+			if (query != '') {
+				this.searching_employee = true
+				arr.map(function(algo){
+					query.split(" ").map(function (word){
+						if(
+							(algo.fname.toLowerCase().indexOf(word.toLowerCase()) != -1) ||
+							(algo.lname.toLowerCase().indexOf(word.toLowerCase()) != -1) ||
+							(algo.employee_code.toLowerCase().indexOf(word.toLowerCase()) != -1)
+						){
+							that.employees_filtered = [algo]
+						}
+					})
 				})
-
-				this.search_result_failed = this.employees_filtered.length == 0 ? true : false
+				this.searching_employee = false
 			}
 			else {
-
-				this.search_show_nothing = true
-				this.employees_filtered = this.employees.data
+				that.employees_filtered = this.employees.data
 			}
 
 
 		},
 
-		// searchEmployee () {
-		//
-		// 	let employees = this.employees.data
-		// 	let that = this
-		// 	let arr = this.employees.data
-		// 	let query = that.search_employee
-		//
-		// 	if (query != '') {
-		//
-		// 		this.search_show_nothing = false
-		// 		this.searching_employee = true
-		// 		arr.map(function(algo){
-		// 			query.split(" ").map(function (word){
-		// 				if(
-		// 					(algo.fname.toLowerCase().indexOf(word.toLowerCase()) != -1) ||
-		// 					(algo.lname.toLowerCase().indexOf(word.toLowerCase()) != -1) ||
-		// 					(algo.employee_code.toLowerCase().indexOf(word.toLowerCase()) != -1)
-		// 				){
-		// 					that.employees_filtered = [algo]
-		// 				}
-		// 			})
-		// 		})
-		// 		this.searching_employee = false
-		// 	}
-		// 	else {
-		// 		this.search_show_nothing = true
-		// 		this.employees_filtered = this.employees.data
-		// 	}
-		//
-		//
-		// },
-
 		taxOption (option) {
-			this.assign_compensation.taxable = option
+			this.assign_compensation.tax = option
 		},
 
 		appendEmployee (id, name) {
@@ -285,7 +230,7 @@ export default {
 			}
 		},
 
-		compensationIndex () {
+		deductionIndex () {
 
 			this.index_compensation_loading = true
 			this.axiosRequest ('GET', this.$store.state.comp + 'compensation?filter=all')
@@ -315,21 +260,21 @@ export default {
 			})
 		},
 
-		compensationAssigning () {
+		deductionAssigning () {
 			this.create_assign_loading = true
 
-			this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation', this.assign_compensation)
-			.then (res => {
-				console.log(res)
-				this.notif = res.data
-				this.tnotif (res)
-				this.create_assign_loading = false
-
-			})
-			.catch (err => {
-				console.log(err)
-				this.create_assign_loading = false
-			})
+			// this.axiosRequest ('POST', this.$store.state.comp + 'compensation', this.compensation)
+			// .then (res => {
+			//
+			// 	this.notif = res.data
+			// 	this.tnotif (res)
+			// 	this.create_assign_loading = false
+			//
+			// })
+			// .catch (err => {
+			// 	console.log(err)
+			// 	this.create_assign_loading = false
+			// })
 		},
 
 	}

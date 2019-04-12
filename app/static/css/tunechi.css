@@ -2,11 +2,10 @@
 * Author: Tunechi aka Pulang Kalabaw
 * @type {[type]}
 */
-
-
-
-.btn-xs	{
-	padding: 5px;
+.default-avatar-md {
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
 }
 
 .required {

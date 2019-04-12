@@ -5,10 +5,18 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub Menus -->
+			<span @click="redirect('compensation.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearfix"></div><br />
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
-					Create new Allowance
+					Create new Compensation
 				</div>
 				<div class="card-body">
 
@@ -18,7 +26,7 @@
 					<form @submit.prevent="compensationCreate()" method="POST">
 
 						<div class="row">
-							<div class="col-md-2">Allowance Name <span class="required">*</span></div>
+							<div class="col-md-2">Compensation Name <span class="required">*</span></div>
 							<div class="col-md-4">
 								<input type="text" v-model="compensation.name" class="form-control form-control-sm" required>
 							</div>
@@ -80,7 +88,7 @@ export default {
 
 			links: [
 				{
-					'label': 'Allowances',
+					'label': 'Compensation',
 					'route': 'compensation.index',
 					'params': {}
 				}
@@ -92,7 +100,7 @@ export default {
 
 		compensationCreate () {
 			this.create_compensation_loading = true
-			this.axiosRequest ('POST', this.$store.state.comp + 'allowance', this.compensation)
+			this.axiosRequest ('POST', this.$store.state.comp + 'compensation', this.compensation)
 			.then (res => {
 
 				this.notif = res.data

@@ -5,6 +5,14 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub menus -->
+			<span @click="redirect('jobs.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearf"></div><br />
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
