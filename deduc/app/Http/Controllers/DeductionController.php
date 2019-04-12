@@ -52,14 +52,13 @@ class DeductionController extends Controller
         // Deduction table
         // * deduction_id
         // * name
-        // * total_amount
+        // * amount
         // * timeframe
         // * interest
         // * deduction
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'total_amount' => 'required|numeric',
-            'timeframe' => 'required'
+            'name' => 'required|string|min:3',
+            'amount' => 'required|numeric',
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -69,8 +68,7 @@ class DeductionController extends Controller
         $deduction_data = Deductions::create([
             'deduction_id' => $deduction_id,
             'name' => $request['name'],
-            'total_amount' => $request['total_amount'],
-            'timeframe' => Carbon::parse($request['timeframe'])->format('Y-m-d'),
+            'amount' => $request['amount'],
             'interest' => $request['interest'],
             'deduction' => $request['deduction']
         ]);
@@ -88,7 +86,7 @@ class DeductionController extends Controller
     {
         $deduction = new Deductions();
 
-        $deduction_data = $deduction->where('deduction_id',$id)->first();
+        $deduction_data['data'] = $deduction->where('deduction_id',$id)->first();
 
         return apiReturn($deduction_data, 'Success!', 'success');
     }
@@ -105,16 +103,16 @@ class DeductionController extends Controller
         $deduction = new Deductions();
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'total_amount' => 'required|numeric',
-            'timeframe' => 'required'
+            'name' => 'required|string|min:3',
+            'amount' => 'required|numeric',
+            'timeframe' => 'required|string'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
         $deduction->where('deduction_id', $id)->update([
             'name' => $request['name'],
-            'total_amount' => $request['total_amount'],
+            'amount' => $request['amount'],
             'timeframe' => Carbon::parse($request['timeframe'])->format('Y-m-d'),
             'interest' => $request['interest'],
             'deduction' => $request['deduction']

@@ -22,4 +22,10 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->get('deduction/{id}','DeductionController@show');
     $router->put('deduction/{id}','DeductionController@update');
     $router->delete('deduction/{id}/delete','DeductionController@destroy');
+
+    // Assign Deduction
+    $router->get('assign-deduction','UserDeductionController@index');
+    $router->post('assign-deduction','UserDeductionController@store');
+    $router->get('assign-deduction/{id}','UserDeductionController@show');
+    $router->put('assign-deduction/{id}','UserDeductionController@update');
 });
