@@ -19,18 +19,22 @@ class PayrollMaster extends Migration
             $table->string('basic_salary');
             $table->string('gross_income');
             $table->string('compensation');
-            $table->string('tax');
             $table->string('deductions');
             $table->string('sss_deduction');
             $table->string('pagibig_deduction');
             $table->string('philhealth_deduction');
+            $table->string('total_government_deduction');
             $table->string('lates');
             $table->string('undertime');
             $table->string('absences');
             $table->string('overtime');
+            $table->string('tax');
+            $table->string('taxable');
+            $table->string('non_taxable');
             $table->string('total');
             $table->string('run_date');
             $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
