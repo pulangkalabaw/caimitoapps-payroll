@@ -17,8 +17,7 @@ class CreateDeductionTable extends Migration
             $table->increments('id');
             $table->string('deduction_id');
             $table->string('name')->nullable();
-            $table->float('total_amount')->decimal('total_amount',2)->nullable();
-            $table->string('timeframe')->nullable();
+            $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
             $table->timestamps();

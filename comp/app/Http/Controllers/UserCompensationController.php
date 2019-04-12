@@ -16,12 +16,24 @@ class UserCompensationController extends Controller
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function index()
+	public function index(Request $request)
 	{
 		$user_compensation = new UserCompensation();
 
+		$user_compensation_data = $user_compensation->with(['getUser','getCompensation'])->paginate(10);
+
+		if($request->has('filter')){
+			if($request->get('filter') == 'all') {
+				$user_compensation_data = $user_compensation->withTrashed()->paginate(10);
+			} else if($request->get('filter') == 'active') {
+				$user_compensation_data = $user_compensation->paginate(10);
+			} else if ($request->get('filter') == 'inactive') {
+				$user_compensation_data = $user_compensation->onlyTrashed()->paginate(10);
+			}
+		}
+
 		$data = [
-			'data' => $user_compensation->with(['getUser','getCompensation'])->paginate(10),
+			'data' => $user_compensation_data,
 			'total' => $user_compensation->count()
 		];
 
@@ -66,7 +78,7 @@ class UserCompensationController extends Controller
 			return apiReturn($request->all(), 'Successfully assigned!', 'success');
 		}
 		else {
-			return apiReturn([], 'Failed to assign', 'success');
+			return apiReturn([], 'Failed to assign', 'failed');
 		}
 
 	}
@@ -86,7 +98,7 @@ class UserCompensationController extends Controller
 			$data['data'] = $user_compensation
 			->where('compensation_id',$id)
 			->with(['getUser','getCompensation'])
-			->firstOrFail();
+			->get();
 			$message = 'Success!';
 			$status = 'success';
 		} else {
@@ -107,7 +119,7 @@ class UserCompensationController extends Controller
 	*/
 	public function update(Request $request, $id)
 	{
-		// not tested yet
+		// not in use yet
 		$user_compensation = new UserCompensation();
 		$compensation = new Compensation();
 
@@ -118,13 +130,13 @@ class UserCompensationController extends Controller
 		]);
 
 		if(!$validator->fails()){
-			$compensation = $compensation->where('compensation_id',$request['compensation_id'])->firstOrFail();
+			$compensation = $compensation->where('compensation_id',$request['compensation_id'])->first();
 
 			$user_compensation->where('user_id',$id)->update([
 				'compensation_id' => $request['compensation_id']
 			]);
 		} else {
-			return apiReturn(null, 'Failed updating compensation to user!', 'failed', $validator->errors());
+			return apiReturn([], 'Failed updating compensation to user!', 'failed', $validator->errors());
 		}
 	}
 
@@ -134,8 +146,14 @@ class UserCompensationController extends Controller
 	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function destroy($id)
+	public function destroy(Request $request, $id)
 	{
-		// create this after deduction
+		$user_compensation = new UserCompensation();
+
+		if($user_compensation->where(['compensation_id' => $request['compensation_id'], 'user_id' => $id])->delete()){
+			return apiReturn([], 'Successful in Deleting' ,'success');
+		} else {
+			return apiReturn([], 'Something went wrong' ,'failed');
+		}
 	}
 }

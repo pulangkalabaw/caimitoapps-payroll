@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDeductionsTable extends Migration
+class CreateUserDeductionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,29 @@ class CreateDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('deductions', function (Blueprint $table) {
+        // User Deduction
+        // * user_id
+        // * deduction_id
+        // * name
+        // * amount
+        // * date_start
+        // * date_end
+        // * interest
+        // * deduction
+        // * reason
+
+        Schema::create('user_deduction', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('user_id');
             $table->string('deduction_id');
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->float('amount')->decimal('total_amount',2)->nullable();
+            $table->string('date_start')->nullable();
+            $table->string('date_end')->nullable();
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
-			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->text('reason')->nullable();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
         });
@@ -33,6 +48,6 @@ class CreateDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deductions');
+        Schema::dropIfExists('user_deduction');
     }
 }
