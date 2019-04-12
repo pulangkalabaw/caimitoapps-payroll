@@ -28,4 +28,5 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->post('assign-deduction','UserDeductionController@store');
     $router->get('assign-deduction/{id}','UserDeductionController@show');
     $router->put('assign-deduction/{id}','UserDeductionController@update');
+    $router->delete('assign-deduction/{id}/delete','UserDeductionController@destroy');
 });

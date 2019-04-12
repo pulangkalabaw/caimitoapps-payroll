@@ -4,9 +4,20 @@
 		<navdir :links='links'></navdir>
 		<div class="clearfix"></div><br />
 
-
-
 		<div id="content">
+
+			<!-- Sub Menus -->
+			<span @click="redirect('compensation.create')" class="btn btn-primary btn-sm btn-tunch">
+				<span class="fa fa-plus-circle"></span>
+				Create new
+			</span>
+			<span @click="redirect('compensation.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearfix"></div><br />
+
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
@@ -23,13 +34,13 @@
 							<!-- Left side -->
 							<div class="col-md-6">
 								<div class="row">
-									<div class="col-md-4">Select duduction <span class="required">*</span></div>
+									<div class="col-md-4">Select deduction <span class="required">*</span></div>
 									<div class="col-md-8">
-										<span v-if="!index_compensation_loading">
-											<select v-model="assign_compensation.allowance_id" class="form-control form-control-sm">
+										<span v-if="!index_deduc_loading">
+											<select v-model="assign_deduc.deduction_id" class="form-control form-control-sm">
 												<option :value="null">Select one</option>
-												<option :value="comp.allowance_id" v-for="comp in compensation.data">
-													{{ comp.name }}
+												<option :value="dd.deduction_id" v-for="dd in deduction.data">
+													{{ dd.name }}
 												</option>
 											</select>
 										</span>
@@ -41,7 +52,7 @@
 								<div class="clearfix"></div><br />
 
 								<div class="row">
-									<div class="col-md-4">Tax option<span class="required">*</span></div>
+									<div class="col-md-4">Tax option <span class="required">*</span></div>
 									<div class="col-md-8">
 										<label>
 											<input type="radio" value="bp" name="tax" @click="taxOption('bp')">
@@ -102,29 +113,41 @@
 								<div class="row">
 									<div class="col-md-12">
 										<span v-if="!index_employees_loading">
-											<input placeholder="search employee" type="text" v-model="search_employee" id="" @keyup="searchEmployee()" class="form-control form-control-sm"><br />
+											<input placeholder="search employee" type="text" v-model="search_employee" id="" @keyup="filterEmployees()" class="form-control form-control-sm"><br />
 										</span>
 										<span v-else>
 											fetching..
 										</span>
 
 										<!-- Employees -->
-										<small>Employees</small><br />
-										<span v-for="employee in employees_filtered"  v-if="!searching_employee">
-											<label>
-												<input :checked="assign_compensation.user_id.includes(employee.user_id)" type="checkbox" @click="appendEmployee(employee.user_id, employee.fname + ' ' + employee.lname)">
-												{{ employee.employee_code }}
-												{{ employee.fname }}
-												{{ employee.lname }}
-											</label>
-											&nbsp;
+										<span v-if="!search_show_nothing">
+											<small>Employees</small><br />
+											<span v-if="!search_result_failed">
+												<span v-for="employee in employees_filtered">
+													<label>
+														<input :checked="assign_deduc.user_id.includes(employee.user_id)" type="checkbox" @click="appendEmployee(employee.user_id, employee.fname + ' ' + employee.lname)">
+														{{ employee.employee_code }}
+														{{ employee.fname }}
+														{{ employee.lname }}
+													</label>
+													&nbsp;
+												</span>
+											</span>
+											<span v-else>
+												No result
+											</span>
+										</span>
+										<span v-else>
+											<small>
+												Search for employee's first,last name and employee code
+											</small>
 										</span>
 									</div>
 								</div>
 
 							</div>
 						</div>
-						<div class="clear"></div><br />
+						<div class="clearfix"></div><br />
 
 					</form>
 
@@ -140,22 +163,23 @@
 export default {
 	data () {
 		return {
+
 			search_employee: '',
 			selected_employee_info: [],
 			search_result_failed: false,
-			searching_employee: false,
+			search_show_nothing: true, // to not output all employee, user must search only
 
-			compensation: [],
-			index_compensation_loading: false,
+			deduction: [],
+			index_deduc_loading: false,
 
 			employees: [],
 			employees_filtered: [],
 			index_employees_loading: true,
 
-			assign_compensation: {
-				allowance_id: null,
+			assign_deduc: {
+				deduction_id: null,
 				user_id: [],
-				tax: null,
+				taxable: null,
 			},
 			create_assign_loading: false,
 
@@ -163,7 +187,7 @@ export default {
 			search_show: false,
 			links: [
 				{
-					'label': 'Deduction',
+					'label': 'Deductions',
 					'route': 'deduction.index',
 					'params': {}
 				}
@@ -172,55 +196,54 @@ export default {
 	},
 
 	created () {
-		// this.deductionIndex()
+		this.deductionIndex()
 		this.employeesIndex()
 	},
 
 	methods: {
 
-		searchEmployee () {
 
+		filterEmployees () {
 			let employees = this.employees.data
 			let that = this
 			let arr = this.employees.data
-			let query = that.search_employee
-			if (query != '') {
-				this.searching_employee = true
-				arr.map(function(algo){
-					query.split(" ").map(function (word){
-						if(
-							(algo.fname.toLowerCase().indexOf(word.toLowerCase()) != -1) ||
-							(algo.lname.toLowerCase().indexOf(word.toLowerCase()) != -1) ||
-							(algo.employee_code.toLowerCase().indexOf(word.toLowerCase()) != -1)
-						){
-							that.employees_filtered = [algo]
-						}
-					})
+			let search_str = that.search_employee
+
+			if (search_str != '') {
+
+				this.search_show_nothing = false
+				this.employees_filtered = arr.filter(x => {
+					return x.fname.toLowerCase().includes(search_str) ||
+					x.lname.toLowerCase().includes(search_str) ||
+					x.employee_code.toLowerCase().includes(search_str)
 				})
-				this.searching_employee = false
+
+				this.search_result_failed = this.employees_filtered.length == 0 ? true : false
 			}
 			else {
-				that.employees_filtered = this.employees.data
+
+				this.search_show_nothing = true
+				this.employees_filtered = this.employees.data
 			}
 
 
 		},
 
 		taxOption (option) {
-			this.assign_compensation.tax = option
+			this.assign_deduc.taxable = option
 		},
 
 		appendEmployee (id, name) {
 
 			let that = this
-			if (this.assign_compensation.user_id.includes(id)) {
-				this.assign_compensation.user_id.splice( this.assign_compensation.user_id.indexOf(id), 1 );
+			if (this.assign_deduc.user_id.includes(id)) {
+				this.assign_deduc.user_id.splice( this.assign_deduc.user_id.indexOf(id), 1 );
 				this.selected_employee_info.splice( this.selected_employee_info.indexOf(name), 1 );
 			}
 			else {
-				this.assign_compensation.user_id.push(id)
+				this.assign_deduc.user_id.push(id)
 				this.selected_employee_info.push(name)
-				// this.selected_employee_info.push(this.assign_compensation.user_id.map(function (x) {
+				// this.selected_employee_info.push(this.assign_deduc.user_id.map(function (x) {
 				// 	for (var i = 0; i < that.employees.data.length; i++) {
 				// 		if (that.employees.data[i].user_id == id) {
 				// 			return that.employees.data[i].fname + ' ' + that.employees.data[i].lname
@@ -232,16 +255,16 @@ export default {
 
 		deductionIndex () {
 
-			this.index_compensation_loading = true
-			this.axiosRequest ('GET', this.$store.state.comp + 'compensation?filter=all')
+			this.index_deduc_loading = true
+			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?filter=all')
 			.then (res => {
-				this.compensation = res.data.data
-				this.index_compensation_loading = false
+				this.deduction = res.data.data
+				this.index_deduc_loading = false
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.index_compensation_loading = false
+				this.index_deduc_loading = false
 			})
 		},
 
@@ -263,18 +286,18 @@ export default {
 		deductionAssigning () {
 			this.create_assign_loading = true
 
-			// this.axiosRequest ('POST', this.$store.state.comp + 'compensation', this.compensation)
-			// .then (res => {
-			//
-			// 	this.notif = res.data
-			// 	this.tnotif (res)
-			// 	this.create_assign_loading = false
-			//
-			// })
-			// .catch (err => {
-			// 	console.log(err)
-			// 	this.create_assign_loading = false
-			// })
+			this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction', this.assign_deduc)
+			.then (res => {
+				console.log(res)
+				this.notif = res.data
+				this.tnotif (res)
+				this.create_assign_loading = false
+
+			})
+			.catch (err => {
+				console.log(err)
+				this.create_assign_loading = false
+			})
 		},
 
 	}

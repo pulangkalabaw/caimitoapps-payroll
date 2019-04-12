@@ -31,6 +31,13 @@ const store =  new Vuex.Store({
 
         comp: 'http://localhost/www/iplus/payroll/dev/comp/',
 
+		/**
+		 * Deduction API Tunnel
+		 *
+		 */
+
+        deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
+
 
 
 		/**

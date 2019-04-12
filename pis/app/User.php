@@ -24,6 +24,12 @@ class User extends Authenticatable
         return $this->hasMany('App\UserCompensation', 'user_id', 'user_id');
     }
 
+	// Get all Deductions
+	public function UserDeduction()
+    {
+        return $this->hasMany('App\UserDeduction', 'user_id', 'user_id');
+    }
+
 	// Payroll Details
     public function UserPayrollDetails(){
         return $this->hasOne('App\UserPayrollDetails', 'user_id', 'user_id');

@@ -11,19 +11,19 @@ export default Vue.mixin({
 
 			switch (string) {
 				case 'probational':
-					r = 'Probational';
-					break;
+				r = 'Probational';
+				break;
 
 				case 'project_based':
-					r = 'Project Based';
-					break;
+				r = 'Project Based';
+				break;
 
 				case 'regular':
-					r = 'Regular';
-					break;
+				r = 'Regular';
+				break;
 
 				default:
-					'-'
+				'-'
 			}
 			return r
 		},

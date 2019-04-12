@@ -139,7 +139,14 @@ class EmployeeController extends Controller
         //
         $User = new User();
 
-        $userdata['data'] = $User->with(['UserDetails.Department', 'UserPayrollDetails', 'UserCompensation', 'UserCompensation.getCompensation'])->where('user_id', $id)->first();
+        $userdata['data'] = $User->with([
+			'UserDetails.Department',
+			'UserPayrollDetails',
+			'UserCompensation',
+			'UserCompensation.getCompensation',
+			'UserDeduction',
+			'UserDeduction.getDeduction'
+			])->where('user_id', $id)->first();
 
         if($userdata){
             return apiReturn($userdata, 'Success', 'success');

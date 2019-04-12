@@ -7,44 +7,44 @@
 		<div id="content">
 
 			<!-- Sub menus -->
-			<span @click="redirect('employees.create')" class="btn btn-primary btn-sm btn-tunch">
+			<span @click="redirect('deduction.create')" class="btn btn-primary btn-sm btn-tunch">
 				<span class="fa fa-plus-circle"></span>
 				Create new
 			</span>
-			<span @click="redirect('employees.index')" class="btn btn-default btn-sm btn-tunch-default">
+			<span @click="redirect('deduction.index')" class="btn btn-default btn-sm btn-tunch-default">
 				<span class="fa fa-th-list"></span>
 				View all
 			</span>
-
+			<div class="clearfix"></div><br />
 
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-tasks"></span>
-					Allowances
+					Deductions
 				</div>
 				<div class="card-body">
-					<div v-if="!allowances_loading">
+					<div v-if="!deduction_loading">
 						<table class="table table-bordered table-hovered" style="width:100%">
 							<thead>
 								<tr>
-									<th width="40%">Allowance name</th>
+									<th width="40%">Deduction name</th>
 									<th width="30%">Amount</th>
 									<th width="30%">Taxable</th>
 								</tr>
 							</thead>
 
-							<tbody v-for="allowance in allowances.data.data" :key="allowance.id">
+							<tbody v-for="deduction in deductions.data.data" :key="deduction.id">
 								<tr>
 									<td>
-										<span class="span-link-underline" @click="redirect('allowances.show', {id:allowance.allowance_id})">
-											{{ allowance.name }}
+										<span class="span-link-underline" @click="redirect('deduction.show', {id:deduction.deduction_id})">
+											{{ deduction.name }}
 										</span>
 									</td>
 									<td>
-										{{ allowance.amount }}
+										{{ deduction.amount }}
 									</td>
 									<td>
-										{{ allowance.taxable ? 'Yes' : 'No' }}
+										{{ deduction.taxable }}
 									</td>
 								</tr>
 							</tbody>
@@ -52,9 +52,9 @@
 						</table>
 
 						<hr>
-						Total departments: <b>{{ allowances.total }}</b>
+						Total departments: <b>{{ deductions.total }}</b>
 						<br /><br />
-						<pagination :data="allowances.data" @pagination-change-page="allowancesIndex"></pagination>
+						<pagination :data="deductions.data" @pagination-change-page="allowancesIndex"></pagination>
 
 					</div>
 				</div>
@@ -68,12 +68,12 @@
 export default {
 	data () {
 		return {
-			allowances: [],
-			allowances_loading: true,
+			deductions: [],
+			deduction_loading: true,
 			links: [
 				{
-					'label': 'Allowances',
-					'route': 'allowances.index',
+					'label': 'Deductions',
+					'route': 'deduction.index',
 					'params': {}
 				}
 			]
@@ -81,24 +81,24 @@ export default {
 	},
 
 	created () {
-		this.allowancesIndex ();
+		this.deductionIndex ();
 	},
 
 	methods: {
 
-		allowancesIndex (page = 1) {
+		deductionIndex (page = 1) {
 
-			this.allowances_loading = true
-			this.axiosRequest ('GET', this.$store.state.comp + 'allowance?page=' + page)
+			this.deduction_loading = true
+			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?page=' + page)
 			.then (res => {
 
-				this.allowances  = res.data.data
-				this.allowances_loading = false
+				this.deductions  = res.data.data
+				this.deduction_loading = false
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.allowances_loading = false
+				this.deduction_loading = false
 			})
 		}
 	}

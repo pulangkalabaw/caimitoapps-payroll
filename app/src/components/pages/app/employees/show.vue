@@ -68,7 +68,7 @@
 									<span class="fa fa-plus fa-xx"></span>
 									Add Compensation
 								</li>
-								<li class="list-group-item span-link" @click="current_tab = 'oi'">
+								<li class="list-group-item span-link" @click="current_tab = 'add_deduc'">
 									<span class="fa fa-plus fa-xx"></span>
 									Add Deduction
 								</li>
@@ -129,6 +129,14 @@
 									</div>
 
 
+									<!--
+									Add deduction
+									***-->
+									<div v-if="current_tab == 'add_deduc'">
+										<add-deduc :employee="employee"></add-deduc>
+									</div>
+
+
 
 								</div>
 							</div>
@@ -156,6 +164,7 @@ import oi from '@/components/pages/app/employees/includes/oi'
 import co from '@/components/pages/app/employees/includes/co'
 import pd from '@/components/pages/app/employees/includes/pd'
 import add_comp from '@/components/pages/app/employees/includes/add_comp'
+import add_deduc from '@/components/pages/app/employees/includes/add_deduc'
 
 export default {
 	components: {
@@ -165,6 +174,7 @@ export default {
 		'co': co,
 		'pd': pd,
 		'add-comp': add_comp,
+		'add-deduc': add_deduc,
 	},
 	data () {
 		return {

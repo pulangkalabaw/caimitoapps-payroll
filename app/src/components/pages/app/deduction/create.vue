@@ -8,19 +8,19 @@
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
-					Create Allowance
+					Create new Deduction
 				</div>
 				<div class="card-body">
 
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
-					<form @submit.prevent="compensationCreate()" method="POST">
+					<form @submit.prevent="deductionCreate()" method="POST">
 
 						<div class="row">
-							<div class="col-md-2">Allowance Name <span class="required">*</span></div>
+							<div class="col-md-2">Deduction Name <span class="required">*</span></div>
 							<div class="col-md-4">
-								<input type="text" v-model="compensation.name" class="form-control form-control-sm" required>
+								<input type="text" v-model="deduction.name" class="form-control form-control-sm" required>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
@@ -28,7 +28,7 @@
 						<div class="row">
 							<div class="col-md-2">Amount <span class="required">*</span></div>
 							<div class="col-md-4">
-								<input type="text" v-model="compensation.amount" class="form-control form-control-sm" required>
+								<input type="text" v-model="deduction.amount" class="form-control form-control-sm" required>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
@@ -36,9 +36,9 @@
 						<div class="row">
 							<div class="col-md-2">Taxable <span class="required">*</span></div>
 							<div class="col-md-4">
-								<select v-model="compensation.taxable" class="form-control form-control-sm">
-									<option value="1">Yes</option>
-									<option value="0">No</option>
+								<select v-model="deduction.taxable" class="form-control form-control-sm">
+									<option value="bp">Before Payroll</option>
+									<option value="ap">After Payroll</option>
 								</select>
 							</div>
 						</div>
@@ -47,14 +47,14 @@
 
 						<div class="row">
 							<div class="col-md-4 offset-md-2 text-right">
-								<button class="btn btn-success btn-sm" :disabled="create_compensation_loading">
-									<span v-if="create_compensation_loading">
+								<button class="btn btn-success btn-sm" :disabled="create_deduction_loading">
+									<span v-if="create_deduction_loading">
 										Submiting..
-										<span class="fa fa-cog" :class="{ 'fa-spin': create_compensation_loading }"></span>
+										<span class="fa fa-cog" :class="{ 'fa-spin': create_deduction_loading }"></span>
 									</span>
 									<span v-else>
 										Submit
-										<span class="fa fa-cog" :class="{ 'fa-spin': create_compensation_loading }"></span>
+										<span class="fa fa-cog" :class="{ 'fa-spin': create_deduction_loading }"></span>
 									</span>
 								</button>
 							</div>
@@ -74,8 +74,8 @@
 export default {
 	data () {
 		return {
-			compensation: {},
-			create_compensation_loading: false,
+			deduction: {},
+			create_deduction_loading: false,
 			notif: '',
 
 			links: [
@@ -90,19 +90,19 @@ export default {
 
 	methods: {
 
-		compensationCreate () {
-			this.create_compensation_loading = true
-			this.axiosRequest ('POST', this.$store.state.comp + 'allowance', this.compensation)
+		deductionCreate () {
+			this.create_deduction_loading = true
+			this.axiosRequest ('POST', this.$store.state.deduc + 'deduction', this.deduction)
 			.then (res => {
 
 				this.notif = res.data
 				this.tnotif (res)
-				this.create_compensation_loading = false
+				this.create_deduction_loading = false
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.create_compensation_loading = false
+				this.create_deduction_loading = false
 			})
 		},
 

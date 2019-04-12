@@ -59,11 +59,11 @@ class UserDeductionController extends Controller
                 'deduction_id' => $request['deduction_id'],
                 'name' => $deduction['name'],
                 'amount' => $deduction['amount'],
-                'date_start' => Carbon::parse($request['date_start'])->format('d/m/Y'),
-                'date_end' => Carbon::parse($request['date_end'])->format('d/m/Y'),
-                'interest' => $deduction['interest'],
-                'deduction' => $deduction['deduction'],
-                'reason' => $request['reason']
+                // 'date_start' => Carbon::parse($request['date_start'])->format('d/m/Y'),
+                // 'date_end' => Carbon::parse($request['date_end'])->format('d/m/Y'),
+                // 'interest' => $deduction['interest'],
+                // 'deduction' => $deduction['deduction'],
+                // 'reason' => $request['reason']
             ];
         }
 
@@ -130,8 +130,18 @@ class UserDeductionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+		$user_deduc = new UserDeduction();
+
+		// Take note
+		// Before you delete the user compensation
+		// copy that row to user compensation history
+
+		if($user_deduc->where('id', $request['ud_id'])->delete()){
+			return apiReturn([], 'Remove Successful' ,'success');
+		} else {
+			return apiReturn([], 'Failed to remove' ,'failed');
+		}
     }
 }

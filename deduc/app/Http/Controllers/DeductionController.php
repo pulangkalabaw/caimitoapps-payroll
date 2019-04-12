@@ -20,22 +20,26 @@ class DeductionController extends Controller
     public function index(Request $request)
     {
         $deduction = new Deductions();
+		$rows = $request->get('show') ? $request->get('show') : 10;
 
-        $deduction_data = $deduction->paginate(10);
-        
         if($request->has('filter')){
             if($request->get('filter') == 'all'){
-                $deduction_data = $deduction->withTrashed()->paginate(10);
-            } else if($request->get('filter') == 'active') {
-                $deduction_data = $deduction->paginate(10);
-            } else if ($request->get('filter') == 'inactive'){
-                $deduction_data = $deduction->onlyTrashed()->paginate(10);
+                $deduction_data = $deduction->withTrashed()->get();
+            }
+			else if($request->get('filter') == 'active') {
+                $deduction_data = $deduction->get();
+            }
+			else if ($request->get('filter') == 'inactive'){
+                $deduction_data = $deduction->onlyTrashed()->get();
             }
         }
+		else {
+			$deduction_data = $deduction->paginate($rows);
+		}
 
         $data = [
             'data' => $deduction_data,
-            'total' => $deduction->count()
+            'total' => $deduction_data->count()
         ];
 
         return apiReturn($data, 'Success', 'success');
@@ -69,8 +73,8 @@ class DeductionController extends Controller
             'deduction_id' => $deduction_id,
             'name' => $request['name'],
             'amount' => $request['amount'],
-            'interest' => $request['interest'],
-            'deduction' => $request['deduction']
+            // 'interest' => $request['interest'],
+            // 'deduction' => $request['deduction']
         ]);
 
         return apiReturn($deduction_data, 'Successful in creating deduction', 'success');

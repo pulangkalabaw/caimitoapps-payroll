@@ -11,14 +11,6 @@
 				<span class="fa fa-plus-circle"></span>
 				Create new
 			</span>
-			<span @click="redirect('employees.create')" class="btn btn-primary btn-sm btn-tunch">
-				<span class="fa fa-plus-circle"></span>
-				Assign Compensation
-			</span>
-			<span @click="redirect('employees.create')" class="btn btn-primary btn-sm btn-tunch">
-				<span class="fa fa-plus-circle"></span>
-				Assign Deduction
-			</span>
 			<div class="clearfix"></div><br />
 
 			<!-- Card -->

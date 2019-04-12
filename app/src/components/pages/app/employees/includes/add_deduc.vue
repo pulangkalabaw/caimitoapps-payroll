@@ -1,7 +1,7 @@
 <template lang="html">
 	<div>
 		<small>
-			<b>Add Compensation</b>
+			<b>Add Deduction</b>
 		</small>
 		<div v-if="!show_employee_loading">
 			<form @submit.prevent="addCompensation()" method="POST">
@@ -13,14 +13,14 @@
 				<table class="table">
 					<tbody>
 						<!-- Add new Allowance -->
-						<tr v-if="!index_compensation_loading">
+						<tr v-if="!index_deduc_loading">
 							<td width="30%">
-								Select Compensation:
+								Select Deduction:
 							</td>
 							<td>
-								<select v-model="assign_compensation.compensation_id" class="form-control form-control-sm" required>
-									<option :value="comp.compensation_id" v-for="comp in compensation.data">
-										{{ comp.name }}
+								<select v-model="assign_deduc.deduction_id" class="form-control form-control-sm" required>
+									<option :value="dd.deduction_id" v-for="dd in deduction.data">
+										{{ dd.name }}
 									</option>
 								</select>
 							</td>
@@ -28,18 +28,18 @@
 
 
 						<!-- Taxable -->
-						<tr v-if="!index_compensation_loading">
+						<tr v-if="!index_deduc_loading">
 							<td>
 								Taxable:
 							</td>
 							<td>
 								<label>
-									<input type="radio" value="nt" name="tax" @click="taxOption(0)" required>
-									Non-Taxable
+									<input type="radio" value="bp" name="tax" @click="taxOption('bp')" required>
+									Before Payroll
 								</label>
 								<label>
-									<input type="radio" value="t" name="tax" @click="taxOption(1)" required>
-									Taxable
+									<input type="radio" value="ap" name="tax" @click="taxOption('ap')" required>
+									After Payroll
 								</label>
 							</td>
 						</tr>
@@ -48,14 +48,14 @@
 						<tr>
 							<td></td>
 							<td class="text-right">
-								<button class="btn btn-success btn-sm" :disabled="create_ucompensation_loading">
-									<span v-if="create_ucompensation_loading">
+								<button class="btn btn-success btn-sm" :disabled="create_udeduc_loading">
+									<span v-if="create_udeduc_loading">
 										Submiting..
-										<span class="fa fa-cog" :class="{ 'fa-spin': create_ucompensation_loading }"></span>
+										<span class="fa fa-cog" :class="{ 'fa-spin': create_udeduc_loading }"></span>
 									</span>
 									<span v-else>
 										Submit
-										<span class="fa fa-cog" :class="{ 'fa-spin': create_ucompensation_loading }"></span>
+										<span class="fa fa-cog" :class="{ 'fa-spin': create_udeduc_loading }"></span>
 									</span>
 								</button>
 							</td>
@@ -67,23 +67,24 @@
 			<br />
 
 			<!-- List of compensations -->
+			<!-- {{ employee }} -->
 			<small>
 				<b>
 					Current Compensation
-					({{ employee.user_compensation != null ? employee.user_compensation.length : 0 }})
+					({{ employee.user_deduction != null ? employee.user_deduction.length : 0 }})
 				</b>
 			</small>
-			<table class="table" v-if="employee.user_compensation.length != 0">
+			<table class="table" v-if="employee.user_deduction.length != 0">
 				<tbody>
 					<tr>
 						<td>
-							<div v-if="employee.user_compensation">
+							<div v-if="employee.user_deduction">
 								<ul class="list-group">
-									<li class="list-group-item span-link" v-for="uc in employee.user_compensation">
+									<li class="list-group-item span-link" v-for="uc in employee.user_deduction">
 										<label>
-											Allowance: {{ ucfirst(uc.get_compensation.name) }} <br />
+											Allowance: {{ ucfirst(uc.get_deduction.name) }} <br />
 											Amount: {{ uc.amount }} <br />
-											Taxable: {{ uc.taxable ? 'Taxable' : 'Non-Taxable' }} <br />
+											Taxable: {{ uc.taxable }} <br />
 											Date start: {{ uc.created_at }} <br />
 											<span class="span-link" @click="removeCompensation(uc.id)">
 												<span class="fa fa-times"></span>
@@ -108,15 +109,15 @@
 export default {
 	data () {
 		return {
-			compensation: [],
-			index_compensation_loading: true,
-			create_ucompensation_loading: false,
+			deduction: [],
+			index_deduc_loading: true,
+			create_udeduc_loading: false,
 			employee: {},
 			show_employee_loading: true,
 
 			notif: '',
-			assign_compensation: {
-				compensation_id: null,
+			assign_deduc: {
+				deduction_id: null,
 				user_id: [],
 				taxable: null,
 			},
@@ -124,7 +125,7 @@ export default {
 	},
 	created () {
 		this.employeeShow()
-		this.compensationIndex()
+		this.deductionIndex()
 	},
 
 	methods: {
@@ -133,9 +134,9 @@ export default {
 
 			let params = {
 				_method: 'DELETE',
-				uc_id: id,
+				ud_id: id,
 			}
-			this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation/' + this.$route.params.id + '/delete', params)
+			this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction/' + this.$route.params.id + '/delete', params)
 			.then (res => {
 
 				this.notif = res.data
@@ -150,28 +151,28 @@ export default {
 
 		addCompensation () {
 
-			this.assign_compensation.user_id = []
-			this.assign_compensation.user_id.push(this.$route.params.id)
+			this.assign_deduc.user_id = []
+			this.assign_deduc.user_id.push(this.$route.params.id)
 
-			this.create_ucompensation_loading = true
-			this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation', this.assign_compensation)
+			this.create_udeduc_loading = true
+			this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction', this.assign_deduc)
 			.then (res => {
 
 				this.notif = res.data
 				this.tnotif (res)
-				this.create_ucompensation_loading = false
+				this.create_udeduc_loading = false
 				this.employeeShow()
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.create_ucompensation_loading = false
+				this.create_udeduc_loading = false
 			})
 
 		},
 
 		taxOption (option) {
-			this.assign_compensation.taxable = option
+			this.assign_deduc.taxable = option
 		},
 
 		employeeShow () {
@@ -192,18 +193,19 @@ export default {
 
 		},
 
-		compensationIndex () {
+		deductionIndex () {
 
-			this.index_compensation_loading = true
-			this.axiosRequest ('GET', this.$store.state.comp + 'compensation?filter=all')
+			this.index_deduc_loading = true
+			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?filter=all')
 			.then (res => {
-				this.compensation = res.data.data
-				this.index_compensation_loading = false
+
+				this.deduction = res.data.data
+				this.index_deduc_loading = false
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.index_compensation_loading = false
+				this.index_deduc_loading = false
 			})
 		},
 	}
