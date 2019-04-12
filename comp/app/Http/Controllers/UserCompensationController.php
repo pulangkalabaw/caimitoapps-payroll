@@ -16,12 +16,24 @@ class UserCompensationController extends Controller
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function index()
+	public function index(Request $request)
 	{
 		$user_compensation = new UserCompensation();
 
+		$user_compensation_data = $user_compensation->with(['getUser','getCompensation'])->paginate(10);
+
+		if($request->has('filter')){
+			if($request->get('filter') == 'all') {
+				$user_compensation_data = $user_compensation->withTrashed()->paginate(10);
+			} else if($request->get('filter') == 'active') {
+				$user_compensation_data = $user_compensation->paginate(10);
+			} else if ($request->get('filter') == 'inactive') {
+				$user_compensation_data = $user_compensation->onlyTrashed()->paginate(10);
+			}
+		}
+
 		$data = [
-			'data' => $user_compensation->with(['getUser','getCompensation'])->paginate(10),
+			'data' => $user_compensation_data,
 			'total' => $user_compensation->count()
 		];
 
@@ -134,8 +146,14 @@ class UserCompensationController extends Controller
 	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function destroy($id)
+	public function destroy(Request $request, $id)
 	{
-		// create this after deduction
+		$user_compensation = new UserCompensation();
+
+		if($user_compensation->where(['compensation_id' => $request['compensation_id'], 'user_id' => $id])->delete()){
+			return apiReturn([], 'Successful in Deleting' ,'success');
+		} else {
+			return apiReturn([], 'Something went wrong' ,'failed');
+		}
 	}
 }

@@ -21,6 +21,8 @@ class DeductionController extends Controller
     {
         $deduction = new Deductions();
 
+        $deduction_data = $deduction->paginate(10);
+        
         if($request->has('filter')){
             if($request->get('filter') == 'all'){
                 $deduction_data = $deduction->withTrashed()->paginate(10);
@@ -29,8 +31,6 @@ class DeductionController extends Controller
             } else if ($request->get('filter') == 'inactive'){
                 $deduction_data = $deduction->onlyTrashed()->paginate(10);
             }
-        } else {
-            $deduction_data = $deduction->paginate(10);
         }
 
         $data = [
