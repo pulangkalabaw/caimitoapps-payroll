@@ -26,8 +26,9 @@ class PayrollMaster extends Migration
             $table->string('philhealth_deduction');
             $table->string('lates');
             $table->string('undertime');
-            $table->string('overtime');
             $table->string('absences');
+            $table->string('overtime');
+            $table->string('total');
             $table->string('run_date');
             $table->timestamp('created_at')->nullable();
         });

@@ -233,24 +233,25 @@ function withholding_tax(){
     $witholding_tax[7]['compensation_range_to'] = 16666;
     $witholding_tax[7]['prescribed_withholding_tax'] = json_encode([.20, 0]);
 
-    $witholding_tax[7]['wage_type'] = 'semi-monthly';
-    $witholding_tax[7]['compensation_range_from'] = 16667;
-    $witholding_tax[7]['compensation_range_to'] = 33332;
-    $witholding_tax[7]['prescribed_withholding_tax'] = json_encode([.25, 1250.00]);
-
     $witholding_tax[8]['wage_type'] = 'semi-monthly';
-    $witholding_tax[8]['compensation_range_from'] = 33333;
-    $witholding_tax[8]['compensation_range_to'] = 83332;
-    $witholding_tax[8]['prescribed_withholding_tax'] = json_encode([.30, 5416.67]);
+    $witholding_tax[8]['compensation_range_from'] = 16667;
+    $witholding_tax[8]['compensation_range_to'] = 33332;
+    $witholding_tax[8]['prescribed_withholding_tax'] = json_encode([.25, 1250.00]);
 
     $witholding_tax[9]['wage_type'] = 'semi-monthly';
-    $witholding_tax[9]['compensation_range_from'] = 83333;
-    $witholding_tax[9]['compensation_range_to'] = 333332;
-    $witholding_tax[9]['prescribed_withholding_tax'] = json_encode([.32, 20416.67]);
+    $witholding_tax[9]['compensation_range_from'] = 33333;
+    $witholding_tax[9]['compensation_range_to'] = 83332;
+    $witholding_tax[9]['prescribed_withholding_tax'] = json_encode([.30, 5416.67]);
 
     $witholding_tax[10]['wage_type'] = 'semi-monthly';
-    $witholding_tax[10]['compensation_range_from'] = 333333;
-    $witholding_tax[10]['compensation_range_to'] = 'and above';
-    $witholding_tax[10]['prescribed_withholding_tax'] = json_encode([.35, 100416.67]);
+    $witholding_tax[10]['compensation_range_from'] = 83333;
+    $witholding_tax[10]['compensation_range_to'] = 333332;
+    $witholding_tax[10]['prescribed_withholding_tax'] = json_encode([.32, 20416.67]);
 
+    $witholding_tax[11]['wage_type'] = 'semi-monthly';
+    $witholding_tax[11]['compensation_range_from'] = 333333;
+    $witholding_tax[11]['compensation_range_to'] = 'and above';
+    $witholding_tax[11]['prescribed_withholding_tax'] = json_encode([.35, 100416.67]);
+
+    return $witholding_tax;
 }
