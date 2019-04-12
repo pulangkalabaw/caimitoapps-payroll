@@ -1,37 +1,40 @@
 <template lang="html">
- <div>
-	 <table class="table">
- 		<tbody>
+	<div>
+		<small>
+			<b>Basic information</b>
+		</small>
+		<table class="table">
+			<tbody>
 
- 			<!-- Email -->
- 			<tr>
- 				<td width="20%">Email</td>
- 				<td>
- 					{{ employee.email }}
- 				</td>
- 			</tr>
+				<!-- Email -->
+				<tr>
+					<td width="20%">Email</td>
+					<td>
+						{{ employee.email }}
+					</td>
+				</tr>
 
- 			<!-- Suffix -->
- 			<tr>
- 				<td width="20%">Suffix</td>
- 				<td>
- 					{{ employee.suffix ? employee.suffix : 'No suffix' }}
- 				</td>
- 			</tr>
+				<!-- Suffix -->
+				<tr>
+					<td width="20%">Suffix</td>
+					<td>
+						{{ employee.suffix ? ucfirst(employee.suffix) : 'No suffix' }}
+					</td>
+				</tr>
 
- 			<!-- Status -->
- 			<tr>
- 				<td width="20%">
- 					Status
- 				</td>
- 				<td>
- 					{{ employee.status ? 'Active account' : 'Deactived account' }}
- 				</td>
- 			</tr>
+				<!-- Status -->
+				<tr>
+					<td width="20%">
+						Status
+					</td>
+					<td>
+						{{ employee.status ? 'Active account' : 'Deactived account' }}
+					</td>
+				</tr>
 
- 		</tbody>
- 	</table>
- </div>
+			</tbody>
+		</table>
+	</div>
 </template>
 
 <script>

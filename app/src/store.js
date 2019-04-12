@@ -43,7 +43,7 @@ const store =  new Vuex.Store({
 
 
         /**
-         * Authentication API Tunnel
+         * Holiday Leave API Tunnel
          *
          */
 

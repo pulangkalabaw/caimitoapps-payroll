@@ -291,7 +291,7 @@
 
 										<div class="row">
 											<div class="col-md-12">
-												Employment type<br />
+												Employment status<br />
 												<select class="form-control form-control-sm" v-model="employee.employment_status" required>
 													<option value="hired" selected>Hired</option>
 													<option value="resigned">Resigned</option>

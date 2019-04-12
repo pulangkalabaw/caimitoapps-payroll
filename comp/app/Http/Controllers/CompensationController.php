@@ -18,6 +18,7 @@ class CompensationController extends Controller
 	public function index(Request $request)
 	{
 		$compensation = new Compensation();
+		$rows = $request->get('show') ? $request->get('show') : 10;
 
 		if($request->has('filter')) {
 

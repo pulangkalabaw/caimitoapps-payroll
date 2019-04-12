@@ -25,6 +25,12 @@
 							<span class="fa fa-users"></span>
 							Employee
 						</div>
+						<div class="col-md-6 text-right" v-if="valid">
+							<span class="span-link btn-sm" @click="redirect('employees.edit', {id:employee.user_id})">
+								<span class="fa fa-edit"></span>
+								Edit Profile
+							</span>
+						</div>
 					</div>
 				</div>
 				<div class="card-body" v-if="valid">
@@ -34,25 +40,48 @@
 						<div class="col-md-3">
 							<img src="/static/img/default-avatar.png" alt="Avatar" class="default-avatar-md">
 							<hr>
-							<ul>
-								<li class="active" @click="current_tab = 'bi'">
+
+							<small>
+								<b>Main Menu</b>
+							</small>
+							<ul class="list-group">
+								<li class="list-group-item span-link" @click="current_tab = 'bi'">
 									Basic Information
 								</li>
-								<li @click="current_tab = 'oi'">
+								<li class="list-group-item span-link" @click="current_tab = 'oi'">
 									Other Information
 								</li>
-								<li>
+								<li class="list-group-item span-link" @click="current_tab = 'co'">
 									Company
 								</li>
-								<li>
+								<li class="list-group-item span-link" @click="current_tab = 'pd'">
 									Payroll Details
+								</li>
+							</ul>
+							<br />
+
+							<small>
+								<b>Other</b>
+							</small>
+							<ul class="list-group">
+								<li class="list-group-item span-link" @click="current_tab = 'add_comp'">
+									<span class="fa fa-plus fa-xx"></span>
+									Add Compensation
+								</li>
+								<li class="list-group-item span-link" @click="current_tab = 'oi'">
+									<span class="fa fa-plus fa-xx"></span>
+									Add Deduction
+								</li>
+								<li class="list-group-item span-link" @click="current_tab = 'oi'">
+									<span class="fa fa-plus fa-xx"></span>
+									Add loan
 								</li>
 							</ul>
 						</div>
 
 						<!-- Right side -->
 						<div class="col-md-9">
-{{ current_tab }}
+
 							<div class="row">
 								<div class="col-md-12">
 									<h1>
@@ -61,6 +90,7 @@
 										{{ employee.fname }}
 										{{ employee.mname }}
 									</h1>
+									<!-- {{ current_tab }} -->
 
 									<!--
 									Basic Information
@@ -76,6 +106,28 @@
 										<oi :employee="employee"></oi>
 									</div>
 
+									<!--
+									Company
+									***-->
+									<div v-if="current_tab == 'co'">
+										<co :employee="employee"></co>
+									</div>
+
+									<!--
+									Payroll Details
+									***-->
+									<div v-if="current_tab == 'pd'">
+										<pd :employee="employee"></pd>
+									</div>
+
+
+									<!--
+									Add compensation
+									***-->
+									<div v-if="current_tab == 'add_comp'">
+										<add-comp :employee="employee"></add-comp>
+									</div>
+
 
 
 								</div>
@@ -85,8 +137,8 @@
 						</div>
 
 					</div>
+					<!-- {{employee }} -->
 
-					{{ employee }}
 				</div> <!-- Card body -->
 				<div class="card-body" v-else>
 					This page either under maintenance or not exists!
@@ -101,17 +153,24 @@
 import Tabs from 'vue-tabs-with-active-line';
 import bi from '@/components/pages/app/employees/includes/bi'
 import oi from '@/components/pages/app/employees/includes/oi'
+import co from '@/components/pages/app/employees/includes/co'
+import pd from '@/components/pages/app/employees/includes/pd'
+import add_comp from '@/components/pages/app/employees/includes/add_comp'
 
 export default {
 	components: {
 		Tabs,
 		'bi': bi,
 		'oi': oi,
+		'co': co,
+		'pd': pd,
+		'add-comp': add_comp,
 	},
 	data () {
 		return {
 			current_tab: 'bi',
 			show_employee_loading: true,
+			employee: {},
 
 			notif: '',
 

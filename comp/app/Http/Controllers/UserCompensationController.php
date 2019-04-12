@@ -123,7 +123,7 @@ class UserCompensationController extends Controller
 		$user_compensation = new UserCompensation();
 		$compensation = new Compensation();
 
-		$validator = Validatior::make($request->all(), [
+		$validator = Validator::make($request->all(), [
 			'compensation_id' => 'required'
 		],[
 			'compensation_id.required' => 'Please select a compensation!'
@@ -150,10 +150,14 @@ class UserCompensationController extends Controller
 	{
 		$user_compensation = new UserCompensation();
 
-		if($user_compensation->where(['compensation_id' => $request['compensation_id'], 'user_id' => $id])->delete()){
-			return apiReturn([], 'Successful in Deleting' ,'success');
+		// Take note
+		// Before you delete the user compensation
+		// copy that row to user compensation history
+
+		if($user_compensation->where('id', $request['uc_id'])->delete()){
+			return apiReturn([], 'Remove Successful' ,'success');
 		} else {
-			return apiReturn([], 'Something went wrong' ,'failed');
+			return apiReturn([], 'Failed to remove' ,'failed');
 		}
 	}
 }

@@ -25,15 +25,11 @@
 							<span class="fa fa-users"></span>
 							Employee
 						</div>
-						<div class="col-md-6 text-right">
-							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
-								<span class="fa fa-warning"></span>
-								Go to Edit mode
-							</button>
-							<button v-else @click="editMode(false)" class="btn btn-sm btn-default">
-								<span class="fa fa-times-circle"></span>
-								Exit Edit mode
-							</button>
+						<div class="col-md-6 text-right" v-if="valid">
+							<span class="span-link btn-sm" @click="redirect('employees.show', {id:employee.user_id})">
+								<span class="fa fa-eye"></span>
+								Exit Edit Profile
+							</span>
 						</div>
 
 					</div>
@@ -101,7 +97,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Suffix <span class="required">*</span><br />
-												<select  :disabled="!edit_mode"class="form-control form-control-sm" v-model="employee.suffix" required>
+												<select class="form-control form-control-sm" v-model="employee.suffix" required>
 													<option value="mr">Mr.</option>
 													<option value="mrs">Mrs.</option>
 													<option value="ms">Ms.</option>
@@ -153,7 +149,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row" v-if="edit_mode">
+								<div class="row">
 									<div class="col-md-12 text-right">
 										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
 											<span v-if="update_employee_loading">
@@ -280,7 +276,7 @@
 									</div>
 								</div>
 
-								<div class="row" v-if="edit_mode">
+								<div class="row">
 									<div class="col-md-12 text-right">
 										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
 											<span v-if="update_employee_loading">
@@ -361,7 +357,7 @@
 									</div>
 								</div>
 
-								<div class="row" v-if="edit_mode">
+								<div class="row">
 									<div class="col-md-12 text-right">
 										<button class="btn btn-success btn-sm" :disabled="update_employee_loading">
 											<span v-if="update_employee_loading">
@@ -502,7 +498,7 @@
 									</div>
 								</div>
 
-								<div class="row" v-if="edit_mode">
+								<div class="row">
 									<div class="col-md-12 text-right">
 										<span @click="currentTab ='co'" class="btn btn-primary btn-sm">
 											<span class="fa fa-chevron-left"></span>

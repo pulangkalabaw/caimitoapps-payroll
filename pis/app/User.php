@@ -18,6 +18,13 @@ class User extends Authenticatable
         return $this->hasOne('App\UserDetails', 'user_id', 'user_id');
     }
 
+	// Get all Allowances
+	public function UserCompensation()
+    {
+        return $this->hasMany('App\UserCompensation', 'user_id', 'user_id');
+    }
+
+	// Payroll Details
     public function UserPayrollDetails(){
         return $this->hasOne('App\UserPayrollDetails', 'user_id', 'user_id');
     }
