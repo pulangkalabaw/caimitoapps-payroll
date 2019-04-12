@@ -77,7 +77,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												First name <span class="required">*</span><br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.fname" class="form-control form-control-sm" required>
+												<input type="text" v-model="employee.fname" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -85,7 +85,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Middle name <span class="required">*</span><br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.mname" class="form-control form-control-sm" required>
+												<input type="text" v-model="employee.mname" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -93,7 +93,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Last name <span class="required">*</span><br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.lname" class="form-control form-control-sm" required>
+												<input type="text" v-model="employee.lname" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -113,7 +113,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employee code <span class="required">*</span><br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.employee_code" class="form-control form-control-sm" required>
+												<input type="text" v-model="employee.employee_code" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -124,7 +124,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Email <span class="required">*</span><br />
-												<input :disabled="!edit_mode" type="email" v-model="employee.email" class="form-control form-control-sm" required>
+												<input type="email" v-model="employee.email" class="form-control form-control-sm" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -134,7 +134,7 @@
 											<div class="row">
 												<div class="col-md-12">
 													Password <br />
-													<input :disabled="!edit_mode" type="password" v-model="employee.password" class="form-control form-control-sm">
+													<input type="password" v-model="employee.password" class="form-control form-control-sm">
 													<small class="">
 														<span class="fa fa-info-circle"></span>
 														Leave it blank, if no change
@@ -146,7 +146,7 @@
 											<div class="row">
 												<div class="col-md-12">
 													Confirm Password <br />
-													<input :disabled="!edit_mode" type="password" v-model="employee.password_confirmation" class="form-control form-control-sm">
+													<input type="password" v-model="employee.password_confirmation" class="form-control form-control-sm">
 												</div>
 											</div>
 											<div class="clearfix"></div><br />
@@ -185,7 +185,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Mobile number<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.mobile_number" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.mobile_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -193,7 +193,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Present Address<br />
-												<textarea :disabled="!edit_mode" name="name" v-model="employee.user_details.present_address" class="form-control form-control-sm" rows="4"></textarea>
+												<textarea name="name" v-model="employee.user_details.present_address" class="form-control form-control-sm" rows="4"></textarea>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -201,7 +201,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Province Address<br />
-												<textarea :disabled="!edit_mode" name="name" v-model="employee.user_details.province_address" class="form-control form-control-sm" rows="4"></textarea>
+												<textarea name="name" v-model="employee.user_details.province_address" class="form-control form-control-sm" rows="4"></textarea>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -209,7 +209,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Birth date<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.birth_date" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.birth_date" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -217,7 +217,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Birth place<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.birth_place" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.birth_place" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -229,7 +229,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Religion<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.religion" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.religion" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -237,7 +237,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Marital Status<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.marital_status" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.marital_status" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -245,7 +245,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Gender<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.gender">
+												<select class="form-control form-control-sm" v-model="employee.user_details.gender">
 													<option value="male">Male</option>
 													<option value="female">Female</option>
 												</select>
@@ -256,7 +256,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Height<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.height" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.height" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -264,7 +264,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Weight<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_details.weight" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_details.weight" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -272,7 +272,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Date hired<br />
-												<input :disabled="!edit_mode" type="date" v-model="employee.user_details.date_hired" class="form-control form-control-sm">
+												<input type="date" v-model="employee.user_details.date_hired" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -317,7 +317,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employment type<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_type">
+												<select class="form-control form-control-sm" v-model="employee.user_details.employment_type">
 													<option value="probational">Probational</option>
 													<option value="project_based">Project Based</option>
 													<option value="regular">Regular</option>
@@ -329,7 +329,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Employment type<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_details.employment_status">
+												<select class="form-control form-control-sm" v-model="employee.user_details.employment_status">
 													<option value="hired" selected>Hired</option>
 													<option value="resigned">Resigned</option>
 												</select>
@@ -341,13 +341,13 @@
 										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
 												Department<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="dept_id" required v-if="dept_id != '696969'">
+												<select class="form-control form-control-sm" v-model="dept_id" required v-if="dept_id != '696969'">
 													<option :value="696969">Select none</option>
 													<option :value="department.department_id" v-for="department in departments.data">
 														{{ department.department_name }}
 													</option>
 												</select>
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="dept_id" v-else>
+												<select class="form-control form-control-sm" v-model="dept_id" v-else>
 													<option :value="696969">Select none</option>
 													<option :value="department.department_id" v-for="department in departments.data">
 														{{ department.department_name }}
@@ -397,7 +397,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Basic Salary<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.basic_salary" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_payroll_details.basic_salary" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -405,7 +405,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Allowance<br />
-												<select :disabled="!edit_mode" v-model="employee.user_payroll_details.allowance" class="form-control form-control-sm" disabled>
+												<select v-model="employee.user_payroll_details.allowance" class="form-control form-control-sm" disabled>
 												</select>
 											</div>
 										</div>
@@ -414,7 +414,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Loans<br />
-												<select :disabled="!edit_mode" v-model="employee.user_payroll_details.loans" class="form-control form-control-sm" disabled>
+												<select v-model="employee.user_payroll_details.loans" class="form-control form-control-sm" disabled>
 												</select>
 											</div>
 										</div>
@@ -423,7 +423,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Wage type<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_payroll_details.wage_type">
+												<select class="form-control form-control-sm" v-model="employee.user_payroll_details.wage_type">
 													<option value="daily">Daily</option>
 													<option value="monthly">Monthly</option>
 													<option value="fixed">Fixed</option>
@@ -435,7 +435,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Bank Details<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.bank_details" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_payroll_details.bank_details" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -443,7 +443,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Payout type<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_payroll_details.payout_type">
+												<select class="form-control form-control-sm" v-model="employee.user_payroll_details.payout_type">
 													<option value="cash">Cash</option>
 													<option value="check">Check</option>
 													<option value="atm">ATM</option>
@@ -455,7 +455,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Tax Computataion<br />
-												<select :disabled="!edit_mode" class="form-control form-control-sm" v-model="employee.user_payroll_details.tax_computation">
+												<select class="form-control form-control-sm" v-model="employee.user_payroll_details.tax_computation">
 													<option value="none">None</option>
 													<option value="annually">Annually</option>
 													<option value="table">Table</option>
@@ -470,7 +470,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												Tin number<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.tin_number" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_payroll_details.tin_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -478,7 +478,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												SSS number<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.sss_number" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_payroll_details.sss_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -486,7 +486,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												PhilHealth number<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.philhealth_number" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_payroll_details.philhealth_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -494,7 +494,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												HMDF number<br />
-												<input :disabled="!edit_mode" type="text" v-model="employee.user_payroll_details.hdmf_number" class="form-control form-control-sm">
+												<input type="text" v-model="employee.user_payroll_details.hdmf_number" class="form-control form-control-sm">
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
