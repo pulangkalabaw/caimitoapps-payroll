@@ -18,30 +18,76 @@
 			<div class="clearfix"></div><br />
 
 
-			<div class="card" :class="{ 'border-warning ': edit_mode }">
+			<div class="card">
 				<div class="card-header">
 					<div class="row">
 						<div class="col-md-6">
 							<span class="fa fa-users"></span>
 							Employee
 						</div>
-						<div class="col-md-6 text-right">
-							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
-								<span class="fa fa-warning"></span>
-								Go to Edit mode
-							</button>
-							<button v-else @click="editMode(false)" class="btn btn-sm btn-default">
-								<span class="fa fa-times-circle"></span>
-								Exit Edit mode
-							</button>
-						</div>
-
 					</div>
 				</div>
 				<div class="card-body" v-if="valid">
-					<img src="/static/img/default-avatar.png" alt="">
+					<div class="row">
+
+						<!-- Left Side -->
+						<div class="col-md-3">
+							<img src="/static/img/default-avatar.png" alt="Avatar" class="default-avatar-md">
+							<hr>
+							<ul>
+								<li class="active" @click="current_tab = 'bi'">
+									Basic Information
+								</li>
+								<li @click="current_tab = 'oi'">
+									Other Information
+								</li>
+								<li>
+									Company
+								</li>
+								<li>
+									Payroll Details
+								</li>
+							</ul>
+						</div>
+
+						<!-- Right side -->
+						<div class="col-md-9">
+{{ current_tab }}
+							<div class="row">
+								<div class="col-md-12">
+									<h1>
+										{{ employee.employee_code }}
+										{{ employee.lname }}
+										{{ employee.fname }}
+										{{ employee.mname }}
+									</h1>
+
+									<!--
+									Basic Information
+									***-->
+									<div v-if="current_tab == 'bi'">
+										<bi :employee="employee"></bi>
+									</div>
+
+									<!--
+									Other Information
+									***-->
+									<div v-if="current_tab == 'oi'">
+										<oi :employee="employee"></oi>
+									</div>
+
+
+
+								</div>
+							</div>
+
+
+						</div>
+
+					</div>
+
 					{{ employee }}
-				</div>
+				</div> <!-- Card body -->
 				<div class="card-body" v-else>
 					This page either under maintenance or not exists!
 				</div>
@@ -53,22 +99,19 @@
 
 <script>
 import Tabs from 'vue-tabs-with-active-line';
+import bi from '@/components/pages/app/employees/includes/bi'
+import oi from '@/components/pages/app/employees/includes/oi'
+
 export default {
 	components: {
 		Tabs,
+		'bi': bi,
+		'oi': oi,
 	},
 	data () {
 		return {
-			employee: {},
-			show_employee_loading: false,
-			update_employee_loading: false,
-			valid: false,
-
-			departments: [],
-			departments_loading: false,
-			dept_id: '696969',
-
-			edit_mode: false,
+			current_tab: 'bi',
+			show_employee_loading: true,
 
 			notif: '',
 
@@ -84,13 +127,6 @@ export default {
 					'params': {}
 				}
 			],
-			tabs: [
-				{ title: 'Basic Information', value: 'bi' },
-				{ title: 'Other Information', value: 'oi' },
-				{ title: 'Company', value: 'co' },
-				{ title: 'Payroll Details', value: 'pd' },
-			],
-			currentTab: 'bi',
 		}
 	},
 
@@ -100,29 +136,29 @@ export default {
 
 	methods: {
 
-		editMode (des){
-			this.edit_mode = des
-			if (des == true) {
-				this.$notify({
-					group: 'notif',
-					title: 'Employee',
-					text: 'You are in Edit Mode',
-					type: 'warn',
-				});
-			}
-			else {
-				this.$notify({
-					group: 'notif',
-					title: 'Employee',
-					text: 'You are in View Mode',
-					type: 'info',
-				});
-			}
-		},
+		// editMode (des){
+		// 	this.edit_mode = des
+		// 	if (des == true) {
+		// 		this.$notify({
+		// 			group: 'notif',
+		// 			title: 'Employee',
+		// 			text: 'You are in Edit Mode',
+		// 			type: 'warn',
+		// 		});
+		// 	}
+		// 	else {
+		// 		this.$notify({
+		// 			group: 'notif',
+		// 			title: 'Employee',
+		// 			text: 'You are in View Mode',
+		// 			type: 'info',
+		// 		});
+		// 	}
+		// },
 
-		handleClick(newTab) {
-			this.currentTab = newTab;
-		},
+		// handleClick(newTab) {
+		// 	this.currentTab = newTab;
+		// },
 
 		departmentIndex () {
 

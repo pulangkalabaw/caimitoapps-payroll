@@ -15,6 +15,7 @@ import hello from '@/components/HelloWorld'
 import employeesIndex from '@/components/pages/app/employees/index'
 import employeesCreate from '@/components/pages/app/employees/create'
 import employeesShow from '@/components/pages/app/employees/show'
+import employeesEdit from '@/components/pages/app/employees/edit'
 
 // Department
 import departmentIndex from '@/components/pages/app/department/index'
@@ -97,6 +98,12 @@ let web_routes = [
 	},
 	{
 		path: '/app/pis/:id', name: 'employees.show', component: employeesShow,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/pis/:id/edit', name: 'employees.edit', component: employeesEdit,
 		meta: {
 			auth: true
 		},
