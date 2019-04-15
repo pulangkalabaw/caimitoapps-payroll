@@ -16,7 +16,7 @@ class CreateSssDeductionsTable extends Migration
         Schema::create('sss_deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('from');
-            $table->float('to');
+            $table->string('to');
             $table->float('monthly_salary_credit');
             $table->float('social_security_er');
             $table->float('social_security_ee');
