@@ -15,16 +15,16 @@ class CreateSssDeductionsTable extends Migration
     {
         Schema::create('sss_deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('from');
-            $table->string('to');
-            $table->string('monthly_salary_credit');
-            $table->string('social_security_er');
-            $table->string('social_security_ee');
-            $table->string('social_security_total');
-            $table->string('ec_er');
-            $table->string('total_contribution_er');
-            $table->string('total_contribution_ee');
-            $table->string('total_contribution_total');
+            $table->float('from');
+            $table->float('to');
+            $table->float('monthly_salary_credit');
+            $table->float('social_security_er');
+            $table->float('social_security_ee');
+            $table->float('social_security_total');
+            $table->float('ec_er');
+            $table->float('total_contribution_er');
+            $table->float('total_contribution_ee');
+            $table->float('total_contribution_total');
             $table->timestamps();
         });
     }
