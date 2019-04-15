@@ -121,7 +121,7 @@
 
 										<!-- Employees -->
 										<span v-if="!search_show_nothing">
-											<small>Employees</small><br />
+											<small>Employees({{ employees_filtered.length }})</small><br />
 											<span v-if="!search_result_failed">
 												<span v-for="employee in employees_filtered">
 													<label>
@@ -187,7 +187,7 @@ export default {
 			search_show: false,
 			links: [
 				{
-					'label': 'Allowances',
+					'label': 'Compensation',
 					'route': 'compensation.index',
 					'params': {}
 				}

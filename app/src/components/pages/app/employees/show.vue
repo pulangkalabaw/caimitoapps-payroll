@@ -45,16 +45,16 @@
 								<b>Main Menu</b>
 							</small>
 							<ul class="list-group">
-								<li class="list-group-item span-link" @click="current_tab = 'bi'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'bi'})">
 									Basic Information
 								</li>
-								<li class="list-group-item span-link" @click="current_tab = 'oi'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'oi'})">
 									Other Information
 								</li>
-								<li class="list-group-item span-link" @click="current_tab = 'co'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'co'})">
 									Company
 								</li>
-								<li class="list-group-item span-link" @click="current_tab = 'pd'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'pd'})">
 									Payroll Details
 								</li>
 							</ul>
@@ -64,15 +64,15 @@
 								<b>Other</b>
 							</small>
 							<ul class="list-group">
-								<li class="list-group-item span-link" @click="current_tab = 'add_comp'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'add_comp'})">
 									<span class="fa fa-plus fa-xx"></span>
 									Add Compensation
 								</li>
-								<li class="list-group-item span-link" @click="current_tab = 'add_deduc'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'add_deduc'})">
 									<span class="fa fa-plus fa-xx"></span>
 									Add Deduction
 								</li>
-								<li class="list-group-item span-link" @click="current_tab = 'oi'">
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'oi'})">
 									<span class="fa fa-plus fa-xx"></span>
 									Add loan
 								</li>
@@ -95,28 +95,28 @@
 									<!--
 									Basic Information
 									***-->
-									<div v-if="current_tab == 'bi'">
+									<div v-if="$route.params.menu == 'bi'">
 										<bi :employee="employee"></bi>
 									</div>
 
 									<!--
 									Other Information
 									***-->
-									<div v-if="current_tab == 'oi'">
+									<div v-else-if="$route.params.menu == 'oi'">
 										<oi :employee="employee"></oi>
 									</div>
 
 									<!--
 									Company
 									***-->
-									<div v-if="current_tab == 'co'">
+									<div v-else-if="$route.params.menu == 'co'">
 										<co :employee="employee"></co>
 									</div>
 
 									<!--
 									Payroll Details
 									***-->
-									<div v-if="current_tab == 'pd'">
+									<div v-else-if="$route.params.menu == 'pd'">
 										<pd :employee="employee"></pd>
 									</div>
 
@@ -124,7 +124,7 @@
 									<!--
 									Add compensation
 									***-->
-									<div v-if="current_tab == 'add_comp'">
+									<div v-else-if="$route.params.menu == 'add_comp'">
 										<add-comp :employee="employee"></add-comp>
 									</div>
 
@@ -132,8 +132,13 @@
 									<!--
 									Add deduction
 									***-->
-									<div v-if="current_tab == 'add_deduc'">
+									<div v-else-if="$route.params.menu == 'add_deduc'">
 										<add-deduc :employee="employee"></add-deduc>
+									</div>
+
+
+									<div v-else>
+										<bi :employee="employee"></bi>
 									</div>
 
 

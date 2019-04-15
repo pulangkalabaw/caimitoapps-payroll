@@ -1,14 +1,27 @@
 **************************
-v0.0.7
-d20180410
+v0.0.9
+d20190412
 
 Features:
 
-	Compensation Asigning
+	Fix UI in
+		Employee Show
+		Assign Compensation
+		Assign Deduction
+
+	Deduction Assigning
+
+**************************
+v0.0.7
+d20190410
+
+Features:
+
+	Compensation Assigning
 
 **************************
 v0.0.5
-d20180405
+d20190405
 
 Features:
 
@@ -16,7 +29,7 @@ Features:
 
 **************************
 v0.0.4
-d20180401
+d20190401
 
 Features:
 
@@ -26,7 +39,7 @@ Features:
 
 **************************
 v0.0.3
-d20180329
+d20190329
 
 Features:
 
@@ -38,7 +51,7 @@ Features:
 
 **************************
 v0.0.2
-d20180326
+d20190326
 
 Features:
 
@@ -56,7 +69,7 @@ Install:
 **************************
 
 v0.0.1
-d20180325
+d20190325
 
 Features:
 	Login page

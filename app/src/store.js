@@ -11,8 +11,8 @@ const store =  new Vuex.Store({
 		 */
 		app_url: 'http://localhost:8080',
 		project_name: 'Payroll Application',
-		version: '0.0.7',
-		d: '20180410',
+		version: 'v0.0.9',
+		d: 'd20190412',
 
 
 		/**
@@ -21,8 +21,6 @@ const store =  new Vuex.Store({
 		 */
 
         pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
-
-
 
 		/**
 		 * Compensation API Tunnel
@@ -46,7 +44,6 @@ const store =  new Vuex.Store({
 		 */
 
         authenticator: 'http://localhost/www/iplus/payroll/dev/authenticator/api/',
-
 
 
         /**

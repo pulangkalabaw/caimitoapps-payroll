@@ -25,6 +25,26 @@
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
+
+					<div v-if="created_id" class="row">
+						<div class="col-md-6">
+							<div class="alert alert-info">
+								<span class="fa fa-info-circle"></span>
+								Click
+								<b class="span-link" @click="redirect('employees.show.menu', {id:created_id,menu:'add_comp'})">here</b>
+								to Assign compensation
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="alert alert-info">
+								<span class="fa fa-info-circle"></span>
+								Click
+								<b class="span-link" @click="redirect('employees.show.menu', {id:created_id,menu:'add_comp'})">here</b>
+								to Assign Deduction
+							</div>
+						</div>
+					</div>
+
 					<tabs
 					:tabs="tabs"
 					:currentTab="currentTab"
@@ -501,6 +521,8 @@ export default {
 
 			departments: [],
 			departments_loading: false,
+			show_help: false,
+			created_id: null,
 
 			submit_button_label: 'Skip and Submit',
 			notif: '',
@@ -553,10 +575,15 @@ export default {
 
 		employeeCreate () {
 
+			this.show_help = false
+			this.created_id = null
 			this.create_employee_loading = true
 			this.axiosRequest ('POST', this.$store.state.pis + 'employee', this.employee)
 			.then (res => {
 
+				console.log(res.data.data.user_id)
+				this.show_help = true
+				this.created_id = res.data.data.user_id
 				this.notif = res.data
 				this.tnotif (res)
 				this.create_employee_loading = false

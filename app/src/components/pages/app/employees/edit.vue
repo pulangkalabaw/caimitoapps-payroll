@@ -18,7 +18,7 @@
 			<div class="clearfix"></div><br />
 
 
-			<div class="card" :class="{ 'border-warning ': edit_mode }">
+			<div class="card border-warning">
 				<div class="card-header">
 					<div class="row">
 						<div class="col-md-6">
@@ -36,17 +36,13 @@
 				</div>
 				<div class="card-body" v-if="valid">
 
-					<div class="alert alert-warning" v-if="edit_mode">
+					<div class="alert alert-warning">
 						<span class="fa fa-warning"></span>
 						<b>Warning!</b> You are in
 						<b>Edit Mode</b>
 					</div>
-					<div class="alert alert-info" v-else>
-						<span class="fa fa-info-circle"></span>
-						You are in
-						<b>View mode</b>
-					</div>
 
+					{{ employee }}
 
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
@@ -126,7 +122,7 @@
 										<div class="clearfix"></div><br />
 
 
-										<div v-if="edit_mode">
+										<div>
 											<div class="row">
 												<div class="col-md-12">
 													Password <br />
@@ -400,15 +396,6 @@
 
 										<div class="row">
 											<div class="col-md-12">
-												Allowance<br />
-												<select v-model="employee.user_payroll_details.allowance" class="form-control form-control-sm" disabled>
-												</select>
-											</div>
-										</div>
-										<div class="clearfix"></div><br />
-
-										<div class="row">
-											<div class="col-md-12">
 												Loans<br />
 												<select v-model="employee.user_payroll_details.loans" class="form-control form-control-sm" disabled>
 												</select>
@@ -561,7 +548,7 @@ export default {
 					'params': {}
 				},
 				{
-					'label': 'View',
+					'label': 'Edit',
 					'route': '',
 					'params': {}
 				}
@@ -649,6 +636,9 @@ export default {
 
 			this.update_employee_loading = true
 			this.employee._method = 'PUT'
+			delete this.employee.user_compensation
+			delete this.employee.user_deduction
+
 
 			let dept_id_value = this.dept_id == '696969' ? null : this.dept_id
 			this.employee.user_details.department_id = dept_id_value

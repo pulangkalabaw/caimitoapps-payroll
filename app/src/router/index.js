@@ -108,6 +108,12 @@ let web_routes = [
 			auth: true
 		},
 	},
+	{
+		path: '/app/pis/:id/:menu', name: 'employees.show.menu', component: employeesShow,
+		meta: {
+			auth: true
+		},
+	},
 
 
 	// Department Management

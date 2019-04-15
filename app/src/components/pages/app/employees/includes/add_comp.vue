@@ -25,6 +25,9 @@
 								</select>
 							</td>
 						</tr>
+						<tr v-else>
+							<td>fetching</td>
+						</tr>
 
 
 						<!-- Taxable -->

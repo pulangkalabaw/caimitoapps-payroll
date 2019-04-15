@@ -86,8 +86,6 @@
 											<i><u>Done selecting</u></i>
 										</small>
 										<div class="clearfix"></div><br />
-
-
 									</div>
 								</div>
 								<div class="clearfix"></div><br />
@@ -121,7 +119,7 @@
 
 										<!-- Employees -->
 										<span v-if="!search_show_nothing">
-											<small>Employees</small><br />
+											<small>Employees({{ employees_filtered.length }})</small><br />
 											<span v-if="!search_result_failed">
 												<span v-for="employee in employees_filtered">
 													<label>
