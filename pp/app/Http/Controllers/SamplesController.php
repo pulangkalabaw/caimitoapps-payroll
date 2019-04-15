@@ -11,6 +11,9 @@ class SamplesController extends Controller {
     // const MODEL = "App\Sample";
 
     public function index(){
+        // return $result = guzzle('GET',env('API_PIS') . 'employee-info');
+        // return $result = guzzle('GET',env('API_GD') . 'gd/government-deductions');
+
         // From PIS
         $basic_pay = 13000.00;
 
@@ -33,7 +36,9 @@ class SamplesController extends Controller {
         // COMPENSATIONS
         $compensation = 0;
         $overtime = 3.00;
-        $overtime_comp = $basic_pay / $working_days / 8 * $overtime * 1.25;
+        $ot_type = 'regot';
+        $ot_percentage = get_ot($ot_type);
+        $overtime_comp = $basic_pay / $working_days / 8 * $overtime * $ot_percentage;
 
         // GROSS INCOME COMPUTATIONS
         $gross_income = ($basic_pay / 2) - $late_deduction - $absent_deduction - $under_time_deduction;
@@ -41,7 +46,8 @@ class SamplesController extends Controller {
         // GOVERNMENT DEDUCTION COMPUTATION
         $sss_deduction = find_sss_deduction($gross_income);
         $pagibig_deduction = 100;
-        $philhealth_deduction = $basic_pay * .02;
+        $philhealth_deduction = $basic_pay * .0275;
+        $government_loan = 0;
         $total_government_deductions = $sss_deduction + $pagibig_deduction + $philhealth_deduction;
 
         // WITHHOLDING TAX
@@ -60,6 +66,7 @@ class SamplesController extends Controller {
         $data['sss_deduction'] = $sss_deduction;
         $data['pagibig_deduction'] = $pagibig_deduction;
         $data['philhealth_deduction'] = $philhealth_deduction;
+        $data['government_loan'] = $government_loan;
         $data['total_government_deduction'] = $total_government_deductions;
         $data['lates'] = $late_deduction;
         $data['undertime'] = $under_time_deduction;
@@ -71,7 +78,10 @@ class SamplesController extends Controller {
         $data['total'] = $gross_income;
         $data['run_date'] = Carbon::now()->toDateString();
         // return Payroll_Process::all();
-        Payroll_Process::create($data);
         return $data;
+        Payroll_Process::create($data);
+    }
+    public function getGovernmentSSSDeduction(){
+        return sss_deduction();
     }
 }
