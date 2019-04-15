@@ -14,19 +14,6 @@ class GovernmentController extends Controller
 
     public function store(Request $request){
 
-    	// $request->validate([
-    	// 	'from' => 'required',
-    	// 	'to' => 'required',
-    	// 	'monthly_salary_creditom' => 'required',
-    	// 	'social_security_er' => 'required',
-    	// 	'social_security_ee' => 'required',
-    	// 	'social_security_total' => 'required',
-    	// 	'ec_er' => 'required',
-    	// 	'total_contribution_er' => 'required',
-    	// 	'total_contribution_ee' => 'required',
-    	// 	'total_contribution_total' => 'required',
-    	// ]);
-
     	sss_deduction::create([
     		'from' => $request->from,
     		'to' => $request->to,
@@ -73,6 +60,4 @@ class GovernmentController extends Controller
      	 $sss_deduction = sss_deduction::findOrFail($id)->delete();
      	 return "Data has been deleted";
     }
-
-
 }
