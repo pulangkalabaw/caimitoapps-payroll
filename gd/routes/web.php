@@ -33,4 +33,12 @@ $router->group(['middleware' => ['cors']], function() use ($router){
 	$router->put('gov-tax-deductions/{id}', 'TaxController@update');
 	$router->delete('gov-tax-deductions/{id}', 'TaxController@destroy');
 
+	//TAX GOVERNMENT DEDUCTIONS
+	$router->get('gov-loan', 'LoanController@index');
+	$router->post('gov-loan/store', 'LoanController@store');
+	$router->get('gov-loan/{id}', 'LoanController@show');
+	// $router->get('gov-tax-deductions', 'LoanController@edit');
+	$router->put('gov-loan/{id}', 'LoanController@update');
+	$router->delete('gov-loan/{id}', 'LoanController@destroy');
+
 });

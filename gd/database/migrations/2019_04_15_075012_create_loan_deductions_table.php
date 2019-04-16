@@ -15,6 +15,11 @@ class CreateLoanDeductionsTable extends Migration
     {
         Schema::create('loan_deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('loan_name');
+            $table->float('amount');
+            $table->float('interest_rate');
+            $table->string('loan_term');
+            $table->float('monthly_amortization');
             $table->timestamps();
         });
     }
