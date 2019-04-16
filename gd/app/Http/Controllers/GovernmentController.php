@@ -8,13 +8,14 @@ use App\sss_deduction;
 class GovernmentController extends Controller
 {
     public function index(){
-
-    	return sss_deduction::all();
+    	 $sss_deduction =  sss_deduction::all();
+         $data = $sss_deduction;
+         return apiReturn($data, 'Success','success');
     }
 
     public function store(Request $request){
 
-    	sss_deduction::create([
+    	$sss_deduction = sss_deduction::create([
     		'from' => $request->from,
     		'to' => $request->to,
     		'monthly_salary_credit' => $request->monthly_salary_credit,
@@ -26,8 +27,8 @@ class GovernmentController extends Controller
     		'total_contribution_ee' => $request->total_contribution_ee,
     		'total_contribution_total' => $request->total_contribution_total,
     	]);
-
-    	return "Successfully inserted";
+        $data = $sss_deduction;
+        return apiReturn($data, 'Successfully assigned Deduction!', 'success');
     }
 
     public function show($id){
@@ -41,19 +42,19 @@ class GovernmentController extends Controller
     public function update(Request $request, $id){
 
 			$sss_deduction = sss_deduction::findOrFail($id)
-				->update([
-					'from' => $request->from,
-					'to' => $request->to,
-					'monthly_salary_credit' => $request->monthly_salary_credit,
-					'social_security_er' => $request->social_security_er,
-					'social_security_ee' => $request->social_security_ee,
-					'social_security_total' => $request->social_security_total,
-					'ec_er' => $request->ec_er,
-					'total_contribution_er' => $request->total_contribution_er,
-					'total_contribution_ee' => $request->total_contribution_ee,
-					'total_contribution_total' => $request->total_contribution_total,
-				]);
-				return "SSS Deduction has been updated successfully";
+			->update([
+				'from' => $request->from,
+				'to' => $request->to,
+				'monthly_salary_credit' => $request->monthly_salary_credit,
+				'social_security_er' => $request->social_security_er,
+				'social_security_ee' => $request->social_security_ee,
+				'social_security_total' => $request->social_security_total,
+				'ec_er' => $request->ec_er,
+				'total_contribution_er' => $request->total_contribution_er,
+				'total_contribution_ee' => $request->total_contribution_ee,
+				'total_contribution_total' => $request->total_contribution_total,
+			]);
+			return "SSS Deduction has been updated successfully";
     }
 
      public function destroy($id){

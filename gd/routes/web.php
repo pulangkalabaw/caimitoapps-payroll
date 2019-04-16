@@ -25,13 +25,12 @@ $router->group(['middleware' => ['cors']], function() use ($router){
 	$router->put('government-deductions/{id}', 'GovernmentController@update');
 	$router->delete('government-deductions/{id}', 'GovernmentController@destroy');
 
-
-	//PHILHEALTH GOVERNMENT DEDUCTIONS
-	$router->get('philhealth-deductions', 'PhilhealthCobtroller@index');
-	$router->post('philhealth-deductions/store', 'PhilhealthCobtroller@store');
-	$router->get('philhealth-deductions/{id}', 'PhilhealthCobtroller@show');
-	// $router->get('philhealth-deductions', 'PhilhealthCobtroller@edit');
-	$router->put('philhealth-deductions/{id}', 'PhilhealthCobtroller@update');
-	$router->delete('philhealth-deductions/{id}', 'PhilhealthCobtroller@destroy');
+	//TAX GOVERNMENT DEDUCTIONS
+	$router->get('gov-tax-deductions', 'TaxController@index');
+	$router->post('gov-tax-deductions/store', 'TaxController@store');
+	$router->get('gov-tax-deductions/{id}', 'TaxController@show');
+	// $router->get('gov-tax-deductions', 'TaxController@edit');
+	$router->put('gov-tax-deductions/{id}', 'TaxController@update');
+	$router->delete('gov-tax-deductions/{id}', 'TaxController@destroy');
 
 });
