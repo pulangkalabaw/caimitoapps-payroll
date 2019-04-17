@@ -18,7 +18,10 @@ $router->get('/', function () use ($router) {
 /**
  * Routes for resource sample
  */
-$router->get('sample/index', 'SamplesController@index');
+ $router->get('sample/index', 'SamplesController@index');
+ $router->group(['prefix' => 'api/'], function () use ($router) {
+    $router->get('sss-government-deduction', 'SamplesController@getGovernmentSSSDeduction');
+});
 // $router->get('sample', 'SamplesController@all');
 // $router->get('sample/{id}', 'SamplesController@get');
 // $router->post('sample', 'SamplesController@add');
