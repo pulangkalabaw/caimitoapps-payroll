@@ -23,32 +23,33 @@ class SamplesController extends Controller {
 
         // DEDUCTIONS
         $lates = 0.43;
-        $late_deduction = $basic_pay / $working_days / 8 * $lates;
+        $late_deduction = compute_late($basic_pay, $working_days, $lates);
 
         $absences = 4;
-        $absent_deduction = $basic_pay / $working_days / 8 * $absences;
+        $absent_deduction = compute_absence($basic_pay, $working_days, $absences);
 
         $under_times = 0.9;
-        $under_time_deduction = $basic_pay / $working_days / 8 * $under_times;
+        $under_time_deduction = compute_under_time($basic_pay, $working_days, $under_times);
 
-        $deductions = $late_deduction + $absent_deduction + $under_time_deduction;
+        $deduction = 0;
+        $deductions = compute_deductions($late_deduction, $absent_deduction, $under_time_deduction, $deduction);
 
         // COMPENSATIONS
-        $compensation = 0;
+        $compensations = 0;
         $overtime = 3.00;
         $ot_type = 'regot';
         $ot_percentage = get_ot($ot_type);
-        $overtime_comp = $basic_pay / $working_days / 8 * $overtime * $ot_percentage;
+        $overtime_comp = compute_overtime($basic_pay, $working_days, $overtime, $ot_type);
 
         // GROSS INCOME COMPUTATIONS
-        $gross_income = ($basic_pay / 2) - $late_deduction - $absent_deduction - $under_time_deduction;
+        $gross_income = compute_gross_income($basic_pay, $late_deduction, $absent_deduction, $under_time_deduction);
 
         // GOVERNMENT DEDUCTION COMPUTATION
         $sss_deduction = find_sss_deduction($gross_income);
         $pagibig_deduction = 100;
         $philhealth_deduction = $basic_pay * .0275;
         $government_loan = 0;
-        $total_government_deductions = $sss_deduction + $pagibig_deduction + $philhealth_deduction;
+        $total_government_deductions = compute_government_deductions($sss_deduction, $pagibig_deduction, $philhealth_deduction);
 
         // WITHHOLDING TAX
         $taxable_income = $gross_income - $total_government_deductions;
@@ -61,7 +62,7 @@ class SamplesController extends Controller {
         $data['emp_code'] = 1231;
         $data['basic_salary'] = $basic_pay;
         $data['gross_income'] = $gross_income;
-        $data['compensation'] = $compensation;
+        $data['compensation'] = $compensations;
         $data['deductions'] = $deductions;
         $data['sss_deduction'] = $sss_deduction;
         $data['pagibig_deduction'] = $pagibig_deduction;
@@ -81,7 +82,12 @@ class SamplesController extends Controller {
         return $data;
         Payroll_Process::create($data);
     }
+
     public function getGovernmentSSSDeduction(){
         return sss_deduction();
+    }
+
+    public function apiCombine(){
+
     }
 }
