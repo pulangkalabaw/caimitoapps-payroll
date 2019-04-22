@@ -58,7 +58,7 @@
 				<tr>
 					<td width="20%">Compensations</td>
 					<td>
-						<div v-if="employee.user_compensation">
+						<div v-if="employee.user_compensation.length != 0">
 							<ul class="list-group">
 								<li class="list-group-item span-link" v-for="uc in employee.user_compensation">
 									<small>
@@ -68,6 +68,27 @@
 									</small>
 								</li>
 							</ul>
+						</div>
+					</td>
+				</tr>
+
+				<!-- Allowances -->
+				<tr>
+					<td width="20%">Deductions</td>
+					<td>
+						<div v-if="employee.user_deduction.length != 0">
+							<ul class="list-group">
+								<li class="list-group-item span-link" v-for="ud in employee.user_deduction">
+									<small>
+										Allowance: {{ ucfirst(ud.get_deduction.name) }} <br />
+										Amount: {{ ud.amount }} <br />
+										Taxable: - <br />
+									</small>
+								</li>
+							</ul>
+						</div>
+						<div v-else>
+							No Deductions
 						</div>
 					</td>
 				</tr>

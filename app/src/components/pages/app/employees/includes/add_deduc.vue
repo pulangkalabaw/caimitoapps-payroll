@@ -37,12 +37,12 @@
 							</td>
 							<td>
 								<label>
-									<input type="radio" value="bp" name="tax" @click="taxOption('bp')" required>
-									Before Payroll
+									<input type="radio" value="bt" name="tax" @click="taxOption('bt')" required>
+									Before Tax
 								</label>
 								<label>
-									<input type="radio" value="ap" name="tax" @click="taxOption('ap')" required>
-									After Payroll
+									<input type="radio" value="at" name="tax" @click="taxOption('at')" required>
+									After Tax
 								</label>
 							</td>
 						</tr>
@@ -141,11 +141,9 @@ export default {
 			}
 			this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction/' + this.$route.params.id + '/delete', params)
 			.then (res => {
-
 				this.notif = res.data
 				this.tnotif (res)
 				this.employeeShow()
-
 			})
 			.catch (err => {
 				console.log(err)
@@ -160,12 +158,10 @@ export default {
 			this.create_udeduc_loading = true
 			this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction', this.assign_deduc)
 			.then (res => {
-
 				this.notif = res.data
 				this.tnotif (res)
 				this.create_udeduc_loading = false
 				this.employeeShow()
-
 			})
 			.catch (err => {
 				console.log(err)
@@ -183,11 +179,9 @@ export default {
 			this.show_employee_loading = true
 			this.axiosRequest ('GET', this.$store.state.pis + 'employee/' + this.$route.params.id)
 			.then (res => {
-
 				this.employee = res.data.data.data
 				this.show_employee_loading = false
 				this.valid = res.data.status == 'success' ? true : false
-
 			})
 			.catch (err => {
 				console.log(err)
@@ -201,10 +195,8 @@ export default {
 			this.index_deduc_loading = true
 			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?filter=all')
 			.then (res => {
-
 				this.deduction = res.data.data
 				this.index_deduc_loading = false
-
 			})
 			.catch (err => {
 				console.log(err)
