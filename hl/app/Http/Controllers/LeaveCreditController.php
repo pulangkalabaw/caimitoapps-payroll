@@ -33,26 +33,50 @@ class LeaveCreditController extends Controller
     public function store(Request $request)
     {
         //
+        // return $request->user_id;
         $validator = Validator::make($request->all(),[
-            'user_id' => 'required|exists:users,user_id',
+            'user_id.*' => 'required|exists:users,user_id',
+            // 'user_id' => 'required|exists:users,user_id',
             'leave_id' => 'required|exists:lib_leave,leave_id',
             'credits' => 'required|numeric|between:0,9999.99',
         ]);
 
         if(!$validator->fails()){
+            // ******DO NOT DELETE CODE FOR SINGLE INSERT**************************
             // Check of if this user is has already this type of leave
-            $exists = LeaveCredits::where(['user_id'=> $request->post('user_id'), 'leave_id' => $request->post('leave_id')])->first();
-            if(!$exists){
-                // Insertion of credit
-                $leave_credit = LeaveCredits::create($request->all());
-                if($leave_credit){
-                    return apiReturn($leave_credit, 'Assigning of leave credit successful!', 'success');
+            // $exists = LeaveCredits::where(['user_id'=> $request->post('user_id'), 'leave_id' => $request->post('leave_id')])->first();
+            // if(!$exists){
+            //     // Insertion of credit
+            //     $leave_credit = LeaveCredits::create($request->all());
+            //     if($leave_credit){
+            //         return apiReturn($leave_credit, 'Assigning of leave credit successful!', 'success');
+            //     }else{
+            //         return apiReturn(null, 'Failed on leave credit insertion', 'success');
+            //     }
+            // }else{
+            //     return apiReturn($exists, 'This user have already this type of leave.', 'failed', $validator->errors());
+            // }
+            // ******DO NOT DELETE CODE FOR SINGLE INSERT**************************
+
+            // code for array of users
+            foreach($request->user_id as $emp){
+
+                $exists = LeaveCredits::where(['user_id'=> $emp, 'leave_id' => $request->post('leave_id')])->first();
+                if(!$exists){
+                    // Insertion of credit
+                    $leave_credit = LeaveCredits::create($request->all());
+                    if($leave_credit){
+                        return apiReturn($leave_credit, 'Assigning of leave credit successful!', 'success');
+                    }else{
+                        return apiReturn(null, 'Failed on leave credit insertion', 'success');
+                    }
                 }else{
-                    return apiReturn(null, 'Failed on leave credit insertion', 'success');
+                    return apiReturn($exists, 'This user have already this type of leave.', 'failed', $validator->errors());
                 }
-            }else{
-                return apiReturn($exists, 'This user have already this type of leave.', 'failed', $validator->errors());
+
             }
+
+
         }else{
             return apiReturn(null, 'Failure on assignment of leave', 'failed', $validator->errors());
         }
