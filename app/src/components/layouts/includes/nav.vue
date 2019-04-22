@@ -49,7 +49,7 @@
 						</li>
 					</ul>
 				</li>
-				<li>
+				<!-- <li>
 					<span class="span-link" :class="{ 'active': $route.name.includes('jobs.index')}">
 						<i class="fa fa-tasks"></i> &nbsp;
 						Jobs
@@ -67,7 +67,7 @@
 							</span>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 				<li>
 					<span class="span-link" :class="{ 'active': $route.name.includes('compensation.index')}">
 						<i class="fa fa-tasks"></i> &nbsp;

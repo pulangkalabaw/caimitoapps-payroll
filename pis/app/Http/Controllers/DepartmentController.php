@@ -36,7 +36,7 @@ class DepartmentController extends Controller
 			}
 		}
 		else{
-			$dept = $dept->paginate($rows);
+			$dept = $dept->with('department_head_info')->paginate($rows);
 		}
 
 		$datareturn = [
@@ -129,7 +129,7 @@ class DepartmentController extends Controller
 	{
 		//
 		$validator = Validator::make($request->all(), [
-			'department_name' => 'required',
+			'department_name' => 'required|unique:departments,department_name,'.$id.',department_id',
 		]);
 
 		if(!$validator->fails()){

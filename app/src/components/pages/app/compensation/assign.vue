@@ -167,7 +167,7 @@ export default {
 			search_employee: '',
 			selected_employee_info: [],
 			search_result_failed: false,
-			search_show_nothing: true, // to not output all employee, user must search only
+			search_show_nothing: true, // to NOT output all employee, user must search only
 
 			compensation: [],
 			index_compensation_loading: false,

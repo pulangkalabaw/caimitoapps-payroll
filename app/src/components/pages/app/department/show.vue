@@ -11,6 +11,7 @@
 				<span class="fa fa-plus-circle"></span>
 				Create new
 			</span>
+			<div class="clearf"></div><br />
 			<span @click="redirect('department.index')" class="btn btn-default btn-sm btn-tunch-default">
 				<span class="fa fa-th-list"></span>
 				View all
@@ -18,100 +19,129 @@
 			<div class="clearf"></div><br />
 
 
-			<div class="card" :class="{ 'border-warning ': edit_mode }">
+			<div class="card">
 				<div class="card-header">
-					<div class="row">
-						<div class="col-md-6">
-							<span class="fa fa-folder"></span>
-							Department
-						</div>
-						<div class="col-md-6 text-right">
-							<span @click="departmentArchive()" class="btn btn-danger btn-sm">
-								<span class="fa fa-archive"></span>
-								Archive this Department
-							</span>
-							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
-								<span class="fa fa-warning"></span>
-								Go to Edit mode
-							</button>
-							<button v-else @click="editMode(false)" class="btn btn-sm btn-default">
-								<span class="fa fa-times-circle"></span>
-								Exit Edit mode
-							</button>
-						</div>
-					</div>
+					<span class="fa fa-folder"></span>
+					Department
 				</div>
 				<div class="card-body" v-if="valid">
-
-
-					<div class="alert alert-warning" v-if="edit_mode">
-						<span class="fa fa-warning"></span>
-						<b>Warning!</b> You are in
-						<b>Edit Mode</b>
-					</div>
-					<div class="alert alert-info" v-else>
-						<span class="fa fa-info-circle"></span>
-						You are in
-						<b>View mode</b>
-					</div>
 
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
 					<form @submit.prevent="departmentUpdate()" method="POST">
 
-						<div class="row" v-if="!employees_loading">
-							<div class="col-md-2">Department Head</div>
-							<div class="col-md-4">
-
-								<select v-model="department.department_head" :disabled="!edit_mode" class="form-control form-control-sm">
-									<option :value="null">Select none</option>
-									<option :value="employee.user_id" v-for="employee in employees">
-										{{ employee.lname }},
-										{{ employee.fname }}
-									</option>
-								</select>
-
-							</div>
-						</div>
-						<div class="clearfix"></div><br />
-
 						<div class="row">
-							<div class="col-md-2">Department Name <span class="required">*</span></div>
-							<div class="col-md-4">
-								<input type="text" v-model="department.department_name" :disabled="!edit_mode" class="form-control form-control-sm" required>
+							<!-- left Side -->
+							<div class="col-md-6">
+								<div class="row" v-if="!employees_loading">
+									<div class="col-md-4">Department Head</div>
+									<div class="col-md-8">
+										<!--  -->
+										<span v-if="selected_employee_info">
+											{{ selected_employee_info }}
+											<small @click="clearDepartmentHead()" class="span-link">
+												<span class="fa fa-times"></span>
+												<b><i><u>Clear</u></i></b>
+											</small>
+										</span>
+										<br />
+
+										<!--  -->
+										<small v-if="!search_show" @click="search_show = true" class="span-link">
+											<i><u>Select employee</u></i>
+										</small>
+										<small v-else @click="search_show = false" class="span-link">
+											<i><u>Done selecting</u></i>
+										</small>
+										<div class="clearfix"></div><br />
+
+
+									</div>
+								</div>
+								<div class="clearfix"></div><br />
+
+								<div class="row">
+									<div class="col-md-4">Department Name <span class="required">*</span></div>
+									<div class="col-md-8">
+										<input type="text" v-model="department.department_name" class="form-control form-control-sm" required>
+									</div>
+								</div>
+								<div class="clearfix"></div><br />
+
+								<div class="row">
+									<div class="col-md-4">Description</div>
+									<div class="col-md-8">
+										<textarea v-model="department.description" class="form-control form-control-sm" cols="30" rows="10"></textarea>
+									</div>
+								</div>
+								<div class="clearfix"></div><br />
+
+
+								<div class="row">
+									<div class="col-md-12 text-right">
+										<button class="btn btn-success btn-sm" :disabled="create_department_loading">
+											<span v-if="create_department_loading">
+												Submiting..
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_department_loading }"></span>
+											</span>
+											<span v-else>
+												Submit
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_department_loading }"></span>
+											</span>
+										</button>
+									</div>
+								</div>
+								<div class="clearfix"></div><br />
+							</div>
+
+							<!-- Right side -->
+							<div class="col-md-6">
+								<div class="col-md-12" v-if="search_show" style="padding: 30px; background: rgba(0,0,0,.09)">
+									<div class="row">
+										<div class="col-md-12">
+											<span v-if="!index_employees_loading">
+												<input placeholder="search employee" type="text" v-model="search_employee" id="" @keyup="filterEmployees()" class="form-control form-control-sm"><br />
+											</span>
+											<span v-else>
+												fetching..
+											</span>
+
+											<!-- Employees -->
+											<span v-if="!search_show_nothing">
+												<small>Employees({{ employees_filtered.length }})</small><br />
+												<span v-if="!search_result_failed">
+													<span v-for="employee in employees_filtered">
+														<label>
+															<input :checked="department.department_head == employee.user_id" type="radio" @click="appendEmployee(employee.user_id, employee.employee_code + ' ' + employee.fname + ' ' + employee.lname)">
+															{{ employee.employee_code }}
+															{{ employee.fname }}
+															{{ employee.lname }}
+														</label>
+														&nbsp;
+													</span>
+												</span>
+												<span v-else>
+													No result
+												</span>
+											</span>
+											<span v-else>
+												<small>
+													Search for employee's first,last name and employee code
+												</small>
+											</span>
+										</div>
+									</div>
+
+								</div>
 							</div>
 						</div>
-						<div class="clearfix"></div><br />
 
-						<div class="row">
-							<div class="col-md-2">Description</div>
-							<div class="col-md-4">
-								<textarea :disabled="!edit_mode" v-model="department.description" class="form-control form-control-sm" cols="30" rows="10"></textarea>
-							</div>
-						</div>
-						<div class="clearfix"></div><br />
-
-
-						<div class="row" v-if="edit_mode">
-							<div class="col-md-4 offset-md-2 text-right">
-								<button class="btn btn-success btn-sm" :disabled="update_department_loading">
-									<span v-if="update_department_loading">
-										Submiting..
-										<span class="fa fa-cog" :class="{ 'fa-spin': update_department_loading }"></span>
-									</span>
-									<span v-else>
-										Submit
-										<span class="fa fa-cog" :class="{ 'fa-spin': update_department_loading }"></span>
-									</span>
-								</button>
-							</div>
-						</div>
-						<div class="clearfix"></div><br />
 					</form>
 
 
 				</div>
+
 				<div class="card-body" v-else>
 					This page either under maintenance or not exists!
 				</div>
@@ -125,17 +155,24 @@
 export default {
 	data () {
 		return {
+
+			search_employee: '',
+			selected_employee_info: '',
+			search_result_failed: false,
+			search_show_nothing: true, // to NOT output all employee, user must search only
+			search_show: false,
+			employees_filtered: [],
+
+
 			employees: [],
 			employees_loading: true,
-			edit_mode: false,
-			valid: false,
 
 			department: {},
+			create_department_loading: false,
+			notif: '',
 
 			show_department_loading: true,
 			update_department_loading: false,
-
-			notif: '',
 
 			links: [
 				{
@@ -159,43 +196,72 @@ export default {
 
 	methods: {
 
-		editMode (des){
-			this.edit_mode = des
-			if (des == true) {
-				this.$notify({
-					group: 'notif',
-					title: 'Employee',
-					text: 'You are in Edit Mode',
-					type: 'warn',
-				});
-			}
-			else {
-				this.$notify({
-					group: 'notif',
-					title: 'Employee',
-					text: 'You are in View Mode',
-					type: 'info',
-				});
-			}
-		},
 
-		departmentArchive () {
+		departmentShow () {
 
-			this.update_department_loading = true
-			let params = { _method: 'DELETE' }
-			this.axiosRequest ('POST', this.$store.state.pis + 'department/' + this.$route.params.id, params)
+			this.show_department_loading = true
+			this.axiosRequest ('GET', this.$store.state.pis + 'department/' + this.$route.params.id)
 			.then (res => {
 
-				this.notif = res.data
-				this.tnotif (res)
-				this.redirect ('department.index')
+				let department  = res.data.data.data
+
+				this.department.department_name = department.department_name
+				this.department.description = department.description
+				this.department.department_head_info = department.department_head_info
+
+				if (department.department_head) {
+					this.department.department_head = department.department_head_info.user_id
+					let name = this.department.department_head_info.employee_code + ' ' + this.department.department_head_info.fname +  ' ' + this.department.department_head_info.lname
+					this.appendEmployee(this.department.department_head_info.user_id, name)
+				}
+				else {
+					this.department.department_head = ''
+				}
+
+				this.valid = res.data.status == 'success' ? true : false
+				this.show_department_loading = false
+
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.update_department_loading = false
+				this.show_department_loading = false
 			})
+		},
 
+
+		filterEmployees () {
+			let employees = this.employees.data
+			let that = this
+			let arr = this.employees.data
+			let search_str = that.search_employee
+
+			if (search_str != '') {
+
+				this.search_show_nothing = false
+				this.employees_filtered = arr.filter(x => {
+					return x.fname.toLowerCase().includes(search_str) ||
+					x.lname.toLowerCase().includes(search_str) ||
+					x.employee_code.toLowerCase().includes(search_str)
+				})
+
+				this.search_result_failed = this.employees_filtered.length == 0 ? true : false
+			}
+			else {
+
+				this.search_show_nothing = true
+				this.employees_filtered = this.employees.data
+			}
+		},
+
+		appendEmployee (id, name) {
+			this.department.department_head = id
+			this.selected_employee_info = name
+		},
+
+		clearDepartmentHead() {
+			this.department.department_head = null
+			this.selected_employee_info = null
 		},
 
 		departmentUpdate () {
@@ -218,34 +284,6 @@ export default {
 			})
 		},
 
-		departmentShow () {
-
-			this.show_department_loading = true
-			this.axiosRequest ('GET', this.$store.state.pis + 'department/' + this.$route.params.id)
-			.then (res => {
-
-				let department  = res.data.data.data
-
-				this.department.department_name = department.department_name
-				this.department.description = department.description
-				if (department.department_head) {
-					this.department.department_head = department.department_head_info.user_id
-				}
-				else {
-					this.department.department_head = ''
-				}
-
-				this.valid = res.data.status == 'success' ? true : false
-
-				this.show_department_loading = false
-
-
-			})
-			.catch (err => {
-				console.log(err)
-				this.show_department_loading = false
-			})
-		},
 
 		employeeIndex () {
 
@@ -253,7 +291,7 @@ export default {
 			this.axiosRequest ('GET', this.$store.state.pis + 'employee?filter=active')
 			.then (res => {
 
-				this.employees  = res.data.data.data
+				this.employees  = res.data.data
 				this.employees_loading = false
 
 			})

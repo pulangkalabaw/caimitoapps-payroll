@@ -92,13 +92,13 @@ class CompensationController extends Controller
 	{
 		$compensation = new Compensation();
 
-		$compensation_data['data'] = $compensation->where('compensation_id',$id)->first();
+		$compensation_data = $compensation->where('compensation_id',$id)->first();
 
 		if ($compensation_data) {
 			return apiReturn($compensation_data, 'Success', 'success');
 		}
 		else {
-			return apiReturn(null, 'This allowance does not exists!', 'failed');
+			return apiReturn([], 'This allowance does not exists!', 'failed');
 		}
 
 

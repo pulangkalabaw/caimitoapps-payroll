@@ -32,7 +32,6 @@ export default Vue.mixin({
 		/**
 		* General Mixins
 		*/
-
 		tnotif (res) {
 			this.$notify({
 				group: 'notif',
@@ -46,7 +45,6 @@ export default Vue.mixin({
 		str_limit (str, limit = 50) {
 
 			var r = str.substring(0,limit)
-
 			if (str.length > limit) {
 				r = r + '..'
 			}
