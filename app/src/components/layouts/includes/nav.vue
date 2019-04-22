@@ -127,12 +127,12 @@
 					<ul class="submenu">
 						<li>
 							<span @click="redirect('leaves.index')" class="span-link">
-								Leave Managment(Create muna)
+								Leave Management
 							</span>
 						</li>
 						<li>
 							<span @click="redirect('leavecredit.index')" class="span-link">
-								Leave Credits
+								Leave credits
 							</span>
 						</li>
 					</ul>

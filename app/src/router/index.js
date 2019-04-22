@@ -46,6 +46,7 @@ import leavesShow from '@/components/pages/app/leaves/show'
 
 // Leave Credit
 import leaveCreditIndex from '@/components/pages/app/leavecredits/index'
+import leaveCreditAssign from '@/components/pages/app/leavecredits/assign'
 
 
 import page404 from '@/components/pages/extras/page404'
@@ -239,6 +240,12 @@ let web_routes = [
 	// Leave credit Management
 	{
 		path: '/app/leavecredits', name: 'leavecredit.index', component: leaveCreditIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/assign-leavecredits', name: 'leavecredit.assign', component: leaveCreditAssign,
 		meta: {
 			auth: true
 		},
