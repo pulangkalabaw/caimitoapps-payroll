@@ -29,24 +29,6 @@
 							<td>fetching</td>
 						</tr>
 
-
-						<!-- Taxable -->
-						<tr v-if="!index_deduc_loading">
-							<td>
-								Taxable:
-							</td>
-							<td>
-								<label>
-									<input type="radio" value="bt" name="tax" @click="taxOption('bt')" required>
-									Before Tax
-								</label>
-								<label>
-									<input type="radio" value="at" name="tax" @click="taxOption('at')" required>
-									After Tax
-								</label>
-							</td>
-						</tr>
-
 						<!-- Taxable -->
 						<tr>
 							<td></td>
@@ -87,7 +69,7 @@
 										<label>
 											Allowance: {{ ucfirst(uc.get_deduction.name) }} <br />
 											Amount: {{ uc.amount }} <br />
-											Taxable: {{ uc.taxable }} <br />
+											Taxable: {{ uc.get_deduction.taxable  == 'at' ? 'After Tax' : 'Before Tax' }} <br />
 											Date start: {{ uc.created_at }} <br />
 											<span class="span-link" @click="removeCompensation(uc.id)">
 												<span class="fa fa-times"></span>

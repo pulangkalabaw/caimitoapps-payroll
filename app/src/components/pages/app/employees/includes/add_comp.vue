@@ -29,25 +29,6 @@
 							<td>fetching</td>
 						</tr>
 
-
-						<!-- Taxable -->
-						<tr v-if="!index_compensation_loading">
-							<td>
-								Taxable:
-							</td>
-							<td>
-								<label>
-									<input type="radio" value="nt" name="tax" @click="taxOption(0)" required>
-									Non-Taxable
-								</label>
-								<label>
-									<input type="radio" value="t" name="tax" @click="taxOption(1)" required>
-									Taxable
-								</label>
-							</td>
-						</tr>
-
-						<!-- Taxable -->
 						<tr>
 							<td></td>
 							<td class="text-right">
@@ -86,7 +67,7 @@
 										<label>
 											Allowance: {{ ucfirst(uc.get_compensation.name) }} <br />
 											Amount: {{ uc.amount }} <br />
-											Taxable: {{ uc.taxable ? 'Taxable' : 'Non-Taxable' }} <br />
+											Taxable: {{ uc.get_compensation.taxable ? 'Taxable' : 'Non-Taxable' }} <br />
 											Date start: {{ uc.created_at }} <br />
 											<span class="span-link" @click="removeCompensation(uc.id)">
 												<span class="fa fa-times"></span>

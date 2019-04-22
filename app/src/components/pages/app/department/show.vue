@@ -11,7 +11,6 @@
 				<span class="fa fa-plus-circle"></span>
 				Create new
 			</span>
-			<div class="clearf"></div><br />
 			<span @click="redirect('department.index')" class="btn btn-default btn-sm btn-tunch-default">
 				<span class="fa fa-th-list"></span>
 				View all
@@ -44,6 +43,9 @@
 												<span class="fa fa-times"></span>
 												<b><i><u>Clear</u></i></b>
 											</small>
+										</span>
+										<span v-else>
+											No Department Head
 										</span>
 										<br />
 
@@ -80,14 +82,14 @@
 
 								<div class="row">
 									<div class="col-md-12 text-right">
-										<button class="btn btn-success btn-sm" :disabled="create_department_loading">
-											<span v-if="create_department_loading">
+										<button class="btn btn-success btn-sm" :disabled="update_department_loading">
+											<span v-if="update_department_loading">
 												Submiting..
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_department_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_department_loading }"></span>
 											</span>
 											<span v-else>
 												Submit
-												<span class="fa fa-cog" :class="{ 'fa-spin': create_department_loading }"></span>
+												<span class="fa fa-cog" :class="{ 'fa-spin': update_department_loading }"></span>
 											</span>
 										</button>
 									</div>
@@ -168,7 +170,6 @@ export default {
 			employees_loading: true,
 
 			department: {},
-			create_department_loading: false,
 			notif: '',
 
 			show_department_loading: true,

@@ -67,6 +67,11 @@ class UserDeductionController extends Controller
             ];
         }
 
+		// Check if this setup is already exist
+		if (UserDeduction::where(['user_id' => $request->post('user_id'), 'deduction_id' => $request->post('deduction_id')])->first()) {
+			return apiReturn([], 'This context is already exist!', 'failed');
+		}
+
         if($user_deduction->insert($data)){
             return apiReturn($data, 'Successfully assigned Deduction!', 'success');
         } else {
