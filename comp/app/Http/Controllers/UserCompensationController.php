@@ -50,7 +50,6 @@ class UserCompensationController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'compensation_id' => 'required',
-			'taxable' => 'required',
 			'user_id' => 'required|array',
 			'user_id.*' => 'required|string|distinct',
 		], [
@@ -72,6 +71,11 @@ class UserCompensationController extends Controller
 				'amount' => $compensation['amount'],
 				'taxable' => $request['taxable']
 			];
+		}
+
+		// Check if this setup is already exist
+		if (UserCompensation::where(['user_id' => $request->post('user_id'), 'compensation_id' => $request->post('compensation_id')])->first()) {
+			return apiReturn([], 'This context is already exist!', 'failed');
 		}
 
 		if ($user_compensation->insert($data)) {

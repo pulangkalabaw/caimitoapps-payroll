@@ -5,6 +5,14 @@
 		<div class="clearfix"></div><br />
 
 		<div id="content">
+
+			<!-- Sub Menus -->
+			<span @click="redirect('deduction.index')" class="btn btn-default btn-sm btn-tunch-default">
+				<span class="fa fa-th-list"></span>
+				View all
+			</span>
+			<div class="clearfix"></div><br />
+
 			<div class="card">
 				<div class="card-header">
 					<span class="fa fa-folder"></span>
@@ -32,14 +40,17 @@
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
-
 						<div class="row">
 							<div class="col-md-2">Taxable <span class="required">*</span></div>
 							<div class="col-md-4">
-								<select v-model="deduction.taxable" class="form-control form-control-sm">
-									<option value="bp">Before Payroll</option>
-									<option value="ap">After Payroll</option>
-								</select>
+								<label>
+									<input type="radio" value="bt" name="tax" @click="taxOption('bt')">
+									Before Tax
+								</label>
+								<label>
+									<input type="radio" value="at" name="tax" @click="taxOption('at')">
+									After Tax
+								</label>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
@@ -74,13 +85,17 @@
 export default {
 	data () {
 		return {
-			deduction: {},
+			deduction: {
+				name: null,
+				amount: 0,
+				taxable: null,
+			},
 			create_deduction_loading: false,
 			notif: '',
 
 			links: [
 				{
-					'label': 'Allowances',
+					'label': 'Deductions',
 					'route': 'compensation.index',
 					'params': {}
 				}
@@ -89,6 +104,10 @@ export default {
 	},
 
 	methods: {
+
+		taxOption (option) {
+			this.deduction.taxable = option
+		},
 
 		deductionCreate () {
 			this.create_deduction_loading = true

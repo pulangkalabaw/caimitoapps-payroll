@@ -4,13 +4,13 @@
 		<navdir :links='links'></navdir>
 		<div class="clearfix"></div><br />
 
-		<div id="content" v-if="!show_compensation_loading">
+		<div id="content" v-if="!show_deduc_loading">
 			<div class="card" :class="{ 'border-warning ': edit_mode }">
 				<div class="card-header">
 					<div class="row">
 						<div class="col-md-6">
 							<span class="fa fa-folder"></span>
-							Allowance
+							Deduction
 						</div>
 						<div class="col-md-6 text-right">
 							<button v-if="!edit_mode" @click="editMode(true)" class="btn btn-warning btn-sm">
@@ -29,12 +29,11 @@
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
-					<form @submit.prevent="compensationUpdate()" method="POST">
-
+					<form @submit.prevent="deducUpdate()" method="POST">
 						<div class="row">
-							<div class="col-md-2">Allowance Name <span class="required">*</span></div>
+							<div class="col-md-2">Deduction Name <span class="required">*</span></div>
 							<div class="col-md-4">
-								<input type="text" v-model="compensation.name" :disabled="!edit_mode" class="form-control form-control-sm" required>
+								<input type="text" v-model="deduc.name" :disabled="!edit_mode" class="form-control form-control-sm" required>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
@@ -42,7 +41,7 @@
 						<div class="row">
 							<div class="col-md-2">Amount <span class="required">*</span></div>
 							<div class="col-md-4">
-								<input type="text" v-model="compensation.amount" :disabled="!edit_mode" class="form-control form-control-sm" required>
+								<input type="text" v-model="deduc.amount" :disabled="!edit_mode" class="form-control form-control-sm" required>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
@@ -50,10 +49,14 @@
 						<div class="row">
 							<div class="col-md-2">Taxable <span class="required">*</span></div>
 							<div class="col-md-4">
-								<select v-model="compensation.taxable" :disabled="!edit_mode" class="form-control form-control-sm">
-									<option value="1">Yes</option>
-									<option value="0">No</option>
-								</select>
+								<label>
+									<input type="radio" value="bt" :disabled="!edit_mode" name="tax" :checked="deduc.taxable == 'bt'" @click="taxOption('bt')">
+									Before Tax
+								</label>
+								<label>
+									<input type="radio" value="at" :disabled="!edit_mode" name="tax" :checked="deduc.taxable == 'at'" @click="taxOption('at')">
+									After Tax
+								</label>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
@@ -61,14 +64,14 @@
 
 						<div class="row" v-if="edit_mode">
 							<div class="col-md-4 offset-md-2 text-right">
-								<button class="btn btn-success btn-sm" :disabled="update_compensation_loading">
-									<span v-if="update_compensation_loading">
+								<button class="btn btn-success btn-sm" :disabled="update_deduc_loading">
+									<span v-if="update_deduc_loading">
 										Submiting..
-										<span class="fa fa-cog" :class="{ 'fa-spin': update_compensation_loading }"></span>
+										<span class="fa fa-cog" :class="{ 'fa-spin': update_deduc_loading }"></span>
 									</span>
 									<span v-else>
 										Submit
-										<span class="fa fa-cog" :class="{ 'fa-spin': update_compensation_loading }"></span>
+										<span class="fa fa-cog" :class="{ 'fa-spin': update_deduc_loading }"></span>
 									</span>
 								</button>
 							</div>
@@ -88,17 +91,17 @@
 export default {
 	data () {
 		return {
-			compensation: {},
-			update_compensation_loading: false,
-			show_compensation_loading: true,
+			deduc: {},
+			update_deduc_loading: false,
+			show_deduc_loading: true,
 			edit_mode: false,
 
 			notif: '',
 
 			links: [
 				{
-					'label': 'Allowances',
-					'route': 'compensation.index',
+					'label': 'Deductions',
+					'route': 'deduction.index',
 					'params': {}
 				},
 				{
@@ -111,7 +114,7 @@ export default {
 	},
 
 	created () {
-		this.compensationShow()
+		this.deducShow()
 	},
 
 	methods: {
@@ -136,39 +139,43 @@ export default {
 			}
 		},
 
-		compensationShow () {
+		taxOption (option) {
+			this.deduc.taxable = option
+		},
 
-			this.show_compensation_loading = true
-			this.axiosRequest ('GET', this.$store.state.comp + 'allowance/' + this.$route.params.id)
+		deducShow () {
+
+			this.show_deduc_loading = true
+			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction/' + this.$route.params.id)
 			.then (res => {
 
-				this.compensation = res.data.data
+				this.deduc = res.data.data.data
 				this.valid = res.data.status == 'success' ? true : false
-				this.show_compensation_loading = false
+				this.show_deduc_loading = false
 			})
 			.catch (err => {
 				console.log(err)
-				this.show_compensation_loading = false
+				this.show_deduc_loading = false
 			})
 		},
 
-		compensationUpdate () {
+		deducUpdate () {
 
-			this.update_compensation_loading = true
-			this.compensation._method = "PUT"
+			this.update_deduc_loading = true
+			this.deduc._method = "PUT"
 
-			this.axiosRequest ('POST', this.$store.state.comp + 'allowance/' + this.$route.params.id, this.compensation)
+			this.axiosRequest ('POST', this.$store.state.deduc + 'deduction/' + this.$route.params.id, this.deduc)
 			.then (res => {
 
-				this.compensation = res.data.data
+				this.deduc = res.data.data
 				this.notif = res.data
 				this.tnotif (res)
-				this.update_compensation_loading = false
+				this.update_deduc_loading = false
 
 			})
 			.catch (err => {
 				console.log(err)
-				this.update_compensation_loading = false
+				this.update_deduc_loading = false
 			})
 		},
 

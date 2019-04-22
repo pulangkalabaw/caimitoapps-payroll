@@ -63,6 +63,7 @@ class DeductionController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
+            'taxable' => 'required|string',
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -73,6 +74,7 @@ class DeductionController extends Controller
             'deduction_id' => $deduction_id,
             'name' => $request['name'],
             'amount' => $request['amount'],
+            'taxable' => $request['taxable'],
             // 'interest' => $request['interest'],
             // 'deduction' => $request['deduction']
         ]);
@@ -109,7 +111,7 @@ class DeductionController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
-            'timeframe' => 'required|string'
+			'taxable' => 'required|string',
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -117,8 +119,8 @@ class DeductionController extends Controller
         $deduction->where('deduction_id', $id)->update([
             'name' => $request['name'],
             'amount' => $request['amount'],
-            'timeframe' => Carbon::parse($request['timeframe'])->format('Y-m-d'),
             'interest' => $request['interest'],
+			'taxable' => $request['taxable'],
             'deduction' => $request['deduction']
         ]);
 

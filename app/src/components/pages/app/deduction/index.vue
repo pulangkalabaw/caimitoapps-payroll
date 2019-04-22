@@ -44,7 +44,7 @@
 										{{ deduction.amount }}
 									</td>
 									<td>
-										{{ deduction.taxable }}
+										{{ deduction.taxable == 'at' ? 'After Tax' : 'Before Tax' }}
 									</td>
 								</tr>
 							</tbody>
@@ -52,7 +52,7 @@
 						</table>
 
 						<hr>
-						Total departments: <b>{{ deductions.total }}</b>
+						Total deductions: <b>{{ deductions.total }}</b>
 						<br /><br />
 						<pagination :data="deductions.data" @pagination-change-page="allowancesIndex"></pagination>
 

@@ -41,6 +41,9 @@
 												<b><i><u>Clear</u></i></b>
 											</small>
 										</span>
+										<span v-else>
+											No Department Head
+										</span>
 										<br />
 
 										<!--  -->

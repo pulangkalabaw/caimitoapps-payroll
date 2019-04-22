@@ -17,7 +17,7 @@ class CompensationController extends Controller
 	*/
 	public function index(Request $request)
 	{
-		$compensation = new Compensation();
+		$compensation_model = new Compensation();
 		$rows = $request->get('show') ? $request->get('show') : 10;
 
 		if($request->has('filter')) {
@@ -27,20 +27,20 @@ class CompensationController extends Controller
 			}
 
 			else if($request->get('filter') == 'active') {
-				$compensation = Compensation::where('status',1)->get();
+				$compensation = Compensation::get();
 			}
 
 			else {
-				$compensation = Compensation::where('status',1)->get();
+				$compensation = Compensation::get();
 			}
 		}
 		else {
-			$compensation = $compensation->paginate($rows);
+			$compensation = Compensation::paginate($rows);
 		}
 
 		$datareturn = [
 			'data' => $compensation,
-			'total' => $compensation->where('status',1)->count(),
+			'total' => $compensation_model->count(),
 		];
 
 		return apiReturn($datareturn, 'Success', 'success');
