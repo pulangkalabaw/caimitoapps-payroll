@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLoanDeductionsTable extends Migration
+class CreateTaxTablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateLoanDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('loan_deductions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('tax_tables', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('wage_type');
+            $table->float('compensation_range_from');
+            $table->string('compensation_range_to');
+            $table->string('prescribed_withholding_tax');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateLoanDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loan_deductions');
+        Schema::dropIfExists('tax_tables');
     }
 }

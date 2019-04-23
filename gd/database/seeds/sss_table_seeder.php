@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\sss_deduction;
+use App\sss_table;
 
-class sss_seeder extends Seeder
+class sss_table_seeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run(){
-
+    public function run()
+    {
         $government_deductions[0]['from'] = 0.00;
         $government_deductions[0]['to'] = 2250;
         $government_deductions[0]['monthly_salary_credit'] = 2000.00;
@@ -419,6 +419,6 @@ class sss_seeder extends Seeder
         $government_deductions[36]['total_contribution_ee'] = 800.00;
         $government_deductions[36]['total_contribution_total'] = 2430.00;
 
-        sss_deduction::insert($government_deductions);
+        sss_table::insert($government_deductions);
     }
 }

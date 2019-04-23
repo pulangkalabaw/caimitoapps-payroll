@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\sss_deduction;
-use App\tax_deduction;
+use App\sss_table;
+use App\tax_table;
 
 class DatabaseSeeder extends Seeder
-{ 
+{
     /**
      * Run the database seeds.
      *
@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersTableSeeder');
-        $this->call('sss_seeder');
-        $this->call('tax_seeder');
+        $this->call('sss_table_seeder');
+        $this->call('tax_table_seeder');
     }
 }

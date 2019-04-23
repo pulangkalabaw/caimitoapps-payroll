@@ -17,7 +17,6 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        //
         $leaves = LibLeave::get();
 
         return apiReturn($leaves, 'Success!', 'success');

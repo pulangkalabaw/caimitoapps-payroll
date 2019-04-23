@@ -8,7 +8,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-primary">Assign leave</button>
+                    <button class="btn btn-primary btn-sm btn-tunch" @click.prevent="redirect('leavecredit.assign')"><i class="fa fa-plus-circle"></i> Assign leave</button>
                 </div>
                 <div class="col-md-12 mt-2">
                     <table class="table table-hover">
@@ -31,7 +31,7 @@
                                     <input type="checkbox">
                                 </td>
                                 <td>John Smith</td>
-                                <td>10.00</td>
+                                <td @dblclick="thisbtn ^= true"><input v-if="thisbtn" type="text" value="10.00"><span v-else>10.00</span></td>
                                 <td>0.00</td>
                                 <td>0.00</td>
                                 <td>5.00</td>
@@ -61,6 +61,7 @@
                     },
                 ],
 
+                thisbtn: false,
                 employees: '',
             }
         },

@@ -52,22 +52,6 @@
 								<div class="clearfix"></div><br />
 
 								<div class="row">
-									<div class="col-md-4">Tax option <span class="required">*</span></div>
-									<div class="col-md-8">
-										<label>
-											<input type="radio" value="bp" name="tax" @click="taxOption('bp')">
-											Before Payroll
-										</label>
-										<label>
-											<input type="radio" value="ap" name="tax" @click="taxOption('ap')">
-											After Payroll
-										</label>
-									</div>
-								</div>
-								<div class="clearfix"></div><br />
-
-
-								<div class="row">
 									<div class="col-md-4">Employee <span class="required">*</span></div>
 									<div class="col-md-8">
 

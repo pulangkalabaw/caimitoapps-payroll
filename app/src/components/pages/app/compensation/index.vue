@@ -37,7 +37,7 @@
 							<tbody v-for="allowance in allowances.data.data" :key="allowance.id">
 								<tr>
 									<td>
-										<span class="span-link-underline" @click="redirect('allowances.show', {id:allowance.allowance_id})">
+										<span class="span-link-underline" @click="redirect('compensation.show', {id:allowance.compensation_id})">
 											{{ allowance.name }}
 										</span>
 									</td>

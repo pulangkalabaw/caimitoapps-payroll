@@ -80,7 +80,7 @@
                 let params = {
                     leave_code: this.leave_code,
                     leave_name: this.leave_name,
-                    leave_desc: this.leave_desc,
+                    leave_description: this.leave_desc,
                 };
 
                 this.axiosRequest ('POST', this.$store.state.hl + 'leave', params)

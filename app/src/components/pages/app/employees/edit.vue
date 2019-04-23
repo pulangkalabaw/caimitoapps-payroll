@@ -42,8 +42,6 @@
 						<b>Edit Mode</b>
 					</div>
 
-					{{ employee }}
-
 					<notif :notif="notif"></notif>
 					<div class="clearfix"></div>
 
