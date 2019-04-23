@@ -29,4 +29,20 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->get('assign-deduction/{id}','UserDeductionController@show');
     $router->put('assign-deduction/{id}','UserDeductionController@update');
     $router->delete('assign-deduction/{id}/delete','UserDeductionController@destroy');
+
+    //SSS GOVERNMENT DEDUCTIONS
+    $router->get('sss-deductions', 'SssController@index');
+    $router->post('sss-deductions/store', 'SssController@store');
+    $router->get('sss-deductions/{id}', 'SssController@show');
+    // $router->get('sss-deductions', 'SssController@edit');
+    $router->put('sss-deductions/{id}', 'SssController@update');
+    $router->delete('sss-deductions/{id}', 'SssController@destroy');
+
+    //TAX GOVERNMENT DEDUCTIONS
+    $router->get('tax-deductions', 'TaxController@index');
+    $router->post('tax-deductions/store', 'TaxController@store');
+    $router->get('tax-deductions/{id}', 'TaxController@show');
+    // $router->get('tax-deductions', 'TaxController@edit');
+    $router->put('tax-deductions/{id}', 'TaxController@update');
+    $router->delete('tax-deductions/{id}', 'TaxController@destroy');
 });

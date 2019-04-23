@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\SssDeduction;
+use App\TaxDeduction;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,5 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersTableSeeder');
+        $this->call('SssTableSeeder');
+        $this->call('TaxTableSeeder');
+
     }
 }
