@@ -12,7 +12,7 @@ class UserPayrollDetailsSeeder extends Seeder
     public function run()
     {
         //
-        factory(App\UserPayrollDetails::class, 1)->create();
+        factory(App\UserPayrollDetails::class, 5)->create();
 
     }
 }

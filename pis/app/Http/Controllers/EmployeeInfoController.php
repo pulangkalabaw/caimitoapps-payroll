@@ -15,27 +15,7 @@ class EmployeeInfoController extends Controller
     public function index(){
 
         $user = new User();
-
-        // /all || /employee_code
-        // [
-        //    {
-        //        employee_code: string,
-        //        fullname: string,
-        //        email: string,
-        //        allowance: [
-        //            { 'allowance_id': int, 'amount': float },
-        //        ],
-        //        deductions: [ // late? absences?
-        //            { 'deduction_id': int , 'amount': float },
-        //        ],
-        //        basic_salary: float,
-        //        wage_type: daily | semi-monthly | monthly,
-        //        payout_type: cash | cheque | bank
-        //        bank_details: nullable | string,
-        //        leave_credit: >= 1 | .5
-        //    }
-        // ]
-
+        // fix this use belongs to
         $employee_info = $user->get(['user_id','employee_code','fname','mname','lname','email'])->map(function ($r) {
 
             // models
@@ -52,7 +32,10 @@ class EmployeeInfoController extends Controller
             return $r;
         });
 
-        return apiReturn($employee_info, 'Success', 'success');
+
+        $x = User::with(['UserCompensation','UserDeduction'])->get();
+        //return apiReturn($employee_info, 'Success', 'success');
+        return apiReturn($x, 'Success', 'success');
     }
 
 }

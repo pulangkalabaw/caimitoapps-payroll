@@ -20,9 +20,10 @@ class CreateUserDeductionTable extends Migration
         // * amount
         // * date_start
         // * date_end
-        // * interest
+        // * interest (undecided)
         // * deduction
         // * reason
+
 		Schema::dropIfExists('user_deduction');
         Schema::create('user_deduction', function (Blueprint $table) {
             $table->increments('id');

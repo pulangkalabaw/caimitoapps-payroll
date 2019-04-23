@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserCompensationTable extends Migration
+class CreateUserPositionHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateUserCompensationTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_compensation', function (Blueprint $table) {
+        Schema::create('user_position_history', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
-            $table->string('compensation_id');
-            $table->string('user_compensation_id');
-            $table->float('amount')->nullable();
-            $table->boolean('taxable')->nullable();
+            $table->string('department_id');
+            $table->string('supervisor_id');
+            $table->string('title')->nullable();
+            $table->string('date_start')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +32,6 @@ class CreateUserCompensationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_compensation');
+        Schema::dropIfExists('user_position_history');
     }
 }
