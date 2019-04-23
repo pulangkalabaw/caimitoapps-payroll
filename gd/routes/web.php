@@ -17,28 +17,20 @@ $router->get('/', function () use ($router) {
 
 $router->group(['middleware' => ['cors']], function() use ($router){
 
-    //SSS GOVERNMENT DEDUCTIONS
-	$router->get('government-deductions', 'GovernmentController@index');
-	$router->post('government-deductions/store', 'GovernmentController@store');
-	$router->get('government-deductions/{id}', 'GovernmentController@show');
-	// $router->get('government-deductions', 'GovernmentController@edit');
-	$router->put('government-deductions/{id}', 'GovernmentController@update');
-	$router->delete('government-deductions/{id}', 'GovernmentController@destroy');
+	//SSS GOVERNMENT DEDUCTIONS
+	$router->get('sss-deductions', 'sssController@index');
+	$router->post('sss-deductions/store', 'sssController@store');
+	$router->get('sss-deductions/{id}', 'sssController@show');
+	// $router->get('sss-deductions', 'sssController@edit');
+	$router->put('sss-deductions/{id}', 'sssController@update');
+	$router->delete('sss-deductions/{id}', 'sssController@destroy');
 
-	//TAX GOVERNMENT DEDUCTIONS
-	$router->get('gov-tax-deductions', 'TaxController@index');
-	$router->post('gov-tax-deductions/store', 'TaxController@store');
-	$router->get('gov-tax-deductions/{id}', 'TaxController@show');
-	// $router->get('gov-tax-deductions', 'TaxController@edit');
-	$router->put('gov-tax-deductions/{id}', 'TaxController@update');
-	$router->delete('gov-tax-deductions/{id}', 'TaxController@destroy');
 
-	//TAX GOVERNMENT DEDUCTIONS
-	$router->get('gov-loan', 'LoanController@index');
-	$router->post('gov-loan/store', 'LoanController@store');
-	$router->get('gov-loan/{id}', 'LoanController@show');
-	// $router->get('gov-tax-deductions', 'LoanController@edit');
-	$router->put('gov-loan/{id}', 'LoanController@update');
-	$router->delete('gov-loan/{id}', 'LoanController@destroy');
-
+	//SSS GOVERNMENT DEDUCTIONS
+	$router->get('tax-deductions', 'taxController@index');
+	$router->post('tax-deductions/store', 'taxController@store');
+	$router->get('tax-deductions/{id}', 'taxController@show');
+	// $router->get('tax-deductions', 'taxController@edit');
+	$router->put('tax-deductions/{id}', 'taxController@update');
+	$router->delete('tax-deductions/{id}', 'taxController@destroy');
 });

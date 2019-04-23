@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSssDeductionsTable extends Migration
+class CreateSssTablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateSssDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sss_deductions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('sss_tables', function (Blueprint $table) {
+            $table->increments('id');
             $table->float('from');
             $table->string('to');
             $table->float('monthly_salary_credit');
@@ -36,6 +36,6 @@ class CreateSssDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sss_deductions');
+        Schema::dropIfExists('sss_tables');
     }
 }

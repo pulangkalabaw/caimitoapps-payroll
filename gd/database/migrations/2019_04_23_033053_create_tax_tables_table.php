@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaxDeductionsTable extends Migration
+class CreateTaxTablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateTaxDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tax_deductions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('tax_tables', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('wage_type');
             $table->float('compensation_range_from');
             $table->string('compensation_range_to');
@@ -30,6 +30,6 @@ class CreateTaxDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tax_deductions');
+        Schema::dropIfExists('tax_tables');
     }
 }

@@ -1,18 +1,17 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\tax_deduction;
-
-class tax_seeder extends Seeder
+use App\tax_table;
+class tax_table_seeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
-	        // WITHHOLDING TAX FOR DAILY
+    public function run(){
+        
+        // WITHHOLDING TAX FOR DAILY
 	    $witholding_tax[0]['wage_type'] = 'daily';
 	    $witholding_tax[0]['compensation_range_from'] = 0;
 	    $witholding_tax[0]['compensation_range_to'] = 684;
@@ -139,6 +138,6 @@ class tax_seeder extends Seeder
 	    $witholding_tax[23]['compensation_range_to'] = 'and above';
 	    $witholding_tax[23]['prescribed_withholding_tax'] = json_encode([.35, 200833.33]);
 
-	    tax_deduction::insert($witholding_tax);
-	}
+	    tax_table::insert($witholding_tax);
+    }
 }
