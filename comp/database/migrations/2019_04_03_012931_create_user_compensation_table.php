@@ -17,6 +17,7 @@ class CreateUserCompensationTable extends Migration
             $table->increments('id');
             $table->string('user_id');
             $table->string('compensation_id');
+            $table->string('user_compensation_id');
             $table->float('amount')->nullable();
             $table->boolean('taxable')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

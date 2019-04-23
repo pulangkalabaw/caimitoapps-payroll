@@ -15,8 +15,8 @@ class CreateDeductionsTable extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('deduction_id');
-            $table->string('interest')->nullable();
+            $table->string('name')->nullable();
+            $table->string('deduction_id')->nullable();
             $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();

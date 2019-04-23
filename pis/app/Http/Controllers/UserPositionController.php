@@ -45,22 +45,27 @@ class UserPositionController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
+        $user_position = new UserPosition();
 
         $validator = Validator::make($request->all(),[
             'user_id' => 'required|unique:user_position,user_id',
             'department_id' => 'required',
             'supervisor_id' => 'required',
             'title' => 'required'
-            'date_start' => 'required'
+            'date_start' => 'required|add_date'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
-        UserPosition::create([
+        //if else for checking
+        $user_position->create([
             'user_id' => $request['user_id'],
             'department_id' => $request['department_id'],
             'supervisor_id' => $request['supervisor_id'],
+
             'date_start' => Carbon::parse($request['date_start'])
+            //'date_start' => $request['date_start']
         ]);
 
         return apiReturn($request->all(), 'Success', 'success');

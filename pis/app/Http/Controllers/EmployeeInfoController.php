@@ -15,7 +15,7 @@ class EmployeeInfoController extends Controller
     public function index(){
 
         $user = new User();
-
+        // fix this use belongs to
         $employee_info = $user->get(['user_id','employee_code','fname','mname','lname','email'])->map(function ($r) {
 
             // models
@@ -32,7 +32,10 @@ class EmployeeInfoController extends Controller
             return $r;
         });
 
-        return apiReturn($employee_info, 'Success', 'success');
+
+        $x = User::with(['UserCompensation','UserDeduction'])->get();
+        //return apiReturn($employee_info, 'Success', 'success');
+        return apiReturn($x, 'Success', 'success');
     }
 
 }
