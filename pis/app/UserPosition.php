@@ -11,7 +11,15 @@ class UserPosition extends Model
     protected $guarded = [];
     use SoftDeletes;
 
+    public function getSupervisor() {
+        return $this->hasOne('App\User','user_id','supervisor_id');
+    }
+
+    public function getDepartment() {
+        return $this->hasOne('App\Department','department_id','department_id');
+    }
+
     public function getUser() {
-        return $this->hasOne('App\User','supervisor_id','user_id');
+        return $this->hasOne('App\User','user_id','user_id');
     }
 }

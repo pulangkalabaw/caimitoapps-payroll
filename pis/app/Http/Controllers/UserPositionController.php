@@ -45,30 +45,24 @@ class UserPositionController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
         $user_position = new UserPosition();
 
         $validator = Validator::make($request->all(),[
             'user_id' => 'required|unique:user_position,user_id',
             'department_id' => 'required',
             'supervisor_id' => 'required',
-            'title' => 'required'
-            'date_start' => 'required|add_date'
+            'title' => 'required',
+            'date_start' => 'required|date|date_format:Y-m-d'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
-        //if else for checking
-        $user_position->create([
-            'user_id' => $request['user_id'],
-            'department_id' => $request['department_id'],
-            'supervisor_id' => $request['supervisor_id'],
+        if($user_position->create($request->all())){
+            return apiReturn($request->all(), 'Success', 'success');
+        } else {
+            return apiReturn([], 'Failed to assign position to employee!', 'error');
+        }
 
-            'date_start' => Carbon::parse($request['date_start'])
-            //'date_start' => $request['date_start']
-        ]);
-
-        return apiReturn($request->all(), 'Success', 'success');
     }
 
     /**
@@ -79,7 +73,21 @@ class UserPositionController extends Controller
      */
     public function show($id)
     {
-        //
+        $user_position = new UserPosition();
+
+        $userdata['data'] = $user_position->with([
+            'getUser',
+            'getDepartment',
+            'getSupervisor'
+        ])
+        ->where('user_id',$id)
+        ->first();
+
+        if($userdata){
+            return apiReturn($userdata, 'Success', 'success');
+        } else {
+            return apiReturn(null, 'Employee not found!', 'failed');
+        }
     }
 
     /**
@@ -102,7 +110,23 @@ class UserPositionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_position = new UserPosition();
+
+        $validator = Validator::make($request->all(),[
+            'department_id' => 'required',
+            'supervisor_id' => 'required',
+            'title' => 'required',
+            'date_start' => 'required|date|date_format:Y-m-d'
+        ]);
+
+        if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
+
+        if($user_position->where('user_id',$id)->update($request->except(['_method']))){
+            return apiReturn($request->all(),'Successfully updated user!', 'success');
+        } else {
+            return apiReturn([],'Failed to update user', 'failed');
+        }
+
     }
 
     /**
