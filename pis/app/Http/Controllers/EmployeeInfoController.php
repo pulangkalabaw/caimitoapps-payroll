@@ -33,7 +33,7 @@ class EmployeeInfoController extends Controller
         });
 
 
-        $x = User::with(['UserCompensation','UserDeduction'])->get();
+        $x = User::with(['UserCompensation'])->get();
         //return apiReturn($employee_info, 'Success', 'success');
         return apiReturn($x, 'Success', 'success');
     }

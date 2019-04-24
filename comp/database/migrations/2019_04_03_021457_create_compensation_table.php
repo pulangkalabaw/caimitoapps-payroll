@@ -19,6 +19,8 @@ class CreateCompensationTable extends Migration
             $table->string('name')->nullable();
             $table->float('amount')->nullable();
             $table->tinyInteger('taxable')->nullable();
+            $table->string('type')->default('fixed'); //determines if fix or variable
+            $table->string('code')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
