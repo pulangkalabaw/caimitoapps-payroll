@@ -1,82 +1,99 @@
 <template lang="html">
 	<div>
-		<small>
-			<b>Add Compensation</b>
-		</small>
 		<div v-if="!show_employee_loading">
-			<form @submit.prevent="addCompensation()" method="POST">
-
-				<notif :notif="notif"></notif>
-				<div class="clearfix"></div>
-
-
-				<table class="table">
-					<tbody>
-						<!-- Add new Allowance -->
-						<tr v-if="!index_compensation_loading">
-							<td width="30%">
-								Select Compensation:
-							</td>
-							<td>
-								<select v-model="assign_compensation.compensation_id" class="form-control form-control-sm" required>
-									<option :value="comp.compensation_id" v-for="comp in compensation.data">
-										{{ comp.name }}
-									</option>
-								</select>
-							</td>
-						</tr>
-
-						<tr v-else>
-							<td>fetching</td>
-						</tr>
-
-						<tr v-if="assign_compensation.compensation_id != null && compensation.data.filter(x => x.compensation_id == assign_compensation.compensation_id)[0].type == 'variable'">
-							<td>Amount <span class="required">*</span></td>
-							<td>
-								<input type="text" v-model="assign_compensation.amount" id="" class="form-control form-control-sm" required>
-								<small>
-									<span class="fa fa-info-circle"></span>
-									this compensation is a variable, amount field is required <span class="required">*</span>
-								</small>
-							</td>
-						</tr>
-
-						<tr>
-							<td>Date Start <span class="required">*</span></td>
-							<td>
-								<input type="date" v-model="assign_compensation.date_start" id="" class="form-control form-control-sm" required>
-							</td>
-						</tr>
-
-						<tr>
-							<td></td>
-							<td class="text-right">
-								<button class="btn btn-success btn-sm" :disabled="create_ucompensation_loading">
-									<span v-if="create_ucompensation_loading">
-										Submiting..
-										<span class="fa fa-cog" :class="{ 'fa-spin': create_ucompensation_loading }"></span>
-									</span>
-									<span v-else>
-										Submit
-										<span class="fa fa-cog" :class="{ 'fa-spin': create_ucompensation_loading }"></span>
-									</span>
-								</button>
-							</td>
-						</tr>
-
-					</tbody>
-				</table>
-			</form>
-			<br />
 
 			<!-- List of compensations -->
 			<small>
 				<b>
-					Current Compensation
+					Compensation
 					({{ employee.user_compensation != null ? employee.user_compensation.length : 0 }})
 				</b>
 			</small>
-			<table class="table" v-if="employee.user_compensation.length != 0">
+			<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Name</th>
+						<th>Tax</th>
+						<th>Date Start</th>
+						<th>Type</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="uc in employee.user_compensation">
+						<td>SKL</td>
+						<td>
+							{{ ucfirst(uc.get_compensation.name) }}
+						</td>
+						<td>
+							{{ uc.get_compensation.taxable ? 'Taxable' : 'Non-Taxable' }}
+						</td>
+						<td>
+							{{ $moment(uc.created_at).format('YYYY-MM-DD') }}
+						</td>
+						<td>
+							{{ ucfirst(uc.type) }}
+						</td>
+						<td>
+							{{ uc.amount.toFixed(2) }}
+						</td>
+					</tr>
+					<tr> <td>&nbsp;</td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>
+					<tr>
+						<td></td> <td></td> <td></td> <td></td> <td></td>
+						<td>
+							<b>Total:</b> {{ compensation_total }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- List of compensations -->
+			<small>
+				<b>
+					Deduction
+					({{ employee.user_compensation != null ? employee.user_compensation.length : 0 }})
+				</b>
+			</small>
+			<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Name</th>
+						<th>Tax</th>
+						<th>Date Start</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="uc in employee.user_compensation">
+						<td>SKL</td>
+						<td>
+							{{ ucfirst(uc.get_compensation.name) }}
+						</td>
+						<td>
+							{{ uc.get_compensation.taxable ? 'Taxable' : 'Non-Taxable' }}
+						</td>
+						<td>
+							{{ $moment(uc.created_at).format('YYYY-MM-DD') }}
+						</td>
+						<td>
+							{{ uc.amount.toFixed(2) }}
+						</td>
+					</tr>
+					<tr> <td>&nbsp;</td> <td></td> <td></td> <td></td> <td></td> </tr>
+					<tr>
+						<td></td> <td></td> <td></td> <td></td>
+						<td>
+							<b>Total:</b> {{ compensation_total }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+			<!-- <table class="table" v-if="employee.user_compensation.length != 0">
 				<tbody>
 					<tr>
 						<td>
@@ -99,7 +116,7 @@
 						</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</div>
 		<div v-else>
 			fetching..
@@ -128,6 +145,22 @@ export default {
 	created () {
 		this.employeeShow()
 		this.compensationIndex()
+	},
+
+	computed: {
+		compensation_total() {
+			if (this.employee.user_compensation) {
+				var total = 0;
+				this.employee.user_compensation.map (function (uc) {
+					if (uc.amount != 0 || !uc.amount) {
+						total += uc.amount
+					}
+				})
+				return total.toFixed(2);
+			}
+
+			return 0;
+		}
 	},
 
 	methods: {
@@ -164,11 +197,6 @@ export default {
 				this.tnotif (res)
 				this.create_ucompensation_loading = false
 				this.employeeShow()
-				this.assign_compensation = {
-					compensation_id: null,
-					user_id: [],
-					taxable: null,
-				}
 
 			})
 			.catch (err => {

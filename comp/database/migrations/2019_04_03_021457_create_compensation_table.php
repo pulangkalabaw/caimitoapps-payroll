@@ -13,6 +13,7 @@ class CreateCompensationTable extends Migration
      */
     public function up()
     {
+		Schema::dropIfExists('compensation');
         Schema::create('compensation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('compensation_id')->unique();

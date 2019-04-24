@@ -61,7 +61,7 @@ class UserCompensationController extends Controller
 		$user_compensation = new UserCompensation();
 
 		// get the selected comepensation of the user
-		$compensation = $compensation->where('compensation_id', $request['compensation_id'])->first();
+		$compensation = $compensation->where('compensation_id', $request->post('compensation_id'))->first();
 
 		// this will check if the given compensation is fixed or variable
 		if($compensation['type'] == 'fixed'){
@@ -69,23 +69,23 @@ class UserCompensationController extends Controller
 			$compensation_amount = $compensation['amount'];
 		} else if($compensation['type'] == 'variable') {
 			// else if the type is variable get the request amount
-			if($request['amount'] == null) return apiReturn([], 'Error please input amount!', 'error');
-			$compensation_amount = $request['amount'];
+			if($request->post('amount') == null) return apiReturn([], 'Error please input amount!', 'error');
+			$compensation_amount = $request->post('amount');
 		} else {
 			// else show error that compensation type was not set
 			return apiReturn([], 'Error compensation type not set!', 'error');
 		}
 
-		foreach($request['user_id'] as $user_id){
+		foreach($request->post('user_id') as $user_id){
 
 			$data[] = [
 				'user_id' => $user_id,
-				'compensation_id' => $request['compensation_id'],
+				'compensation_id' => $request->post('compensation_id'),
 				'user_compensation_id' => $user_id.'u'.rand(111,999),
 				'amount' => $compensation_amount,
-				'taxable' => $request['taxable'],
+				'taxable' => $request->post('taxable'),
 				'type' => $compensation['type'],
-				'date_start' => $request['date_start']
+				'date_start' => $request->post('date_start')
 			];
 		}
 

@@ -28,21 +28,29 @@
 						<table class="table table-bordered table-hovered" style="width:100%">
 							<thead>
 								<tr>
-									<th width="40%">Compensation name</th>
-									<th width="30%">Amount</th>
-									<th width="30%">Taxable</th>
+									<th width="15%">Code</th>
+									<th width="30%">Name</th>
+									<th width="25%">Type</th>
+									<th width="10%">Amount</th>
+									<th width="20%">Taxable</th>
 								</tr>
 							</thead>
 
 							<tbody v-for="allowance in allowances.data.data" :key="allowance.id">
 								<tr>
 									<td>
+										{{ allowance.code ? allowance.code : '-' }}
+									</td>
+									<td>
 										<span class="span-link-underline" @click="redirect('compensation.show', {id:allowance.compensation_id})">
-											{{ allowance.name }}
+											{{ ucfirst(allowance.name) }}
 										</span>
 									</td>
 									<td>
-										{{ allowance.amount }}
+										{{ ucfirst(allowance.type) }}
+									</td>
+									<td>
+										{{ allowance.amount ? allowance.amount : '-' }}
 									</td>
 									<td>
 										{{ allowance.taxable ? 'Yes' : 'No' }}

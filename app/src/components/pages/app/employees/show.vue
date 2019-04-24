@@ -57,6 +57,9 @@
 								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'pd'})">
 									Payroll Details
 								</li>
+								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'comp'})">
+									Compensation
+								</li>
 							</ul>
 							<br />
 
@@ -120,6 +123,13 @@
 										<pd :employee="employee"></pd>
 									</div>
 
+									<!--
+									Payroll Details
+									***-->
+									<div v-else-if="$route.params.menu == 'comp'">
+										<comp :employee="employee"></comp>
+									</div>
+
 
 									<!--
 									Add compensation
@@ -168,6 +178,7 @@ import bi from '@/components/pages/app/employees/includes/bi'
 import oi from '@/components/pages/app/employees/includes/oi'
 import co from '@/components/pages/app/employees/includes/co'
 import pd from '@/components/pages/app/employees/includes/pd'
+import comp from '@/components/pages/app/employees/includes/comp'
 import add_comp from '@/components/pages/app/employees/includes/add_comp'
 import add_deduc from '@/components/pages/app/employees/includes/add_deduc'
 
@@ -178,6 +189,7 @@ export default {
 		'oi': oi,
 		'co': co,
 		'pd': pd,
+		'comp': comp,
 		'add-comp': add_comp,
 		'add-deduc': add_deduc,
 	},

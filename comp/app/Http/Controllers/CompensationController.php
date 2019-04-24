@@ -58,7 +58,7 @@ class CompensationController extends Controller
 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
-			'amount' => 'required|numeric',
+			'amount' => 'numeric',
 			'type' => 'required|max:50',
 			'code' => 'required'
 		]);
@@ -69,11 +69,11 @@ class CompensationController extends Controller
 
 		$compensation_data = Compensation::create([
 			'compensation_id' => $compensation_id,
-			'name' => $request['name'],
-			'amount' => $request['amount'],
-			'taxable' => $request['taxable'],
-			'type' => $request['type'],
-			'code' => $request['code']
+			'name' => $request->post('name'),
+			'amount' => $request->post('amount'),
+			'taxable' => $request->post('taxable'),
+			'type' => $request->post('type'),
+			'code' => $request->post('code')
 		]);
 
 		if($compensation_data){
