@@ -95,7 +95,7 @@ class UserCompensationController extends Controller
 		}
 
 		if ($user_compensation->insert($data)) {
-			return apiReturn($request->all(), 'Successfully assigned!', 'success');
+			return apiReturn($data, 'Successfully assigned!', 'success');
 		}
 		else {
 			return apiReturn([], 'Failed to assign', 'failed');

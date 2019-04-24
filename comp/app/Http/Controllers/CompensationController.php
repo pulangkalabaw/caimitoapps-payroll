@@ -60,7 +60,7 @@ class CompensationController extends Controller
 			'name' => 'required',
 			'amount' => 'numeric',
 			'type' => 'required|max:50',
-			'code' => 'required'
+			'code' => 'required|max:30|unique:compensation'
 		]);
 
 		if($validator->fails()) return apiReturn([], 'Validation Failed', $validator->errors());
@@ -124,17 +124,18 @@ class CompensationController extends Controller
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
 			'amount' => 'required|numeric',
-			'type' => 'required|max:50'
+			'type' => 'required|max:50',
+			'code' => 'required|max:30|unqiue:compensation,code,'.$id.',compensation_id'
 		]);
 
 		if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
 		$compensation = $compensation->where('compensation_id', $id)->update([
-			'name' => $request['name'],
-			'amount' => $request['amount'],
-			'taxable' => $request['taxable'],
-			'type' => $request['type'],
-			'code' => $request['code']
+			'name' => $request->post('name'),
+			'amount' => $request->post('amount'),
+			'taxable' => $request->post('taxable'),
+			'type' => $request->post('type'),
+			'code' => $request->post('code')
 		]);
 
 		if($compensation){
