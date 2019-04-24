@@ -40,6 +40,7 @@
 											<select v-model="assign_compensation.compensation_id" class="form-control form-control-sm">
 												<option :value="null">Select one</option>
 												<option :value="comp.compensation_id" v-for="comp in compensation.data">
+													{{ comp.code }}
 													{{ comp.name }}
 												</option>
 											</select>
@@ -47,6 +48,30 @@
 										<span v-else>
 											fetching..
 										</span>
+									</div>
+								</div>
+								<div class="clearfix"></div><br />
+
+								<div v-if="assign_compensation.compensation_id != null">
+									<div v-if="compensation.data.filter(x => x.compensation_id == assign_compensation.compensation_id)[0].type == 'variable'">
+										<div class="row">
+											<div class="col-md-4">Amount <span class="required">*</span></div>
+											<div class="col-md-8">
+												<input type="text" v-model="assign_compensation.amount" id="" class="form-control form-control-sm" required>
+												<small>
+													<span class="fa fa-info-circle"></span>
+													this compensation is a variable, amount field is required <span class="required">*</span>
+												</small>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">Date Start <span class="required">*</span></div>
+									<div class="col-md-8">
+										<input type="date" v-model="assign_compensation.date_start" id="" class="form-control form-control-sm" required>
 									</div>
 								</div>
 								<div class="clearfix"></div><br />
@@ -155,6 +180,7 @@ export default {
 
 			compensation: [],
 			index_compensation_loading: false,
+			selected_compensation: {},
 
 			employees: [],
 			employees_filtered: [],
@@ -186,6 +212,10 @@ export default {
 
 	methods: {
 
+		select_compensation (se) {
+			this.selected_compensation = se
+			console.log(se)
+		},
 
 		filterEmployees () {
 			let employees = this.employees.data
