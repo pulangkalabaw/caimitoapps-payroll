@@ -52,8 +52,7 @@ class UserCompensationController extends Controller
 			'compensation_id' => 'required',
 			'user_id' => 'required|array',
 			'user_id.*' => 'required|string|distinct',
-		], [
-			'user_id.required' => 'Please select one or more employee'
+			'date_start' => 'required|date|date_format:Y-m-d',
 		]);
 
 		if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -64,12 +63,29 @@ class UserCompensationController extends Controller
 		// get the selected comepensation of the user
 		$compensation = $compensation->where('compensation_id', $request['compensation_id'])->first();
 
+		// this will check if the given compensation is fixed or variable
+		if($compensation['type'] == 'fixed'){
+			// if the type is fixed copy the compensation amount
+			$compensation_amount = $compensation['amount'];
+		} else if($compensation['type'] == 'variable') {
+			// else if the type is variable get the request amount
+			if($request['amount'] == null) return apiReturn([], 'Error please input amount!', 'error');
+			$compensation_amount = $request['amount'];
+		} else {
+			// else show error that compensation type was not set
+			return apiReturn([], 'Error compensation type not set!', 'error');
+		}
+
 		foreach($request['user_id'] as $user_id){
+
 			$data[] = [
 				'user_id' => $user_id,
 				'compensation_id' => $request['compensation_id'],
-				'amount' => $compensation['amount'],
-				'taxable' => $request['taxable']
+				'user_compensation_id' => $user_id.'u'.rand(111,999),
+				'amount' => $compensation_amount,
+				'taxable' => $request['taxable'],
+				'type' => $compensation['type'],
+				'date_start' => $request['date_start']
 			];
 		}
 
@@ -121,24 +137,45 @@ class UserCompensationController extends Controller
 	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function update(Request $request, $id)
+	public function update(Request $request, $user_compensation_id)
 	{
-		// not in use yet
+		// Note: before updating the compensation assign to user log it first to user_compensation_history table
+		// give the user_compensation_id for update a specific user
 		$user_compensation = new UserCompensation();
 		$compensation = new Compensation();
 
 		$validator = Validator::make($request->all(), [
-			'compensation_id' => 'required'
+			'compensation_id' => 'required',
+			'date_start' => 'required|date|date_format:Y-m-d'
 		],[
 			'compensation_id.required' => 'Please select a compensation!'
 		]);
 
-		if(!$validator->fails()){
-			$compensation = $compensation->where('compensation_id',$request['compensation_id'])->first();
+		if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
-			$user_compensation->where('user_id',$id)->update([
-				'compensation_id' => $request['compensation_id']
-			]);
+		$compensation = $compensation->where('compensation_id',$request['compensation_id'])->first();
+
+		// this will check if the given compensation is fixed or variable
+		if($compensation['type'] == 'fixed'){
+			// if the type is fixed copy the compensation amount
+			$compensation_amount = $compensation['amount'];
+		} else if($compensation['type'] == 'variable') {
+			// else if the type is variable get the request amount
+			$compensation_amount = $request['amount'];
+		} else {
+			// else show error that compensation type was not set
+			return apiReturn([], 'Error compensation type not set!', 'error');
+		}
+
+		$user_compensation = $user_compensation->where('user_id',$id)->update([
+			'compensation_id' => $request['compensation_id'],
+			'amount' => $compensation_amount,
+			'taxable' => $request['type'],
+			'date_start' => $request['date_start']
+		]);
+
+		if($user_compensation){
+			return apiReturn($request->all(), 'Successfully assigned!', 'success');
 		} else {
 			return apiReturn([], 'Failed updating compensation to user!', 'failed', $validator->errors());
 		}
