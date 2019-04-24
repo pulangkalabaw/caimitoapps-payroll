@@ -57,13 +57,12 @@ class DeductionController extends Controller
         // * deduction_id
         // * name
         // * amount
-        // * timeframe
-        // * interest
         // * deduction
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
             'taxable' => 'required|string',
+            'code' => 'required|unique:deductions|max:30'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -72,11 +71,11 @@ class DeductionController extends Controller
 
         $deduction_data = Deductions::create([
             'deduction_id' => $deduction_id,
-            'name' => $request['name'],
-            'amount' => $request['amount'],
-            'taxable' => $request['taxable'],
-            // 'interest' => $request['interest'],
-            // 'deduction' => $request['deduction']
+            'name' => $request->post('name'),
+            'amount' => $request->post('amount'),
+            'taxable' => $request->post('taxable'),
+            // 'interest' => $request->post('interest'),
+            // 'deduction' => $request->post('deduction')
         ]);
 
         return apiReturn($deduction_data, 'Successful in creating deduction', 'success');
@@ -112,16 +111,17 @@ class DeductionController extends Controller
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
 			'taxable' => 'required|string',
+            'code' => 'required|unique:deductions,code,'.$id.',deduction_id|max:30'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
         $deduction->where('deduction_id', $id)->update([
-            'name' => $request['name'],
-            'amount' => $request['amount'],
-            'interest' => $request['interest'],
-			'taxable' => $request['taxable'],
-            'deduction' => $request['deduction']
+            'name' => $request->post('name'),
+            'amount' => $request->post('amount'),
+            'interest' => $request->post('interest'),
+			'taxable' => $request->post('taxable'),
+            'deduction' => $request->post('deduction')
         ]);
 
         return apiReturn($request->all(), 'Successful in updating', 'success');
