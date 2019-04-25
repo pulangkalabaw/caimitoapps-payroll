@@ -1,9 +1,7 @@
 <?php
 function sss_deduction()
 {
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
+    sessionStart();
 
     if(empty($_SESSION["sss_deduction"]) || $_SESSION["sss_deduction"] == null){
         // $result = guzzle('GET',env('API_GD_SSS'));
@@ -15,10 +13,8 @@ function sss_deduction()
 
 function withholding_tax()
 {
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    
+    sessionStart();
+
     if(empty($_SESSION["tax_deduction"]) || $_SESSION["tax_deduction"] == null){
         // $result = guzzle('GET',env('API_GD_TAX'));
         $result = guzzle('GET',env('API_GD_TAX_2'));

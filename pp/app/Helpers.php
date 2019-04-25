@@ -54,6 +54,7 @@
     }
 
     function get_ot($ot_type){
+
         if($ot_type == 'rd'){
             return 1.3;
         } else if($ot_type == 'rdot'){
@@ -80,34 +81,53 @@
     }
 
     function compute_late($basic_pay = 0, $working_days = 0, $lates = 0){
+
         return $basic_pay / $working_days / 8 * $lates;
     }
 
     function compute_absence($basic_pay = 0, $working_days = 0, $absences = 0){
+
         return $basic_pay / $working_days / 8 * $absences;
     }
 
     function compute_under_time($basic_pay = 0, $working_days = 0, $under_times = 0){
+
         return $basic_pay / $working_days / 8 * $under_times;
     }
 
     function compute_deductions($late_deduction = 0, $absent_deduction = 0, $under_time_deduction = 0, $deduction = 0){
+
         return $late_deduction + $absent_deduction + $under_time_deduction + $deduction;
     }
 
     function compute_overtime($basic_pay = 0, $working_days = 0, $overtime = 0, $ot_type = null){
+
         if($ot_type != null){
+
             $ot_percentage = get_ot($ot_type);
+
             return $basic_pay / $working_days / 8 * $overtime * $ot_percentage;
         } else {
+
             return $basic_pay / $working_days / 8 * $overtime;
         }
     }
 
     function compute_gross_income($basic_pay = 0, $late_deduction = 0, $absent_deduction = 0, $under_time_deduction = 0){
+
         return ($basic_pay / 2) - $late_deduction - $absent_deduction - $under_time_deduction;
     }
 
     function compute_government_deductions($sss_deduction = 0, $pagibig_deduction = 0, $philhealth_deduction = 0){
+
         return $sss_deduction + $pagibig_deduction + $philhealth_deduction;
+    }
+
+    function sessionStart()
+    {
+
+        if (session_status() == PHP_SESSION_NONE) {
+            
+            session_start();
+        }
     }
