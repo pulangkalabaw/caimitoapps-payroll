@@ -26,6 +26,8 @@ class CreateSssDeductionsTable extends Migration
             $table->float('total_contribution_ee');
             $table->float('total_contribution_total');
             $table->timestamps();
+            $table->softDeletes();
+            
         });
     }
 

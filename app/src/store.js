@@ -34,7 +34,8 @@ const store =  new Vuex.Store({
 		 *
 		 */
 
-        deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
+        // deduc: 'http://localhost/www/iplus/payroll/dev/deduc/'
+        deduc: 'http://localhost/Iplus/caimitoapps-payroll/deduc/',
 
 
 
