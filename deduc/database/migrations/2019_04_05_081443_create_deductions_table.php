@@ -20,7 +20,6 @@ class CreateDeductionsTable extends Migration
             $table->string('name');
 			$table->string('taxable');
             $table->float('amount')->decimal('total_amount',2)->nullable();
-            $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
             $table->string('code')->nullable();
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
