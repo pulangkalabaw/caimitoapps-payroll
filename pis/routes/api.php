@@ -22,8 +22,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('employee', 'EmployeeController');
     Route::resource('department', 'DepartmentController');
     Route::resource('jobs', 'JobsController');
-    // EmployeeInfo
-    Route::get('employee-info','EmployeeInfoController@index');
     // User Position
     Route::resource('employee-position','UserPositionController');
 });
