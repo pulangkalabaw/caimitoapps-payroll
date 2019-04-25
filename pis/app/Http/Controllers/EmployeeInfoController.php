@@ -17,7 +17,6 @@ class EmployeeInfoController extends Controller
         $user = new User();
 
         // $employee_info = $user->get(['user_id','employee_code','fname','mname','lname','email'])->map(function ($r) {
-        //
         //     // models
         //     $user_compensation = new UserCompensation();
         //     $user_deduction = new UserDeduction();
@@ -67,7 +66,7 @@ class EmployeeInfoController extends Controller
                 'allowance_taxable_total' => $user_compensation->where(['user_id' => $user['user_id'], 'taxable' => 1])->sum('amount'),
                 'allowance_total' => $user_compensation->where('user_id', $user['user_id'])->sum('amount'),
                 // Deduction and Goverment
-                
+
             ];
         }
 

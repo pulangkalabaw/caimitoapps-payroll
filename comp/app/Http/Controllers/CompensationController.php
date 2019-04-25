@@ -103,8 +103,6 @@ class CompensationController extends Controller
 			return apiReturn([], 'This allowance does not exists!', 'failed');
 		}
 
-
-
 		return apiReturn($compensation_data, 'Success!', 'success');
 	}
 
