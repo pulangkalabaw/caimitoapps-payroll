@@ -13,6 +13,8 @@ class SamplesController extends Controller {
     public function index(){
         // return $result = guzzle('GET',env('API_PIS') . 'employee-info');
         // return $result = guzzle('GET',env('API_GD') . 'gd/government-deductions');
+        // return sss_deduction();
+        // return sss_deduction_bak();
 
         // From PIS
         $basic_pay = 13000.00;

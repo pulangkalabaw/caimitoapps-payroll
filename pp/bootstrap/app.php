@@ -28,6 +28,7 @@ $app->withFacades();
 $app->withEloquent();
 
 $app->configure('cors');
+$app->configure('session');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -63,6 +64,11 @@ $app->singleton(
 $app->middleware([
     App\Http\Middleware\ExampleMiddleware::class,
     \Barryvdh\Cors\HandleCors::class,
+    // \Illuminate\Session\Middleware\StartSession::class,
+    // \Illuminate\Cookie\Middleware\EncryptCookies::class,
+    // \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    // \Illuminate\Session\Middleware\StartSession::class,
+    // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
 ]);
 
 $app->routeMiddleware([
@@ -85,7 +91,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Barryvdh\Cors\ServiceProvider::class);
-
+$app->register(\Illuminate\Session\SessionServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -101,6 +107,10 @@ $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
+});
+
+$app->bind(\Illuminate\Session\SessionManager::class, function () use ($app) {
+    return new \Illuminate\Session\SessionManager($app);
 });
 
 return $app;
