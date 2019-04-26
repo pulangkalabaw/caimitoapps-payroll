@@ -56,20 +56,24 @@ class EmployeeInfoController extends Controller
         $user_payroll_details = new UserPayrollDetails();
 
         foreach(User::get() as $user){
-            $user_collect = $user_compensation->where('user_id',$user['user_id'])->get(['compensation_id','amount','taxable']);
-            $user_collect = collect($user_collect->toArray());
+            // $user_collect = $user_compensation->where('user_id',$user['user_id'])->get(['compensation_id','amount','taxable']);
+            // $user_collect = collect($user_collect->toArray());
             $data[] = [
                 'employee_code' => $user['employee_code'],
                 'fullname' => $user['fname'] . ' ' . $user['lname'],
                 'email' => $user['email'],
                 // Compensation and allowances
-                'allowance' => $user_collect,
-                'allowance_non-taxable_total' => $user_collect->where('taxable' , 0)->sum('amount'),
-                'allowance_taxable_total' => $user_collect->where('taxable', 1)->sum('amount'),
-                'allowance_total' => $user_collect->sum('amount'),
-                // 'allowance_non-taxable_total' => $user_compensation->where(['user_id' => $user['user_id'], 'taxable' => 0])->sum('amount'),
-                // 'allowance_taxable_total' => $user_compensation->where(['user_id' => $user['user_id'], 'taxable' => 1])->sum('amount'),
-                // 'allowance_total' => $user_compensation->where('user_id', $user['user_id'])->sum('amount'),
+
+                // testing speed
+                
+                // 'allowance' => $user_collect,
+                // 'allowance_non-taxable_total' => $user_collect->where('taxable' , 0)->sum('amount'),
+                // 'allowance_taxable_total' => $user_collect->where('taxable', 1)->sum('amount'),
+                // 'allowance_total' => $user_collect->sum('amount'),
+                'allowance' => $user_compensation->where('user_id',$user['user_id'])->get(['compensation_id','amount','taxable']),
+                'allowance_non-taxable_total' => $user_compensation->where(['user_id' => $user['user_id'], 'taxable' => 0])->sum('amount'),
+                'allowance_taxable_total' => $user_compensation->where(['user_id' => $user['user_id'], 'taxable' => 1])->sum('amount'),
+                'allowance_total' => $user_compensation->where('user_id', $user['user_id'])->sum('amount'),
 
                 // Deduction and Goverment
 

@@ -18,12 +18,11 @@ class CreateUserDeductionTable extends Migration
         // * deduction_id
         // * name
         // * amount
-        // * date_start
-        // * date_end
+        // * date_start (don't use seeder)
+        // * date_end (don't use seeder)
         // * interest (optional)
-        // * deduction
-        // * type (Goverment, Company, Other deduction)
-
+        // * deduction (don't use seeder)
+        // * type (Goverment or other value: 1 or 0)
         // check first if goverment type is applied
         // * tax_type (at (after tax) or bt (before tax))
         // * remarks
@@ -37,15 +36,11 @@ class CreateUserDeductionTable extends Migration
             $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
-
-            // optional
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
-            $table->string('type')->nullable(); //Goverment or Company or other deduction
-            // if the type is Goverment apply tax type
-            $table->string('tax_type')->nullable(); // at(after tax) or bt(before tax)
+            $table->string('type')->nullable();
+            $table->string('tax_type')->nullable();
             $table->string('remarks')->nullable();
-
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
