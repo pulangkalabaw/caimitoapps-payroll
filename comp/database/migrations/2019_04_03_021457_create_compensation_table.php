@@ -13,12 +13,15 @@ class CreateCompensationTable extends Migration
      */
     public function up()
     {
+		Schema::dropIfExists('compensation');
         Schema::create('compensation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('compensation_id')->unique();
             $table->string('name')->nullable();
             $table->float('amount')->nullable();
             $table->tinyInteger('taxable')->nullable();
+            $table->string('type')->default('fixed'); //determines if fix or variable
+            $table->string('code')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();

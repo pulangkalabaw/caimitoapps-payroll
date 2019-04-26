@@ -25,8 +25,27 @@
 								</select>
 							</td>
 						</tr>
+
 						<tr v-else>
 							<td>fetching</td>
+						</tr>
+
+						<tr v-if="assign_compensation.compensation_id != null && compensation.data.filter(x => x.compensation_id == assign_compensation.compensation_id)[0].type == 'variable'">
+							<td>Amount <span class="required">*</span></td>
+							<td>
+								<input type="text" v-model="assign_compensation.amount" id="" class="form-control form-control-sm" required>
+								<small>
+									<span class="fa fa-info-circle"></span>
+									this compensation is a variable, amount field is required <span class="required">*</span>
+								</small>
+							</td>
+						</tr>
+
+						<tr>
+							<td>Date Start <span class="required">*</span></td>
+							<td>
+								<input type="date" v-model="assign_compensation.date_start" id="" class="form-control form-control-sm" required>
+							</td>
 						</tr>
 
 						<tr>
@@ -145,6 +164,11 @@ export default {
 				this.tnotif (res)
 				this.create_ucompensation_loading = false
 				this.employeeShow()
+				this.assign_compensation = {
+					compensation_id: null,
+					user_id: [],
+					taxable: null,
+				}
 
 			})
 			.catch (err => {

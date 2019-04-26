@@ -58,26 +58,28 @@ class CompensationController extends Controller
 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
-			'amount' => 'required|numeric'
+			'amount' => 'numeric',
+			'type' => 'required|max:50',
+			'code' => 'required|max:30|unique:compensation'
 		]);
 
-		if(!$validator->fails()){
+		if($validator->fails()) return apiReturn([], 'Validation Failed', $validator->errors());
 
-			$compensation_id = str_random(15).rand(1111,9999);
+		$compensation_id = str_random(15).rand(1111,9999);
 
-			$compensation_data = Compensation::create([
-				'compensation_id' => $compensation_id,
-				'name' => $request['name'],
-				'amount' => $request['amount'],
-				'taxable' => $request['taxable']
-			]);
+		$compensation_data = Compensation::create([
+			'compensation_id' => $compensation_id,
+			'name' => $request->post('name'),
+			'amount' => $request->post('amount'),
+			'taxable' => $request->post('taxable'),
+			'type' => $request->post('type'),
+			'code' => $request->post('code')
+		]);
 
+		if($compensation_data){
 			return apiReturn($compensation_data, 'Added Successful', 'success');
-
 		} else {
-
-			return apiReturn([], 'Failure to add!', 'failed', $validator->errors());
-
+			return apiReturn([], 'Failure to create compensation!', 'failed', 'error');
 		}
 
 	}
@@ -101,8 +103,6 @@ class CompensationController extends Controller
 			return apiReturn([], 'This allowance does not exists!', 'failed');
 		}
 
-
-
 		return apiReturn($compensation_data, 'Success!', 'success');
 	}
 
@@ -121,25 +121,25 @@ class CompensationController extends Controller
 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
-			'amount' => 'required|numeric'
+			'amount' => 'required|numeric',
+			'type' => 'required|max:50',
+			'code' => 'required|max:30|unqiue:compensation,code,'.$id.',compensation_id'
 		]);
 
-		if(!$validator->fails()){
+		if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
-			$compensation->where('compensation_id', $id)->update([
-				'name' => $request['name'],
-				'amount' => $request['amount'],
-				'taxable' => $request['taxable']
-			]);
+		$compensation = $compensation->where('compensation_id', $id)->update([
+			'name' => $request->post('name'),
+			'amount' => $request->post('amount'),
+			'taxable' => $request->post('taxable'),
+			'type' => $request->post('type'),
+			'code' => $request->post('code')
+		]);
 
-			$compensation_data = $compensation->where('compensation_id', $id)->first();
-
-			return apiReturn($compensation_data, 'Update compete!', 'success');
-
+		if($compensation){
+			return apiReturn($request->all(), 'Update compete!', 'success');
 		} else {
-
 			return apiReturn(null, 'Failed to update!', 'failed', $validator->errors());
-
 		}
 	}
 

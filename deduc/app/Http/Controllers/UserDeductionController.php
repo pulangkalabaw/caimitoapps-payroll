@@ -39,7 +39,9 @@ class UserDeductionController extends Controller
         $validator = Validator::make($request->all(),[
             'deduction_id' => 'required',
             'user_id' => 'required|array',
-            'user_id.*' => 'required|string|distinct'
+            'user_id.*' => 'required|string|distinct',
+            'date_start' => 'required|date|date_format:Y-m-d',
+            'date_end' => 'required|date|date_format:Y-m-d'
         ],[
             'user_id.required' => 'Please select one or more employee',
             'deduction_id.required' => 'Please select a deduction'
@@ -62,7 +64,9 @@ class UserDeductionController extends Controller
                 // 'date_end' => Carbon::parse($request['date_end'])->format('d/m/Y'),
                 // 'interest' => $deduction['interest'],
                 // 'deduction' => $deduction['deduction'],
-                // 'reason' => $request['reason']
+                // 'type' => $request->post('type'),
+                // 'tax_type' => $request->post('tax_type'),
+                // 'remarks' => $request->post('remarks'),
             ];
         }
 

@@ -20,9 +20,13 @@ class CreateUserDeductionTable extends Migration
         // * amount
         // * date_start
         // * date_end
-        // * interest (undecided)
+        // * interest (optional)
         // * deduction
-        // * reason
+        // * type (Goverment, Company, Other deduction)
+
+        // check first if goverment type is applied
+        // * tax_type (at (after tax) or bt (before tax))
+        // * remarks
 
 		Schema::dropIfExists('user_deduction');
         Schema::create('user_deduction', function (Blueprint $table) {
@@ -33,11 +37,15 @@ class CreateUserDeductionTable extends Migration
             $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
+
+            // optional
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
-            $table->text('reason')->nullable();
-            $table->string('deduction_type')->nullable();
-            $table->string('type')->nullable();
+            $table->string('type')->nullable(); //Goverment or Company or other deduction
+            // if the type is Goverment apply tax type
+            $table->string('tax_type')->nullable(); // at(after tax) or bt(before tax)
+            $table->string('remarks')->nullable();
+
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
