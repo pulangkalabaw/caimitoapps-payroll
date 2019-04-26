@@ -16,7 +16,7 @@ class CreateCompensationTable extends Migration
 		Schema::dropIfExists('compensation');
         Schema::create('compensation', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('compensation_id')->unique();
+            $table->string('compensation_id');
             $table->string('name')->nullable();
             $table->float('amount')->nullable();
             $table->tinyInteger('taxable')->nullable();

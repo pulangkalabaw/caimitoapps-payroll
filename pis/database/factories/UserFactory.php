@@ -1,6 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Compensation;
+use App\UserCompensation;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,13 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
+
+    // Compensation seeder
+    // $compensation_id = $faker->randomElement(compensation::get()->pluck('id')); // [1, 2, 3, 4]
+    // user_compensation::insert(
+    //    'user_id' => $user_id,
+    //    'compensation_id' => $compensation_id,
+    // );
 
     return [
         'user_id' => $faker->bothify('***************##########'),
