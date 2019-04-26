@@ -48,6 +48,14 @@ import leavesShow from '@/components/pages/app/leaves/show'
 import leaveCreditIndex from '@/components/pages/app/leavecredits/index'
 import leaveCreditAssign from '@/components/pages/app/leavecredits/assign'
 
+// Sss Management
+import sssgovtIndex from '@/components/pages/app/government/sss/index'
+import sssgovtCreate from '@/components/pages/app/government/sss/create'
+
+// Tax Management
+import taxgovtIndex from '@/components/pages/app/government/tax/index'
+import taxgovtCreate from '@/components/pages/app/government/tax/create'
+
 
 import page404 from '@/components/pages/extras/page404'
 
@@ -251,7 +259,33 @@ let web_routes = [
 		},
 	},
 
+	// Sss List Management
+	{
+		path: '/app/government/sss', name: 'government.sss.index', component: sssgovtIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/government/sss/add', name: 'government.sss.create', component: sssgovtCreate,
+		meta: {
+			auth: true
+		},
+	},
 
+	//Tax List Management
+	{
+		path: '/app/government/tax', name: 'government.tax.index', component: taxgovtIndex,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/government/tax/add', name: 'government.tax.create', component: taxgovtCreate,
+		meta: {
+			auth: true
+		},
+	},
 ];
 
 
@@ -279,7 +313,5 @@ router.beforeEach((to, from, next) => {
 		next()
 	}
 });
-
-
 
 export default router

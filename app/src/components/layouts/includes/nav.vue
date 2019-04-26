@@ -137,6 +137,56 @@
 						</li>
 					</ul>
 				</li>
+
+				<li>
+					<span class="span-link" :class="{ 'active': $route.name.includes('leave.index')}">
+						<i class="fa fa-tasks"></i> &nbsp;
+						Government
+						<i class="float-right fa fa-chevron-down"></i>
+					</span>
+					<ul class="submenu">
+						<li>
+							<span class="span-link" :class="{ 'active': $route.name.includes('leave.index')}">
+								<i class="fa fa-tasks"></i> &nbsp;
+								Sss
+								<i class="float-right fa fa-chevron-down"></i>
+							</span>
+							<ul class="submenu">
+								<li>
+									<span @click="redirect('government.sss.index')" class="span-link">
+										View all
+									</span>
+								</li>
+								<li>
+									<span @click="redirect('government.sss.create')" class="span-link">
+										Create new
+									</span>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<span class="span-link" :class="{ 'active': $route.name.includes('leave.index')}">
+								<i class="fa fa-tasks"></i> &nbsp;
+								Tax
+								<i class="float-right fa fa-chevron-down"></i>
+							</span>
+							<ul class="submenu">
+								<li>
+									<span @click="redirect('government.tax.index')" class="span-link">
+										View all
+									</span>
+								</li>
+								<li>
+									<span @click="redirect('government.tax.create')" class="span-link">
+										Create new
+									</span>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -27,7 +27,7 @@ class SssController extends Controller
             'total_contribution_ee' => $request->total_contribution_ee,
             'total_contribution_total' => $request->total_contribution_total,
         ]);
-        $data = $SssDeduction;
+        $data = $SssDeduction->paginate(10);
         return apiReturn($data, 'Successfully assigned Deduction!', 'success');
     }
 

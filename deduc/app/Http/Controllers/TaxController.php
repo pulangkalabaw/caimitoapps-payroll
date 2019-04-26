@@ -21,7 +21,6 @@ class TaxController extends Controller
             'compensation_range_to' => $request->compensation_range_to,
             'prescribed_withholding_tax' => $request->prescribed_withholding_tax,
         ]);
-
         return "Tax has been inserted successfully";
     }
 
