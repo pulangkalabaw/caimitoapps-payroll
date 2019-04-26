@@ -3,8 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class TaxDeduction extends Model
 {
-     protected $fillable = ['id','wage_type','compensation_range_from','compensation_range_to','prescribed_withholding_tax'];
+     protected $guarded = [];
+    // use SoftDeletes;
 }

@@ -20,6 +20,8 @@ class CreateTaxDeductionsTable extends Migration
             $table->string('compensation_range_to');
             $table->string('prescribed_withholding_tax');
             $table->timestamps();
+            $table->softDeletes();
+            
         });
     }
 

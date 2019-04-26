@@ -37,6 +37,7 @@ class CreateUserDeductionTable extends Migration
             $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
+
             // optional
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
@@ -44,6 +45,7 @@ class CreateUserDeductionTable extends Migration
             // if the type is Goverment apply tax type
             $table->string('tax_type')->nullable(); // at(after tax) or bt(before tax)
             $table->string('remarks')->nullable();
+
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
