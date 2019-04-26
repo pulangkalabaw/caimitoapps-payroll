@@ -41,7 +41,6 @@ class DeductionController extends Controller
             'data' => $deduction_data,
             'total' => $deduction_data->count()
         ];
-
         return apiReturn($data, 'Success', 'success');
 	}
 

@@ -57,7 +57,16 @@
 
 								<div class="row">
 									<div class="col-md-12 text-right">
-										<button class="btn btn-success btn-sm text-right">Submit</button>
+										<button class="btn btn-success btn-sm" :disabled="create_tax_loading">
+											<span v-if="create_tax_loading">
+												Submiting..
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_tax_loading }"></span>
+											</span>
+											<span v-else>
+												Submit
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_tax_loading }"></span>
+											</span>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -76,6 +85,7 @@
 			return{
 				tax: {},
 				notif: '',
+				create_tax_loading: false,
 				links: [
 					{
 						'label': 'Tax',
@@ -88,17 +98,21 @@
 
 		methods: {
 			TaxCreate(){
+				this.create_tax_loading = true
 				this.axiosRequest ('POST', this.$store.state.deduc + 'tax-deductions/store', this.tax)
 				.then(res => {
 					console.log(res.data.data)
+					this.notif = res.data
+					this.tnotif (res)
+					this.create_tax_loading = false
 				})
 				.catch(err => {
 					console.log(err)
+					this.create_tax_loading = false
 				})
 			},
 		}
 	}
-
 
 </script>
 

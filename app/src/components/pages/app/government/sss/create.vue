@@ -106,7 +106,16 @@
 								<div class="clearfix"></div><br />
 								<div class="row">
 									<div class="col-md-12 text-right">
-										<button class="btn btn-success btn-sm text-right">Submit</button>
+										<button class="btn btn-success btn-sm" :disabled="create_sss_loading">
+											<span v-if="create_sss_loading">
+												Submiting..
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_sss_loading }"></span>
+											</span>
+											<span v-else>
+												Submit
+												<span class="fa fa-cog" :class="{ 'fa-spin': create_sss_loading }"></span>
+											</span>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -125,6 +134,7 @@
 			return{
 				sss: {},
 				notif: '',
+				create_sss_loading: false,
 				links: [
 					{
 						'label': 'SSS',
@@ -136,17 +146,19 @@
 		},
 		methods: {
 			sssCreate(){
+				this.create_sss_loading = true
 				this.axiosRequest ('POST', this.$store.state.deduc + 'sss-deductions/store', this.sss)
 				.then(res => {
 					console.log(res.data.data)
+					this.create_sss_loading = false
 				})
 				.catch(err => {
 					console.log(err)
+					this.create_sss_loading = false
 				})
 			},
 		}
 	}
-
 </script>
 
 <style>
