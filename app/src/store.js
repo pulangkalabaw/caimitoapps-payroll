@@ -20,7 +20,9 @@ const store =  new Vuex.Store({
 		 *
 		 */
 
-        pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
+        // pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
+        pis: 'http://localhost/Iplus/caimitoapps-payroll/pis/api/',
+
 
 		/**
 		 * Compensation API Tunnel

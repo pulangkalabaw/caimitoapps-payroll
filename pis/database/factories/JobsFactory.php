@@ -3,6 +3,7 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Jobs::class, function (Faker $faker) {
+	
     return [
         //
         'job_id' => $faker->bothify('######'),

@@ -13,6 +13,5 @@ class JobsSeeder extends Seeder
     {
         //
         factory(App\Jobs::class, 10)->create();
-
     }
 }

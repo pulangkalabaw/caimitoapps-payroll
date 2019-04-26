@@ -8,8 +8,8 @@ use App\TaxDeduction;
 class TaxController extends Controller
 {
     public function index(){
-        $TaxDeduction = TaxDeduction::all();
-        $data = $TaxDeduction;
+        $tax_deduction = TaxDeduction::all();
+        $data = $tax_deduction;
         return apiReturn($data, 'Success','success');
     }
 
@@ -26,7 +26,8 @@ class TaxController extends Controller
 
 
     public function show($id){
-        return $TaxDeduction = TaxDeduction::findOrFail($id);
+        $tax_deduction = TaxDeduction::findOrFail($id);
+        return apiReturn($tax_deduction, 'Success!', 'success');
     }
 
 
@@ -36,18 +37,18 @@ class TaxController extends Controller
 
 
     public function update(Request $request, $id){
-        $TaxDeduction = TaxDeduction::findOrFail($id)
+        $tax_deduction = TaxDeduction::findOrFail($id)
             ->update([
                 'wage_type' => $request->wage_type,
                 'compensation_range_from' => $request->compensation_range_from,
                 'compensation_range_to' => $request->compensation_range_to,
                 'prescribed_withholding_tax' => $request->prescribed_withholding_tax,
             ]);
-            return "Data has been updated successfully";
+            return apiReturn($request->all(), 'Successful in updating', 'success');
     }
 
     public function destroy($id){
-        $TaxDeduction = TaxDeduction::findOrFail($id)->delete();
+        $tax_deduction = TaxDeduction::findOrFail($id)->delete();
         return "Data has been deleted";
     }
 }
