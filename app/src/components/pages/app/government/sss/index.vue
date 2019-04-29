@@ -30,6 +30,7 @@
 								<th>Total contribution er</th>
 								<th>Total contribution ee</th>
 								<th>Total contribution total</th>
+								<!-- <th class="text-center">Action</th> -->
 							</tr>
 						</thead>
 						<tbody v-for="sssDeduction in sssDeductions" :key="sssDeduction.id">
@@ -44,6 +45,11 @@
 								<td>{{sssDeduction.total_contribution_er}}</td>
 								<td>{{sssDeduction.total_contribution_ee}}</td>
 								<td>{{sssDeduction.total_contribution_total}}</td>
+								<!-- <td class="text-center">
+									<button class="btn btn-warning btn-sm"><span class="fa fa-edit"></span></button>
+									<button class="btn btn-primary btn-sm"><span class="fa fa-eye"></span></button>
+									<button class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
+								</td> -->
 							</tr>
 						</tbody>
 					</table>

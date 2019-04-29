@@ -151,6 +151,8 @@
 				.then(res => {
 					console.log(res.data.data)
 					this.create_sss_loading = false
+					this.notif = res.data
+					this.tnotif (res)
 				})
 				.catch(err => {
 					console.log(err)
