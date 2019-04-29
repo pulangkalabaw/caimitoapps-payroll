@@ -17,11 +17,11 @@ $factory->define(App\Compensation::class, function (Faker $faker) {
     $taxable = array(1,0);
 
     return [
-        'compensation_id' => $faker->bothify('###???###???'),
+        'compensation_id' => $faker->bothify('##??###???'),
         'name' => $faker->firstName(),
         'amount' => $faker->randomFloat(2, 1, 500),
         'taxable' => array_rand($taxable),
-        'type' => array_rand($type),
+        'type' => $type[array_rand($type)],
         'code' => $faker->bothify('##??')
     ];
 });

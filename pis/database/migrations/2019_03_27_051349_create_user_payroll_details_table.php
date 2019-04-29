@@ -18,15 +18,13 @@ class CreateUserPayrollDetailsTable extends Migration
             $table->string('user_id')->unique();
 
             // Payroll details
-            $table->float('basic_salary', 20, 2)->default(0);
-            $table->integer('allowances')->nullable();
-            $table->integer('loans')->nullable();
             $table->string('wage_type')->default('daily');
             $table->string('bank_details')->nullable();
             $table->string('payout_type')->default('cash');
-
+            $table->integer('working_days')->default(5);
 
             // Government UserDetails
+            $table->string('tax_code')->nullable();
             $table->string('tax_computation')->default('none');
             $table->string('tin_number')->nullable();
             $table->string('sss_number')->nullable();
