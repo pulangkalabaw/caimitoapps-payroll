@@ -20,7 +20,7 @@ class CreateUserCompensationTable extends Migration
             $table->string('compensation_id');
             $table->float('amount')->nullable();
             $table->boolean('taxable')->nullable();
-            $table->string('date_start');
+            $table->string('date_start')->nullable();
             $table->string('type')->default('fixed'); //determines if fix or variable
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

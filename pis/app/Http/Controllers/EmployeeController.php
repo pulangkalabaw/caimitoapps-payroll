@@ -117,7 +117,7 @@ class EmployeeController extends Controller
 
                 // Insertion to UserPayrollDetails
                 $userpayrolldetails = $UserPayrollDetails->insert($request->only([
-                    'user_id','basic_salary','allowances','loans','wage_type','bank_details','payout_type','tax_computation','tin_number','sss_number','philhealth_number','hdmf_number'
+                    'user_id','wage_type','bank_details','payout_type','tax_computation','tin_number','sss_number','philhealth_number','hdmf_number'
                 ]));
             }
 

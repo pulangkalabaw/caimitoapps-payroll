@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // $this->call('UsersTableSeeder');
         $this->call('SssTableSeeder');
         $this->call('TaxTableSeeder');
-        $this->call('DeductionSeeder');
+        $this->call('OtherdeductionTableSeeder');
 
     }
 }
