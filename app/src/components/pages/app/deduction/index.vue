@@ -85,9 +85,8 @@ export default {
 	},
 
 	methods: {
-
+		
 		deductionIndex (page = 1) {
-
 			this.deduction_loading = true
 			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?page=' + page)
 			.then (res => {

@@ -8,14 +8,14 @@ use App\SssDeduction;
 class SssController extends Controller
 {
      public function index(){
-        $SssDeduction =  SssDeduction::all();
-        $data = $SssDeduction;
+        $sss_deduction =  SssDeduction::all();
+        $data = $sss_deduction;
         return apiReturn($data, 'Success','success');
     }
 
     public function store(Request $request){
 
-        $SssDeduction = SssDeduction::create([
+        $sss_deduction = SssDeduction::create([
             'from' => $request->from,
             'to' => $request->to,
             'monthly_salary_credit' => $request->monthly_salary_credit,
@@ -27,12 +27,16 @@ class SssController extends Controller
             'total_contribution_ee' => $request->total_contribution_ee,
             'total_contribution_total' => $request->total_contribution_total,
         ]);
-        $data = $SssDeduction->paginate(10);
-        return apiReturn($data, 'Successfully assigned Deduction!', 'success');
+        return apiReturn($sss_deduction, 'Successfully assigned Deduction!', 'success');
     }
 
     public function show($id){
-        return  $SssDeduction = SssDeduction::findOrFail($id);
+       $sss_deduction = SssDeduction::findOrFail($id);
+       if($sss_deduction){
+            return apiReturn($sss_deduction, 'Success', 'success');
+       }else{
+            return apiReturn(null,'Sss data does not exist!', 'failed');
+       }
     }
 
     public function edit($id){
@@ -40,8 +44,8 @@ class SssController extends Controller
     }
 
     public function update(Request $request, $id){
-        $SssDeduction = SssDeduction::findOrFail($id)
-        ->update([
+        $sss_deduction = SssDeduction::findOrFail($id)
+        ->update([  
             'from' => $request->from,
             'to' => $request->to,
             'monthly_salary_credit' => $request->monthly_salary_credit,
@@ -53,11 +57,20 @@ class SssController extends Controller
             'total_contribution_ee' => $request->total_contribution_ee,
             'total_contribution_total' => $request->total_contribution_total,
         ]);
-        return "SSS Deduction has been updated successfully";
+
+        if($sss_deduction){
+            return apiReturn($sss_deduction, 'SSS has been updated Successfully', 'success');
+        }else{
+            return apiReturn(null, 'Updating failed');
+        }
     }
 
      public function destroy($id){
-         $SssDeduction = SssDeduction::findOrFail($id)->delete();
-         return "Data has been deleted";
+         $sss_deduction = SssDeduction::findOrFail($id)->delete();
+         if($sss_deduction){
+            return apiReturn($sss_deduction, 'SSS deduction has been deleted successfully', 'success');
+         }else{
+            return apiReturn(null, 'SSS is not deleted', 'fail');
+         }
     }
 }
