@@ -45,20 +45,21 @@ class EmployeeInfoController extends Controller
     // computes the basic pay of the employee
     public function userBasicPay($user_id) {
 
+        // Instance
         $user_payroll_details = new UserPayrollDetails();
         $user_compensation = new UserCompensation();
 
+        // Variable
+        $taxable = 0;
+
+        // Calculation
         $working_days = $user_payroll_details->where('user_id',$user_id)->value('working_days');
         $work_day_multi = ($working_days == 5) ? 21.75 : 26.083;
         $min_wage = 537 * $work_day_multi;
-
         $basic_pay = $user_compensation->where('user_id',$user_id)->value('amount');
 
-        if($basic_pay > $min_wage){
-            $taxable = 1;
-        } else {
-            $taxable = 0;
-        }
+        // Check if the basic pay is taxable or not
+        if($basic_pay > $min_wage) $taxable = 1;
 
         $data = [
             'status' => $taxable,
@@ -71,6 +72,8 @@ class EmployeeInfoController extends Controller
 
     // shows the Employee Payroll Details
     public function userPayrollDetails($user_id) {
+
+        // Instance
         $user_payroll_details = new UserPayrollDetails();
 
         $data = $user_payroll_details->where('user_id', $user_id)
