@@ -18,7 +18,8 @@ $router->get('/', function () use ($router) {
 /**
  * Routes for resource sample
  */
- $router->get('sample/index', 'SamplesController@index');
+ $router->get('sample/index', 'SamplesController@computation');
+ $router->get('sample/pis-timekeeping', 'SamplesController@pis_timekeeping');
  $router->group(['prefix' => 'api/'], function () use ($router) {
     $router->get('sss-government-deduction', 'SamplesController@getGovernmentSSSDeduction');
 });

@@ -30,7 +30,8 @@
         "files": [
             "app/Helpers.php",
             "app/Government_DeductionsBak.php",
-            "app/Government_Deductions.php"
+            "app/Government_Deductions.php",
+            "app/pis_tk.php"
         ]
     },
     "autoload-dev": {
