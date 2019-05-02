@@ -297,29 +297,6 @@
 								<div class="row">
 									<div class="col-md-6">
 
-										<div class="row">
-											<div class="col-md-12">
-												Employment type<br />
-												<select class="form-control form-control-sm" v-model="employee.employment_type" required>
-													<option value="probational">Probational</option>
-													<option value="project_based">Project Based</option>
-													<option value="regular">Regular</option>
-												</select>
-											</div>
-										</div>
-										<div class="clearfix"></div><br />
-
-										<div class="row">
-											<div class="col-md-12">
-												Employment status<br />
-												<select class="form-control form-control-sm" v-model="employee.employment_status" required>
-													<option value="hired" selected>Hired</option>
-													<option value="resigned">Resigned</option>
-												</select>
-											</div>
-										</div>
-										<div class="clearfix"></div><br />
-
 
 										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
@@ -329,6 +306,9 @@
 														{{ department.department_name }}
 													</option>
 												</select>
+											</div>
+											<div class="col-md-12" v-else>
+												fetching..
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -368,18 +348,14 @@
 
 								<div class="row">
 									<div class="col-md-6">
-										<div class="row">
-											<div class="col-md-12">
-												Basic Salary<br />
-												<input type="text" v-model="employee.basic_salary" class="form-control form-control-sm">
-											</div>
-										</div>
-										<div class="clearfix"></div><br />
 
 										<div class="row">
 											<div class="col-md-12">
-												Allowance<br />
-												<select class="form-control form-control-sm" disabled>
+												Employment type<br />
+												<select class="form-control form-control-sm" v-model="employee.employment_type" required>
+													<option value="probational">Probational</option>
+													<option value="project_based">Project Based</option>
+													<option value="regular">Regular</option>
 												</select>
 											</div>
 										</div>
@@ -387,12 +363,15 @@
 
 										<div class="row">
 											<div class="col-md-12">
-												Loans<br />
-												<select class="form-control form-control-sm" disabled>
+												Employment status<br />
+												<select class="form-control form-control-sm" v-model="employee.employment_status" required>
+													<option value="hired" selected>Hired</option>
+													<option value="resigned">Resigned</option>
 												</select>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
 
 										<div class="row">
 											<div class="col-md-12">
@@ -542,7 +521,7 @@ export default {
 			tabs: [
 				{ title: 'Basic Information', value: 'bi' },
 				{ title: 'Other Information', value: 'oi' },
-				{ title: 'Company', value: 'co' },
+				{ title: 'Department', value: 'co' },
 				{ title: 'Payroll Details', value: 'pd' },
 			],
 			currentTab: 'bi',

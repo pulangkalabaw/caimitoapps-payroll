@@ -30,6 +30,15 @@
 					<div class="clearfix"></div>
 
 					<form @submit.prevent="deducUpdate()" method="POST">
+
+						<div class="row">
+							<div class="col-md-2">Code <span class="required">*</span></div>
+							<div class="col-md-4">
+								<input type="text" v-model="deduc.code" :disabled="!edit_mode" class="form-control form-control-sm" required>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+
 						<div class="row">
 							<div class="col-md-2">Deduction Name <span class="required">*</span></div>
 							<div class="col-md-4">

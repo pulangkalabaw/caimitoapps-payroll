@@ -6,21 +6,6 @@
 		<table class="table">
 			<tbody>
 
-				<!-- Employement Type -->
-				<tr>
-					<td width="20%">Employement Type</td>
-					<td>
-						{{ employee.user_details.employment_type ? employementType(employee.user_details.employment_type) : '-' }}
-					</td>
-				</tr>
-
-				<!-- Employement Status -->
-				<tr>
-					<td width="20%">Employement Status</td>
-					<td>
-						{{ employee.user_details.employment_status ? ucfirst(employee.user_details.employment_status) : '-' }}
-					</td>
-				</tr>
 
 				<!-- Department -->
 				<tr>

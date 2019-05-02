@@ -9,7 +9,6 @@
 				<notif :notif="notif"></notif>
 				<div class="clearfix"></div>
 
-
 				<table class="table">
 					<tbody>
 						<!-- Add new Allowance -->

@@ -61,7 +61,7 @@ class DeductionController extends Controller
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
             'taxable' => 'required|string',
-            'code' => 'required|unique:deductions|max:30'
+            'code' => 'required|unique:deductions|max:30|unique:deductions,code'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -73,6 +73,7 @@ class DeductionController extends Controller
             'name' => $request->post('name'),
             'amount' => $request->post('amount'),
             'taxable' => $request->post('taxable'),
+            'code' => $request->post('code'),
             // 'interest' => $request->post('interest'),
             // 'deduction' => $request->post('deduction')
         ]);
@@ -116,9 +117,10 @@ class DeductionController extends Controller
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
         $deduction->where('deduction_id', $id)->update([
+            'code' => $request->post('code'),
             'name' => $request->post('name'),
             'amount' => $request->post('amount'),
-            'interest' => $request->post('interest'),
+            // 'interest' => $request->post('interest'),
 			'taxable' => $request->post('taxable'),
             'deduction' => $request->post('deduction')
         ]);

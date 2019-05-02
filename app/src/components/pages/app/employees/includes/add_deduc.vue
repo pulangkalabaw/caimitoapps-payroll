@@ -29,6 +29,22 @@
 							<td>fetching</td>
 						</tr>
 
+						<tr>
+							<td>Date Start <span class="required">*</span></td>
+							<td>
+								<input type="date" v-model="assign_deduc.date_start" id="" class="form-control form-control-sm" required>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td>Date End <span class="required">*</span></td>
+							<td>
+								<input type="date" v-model="assign_deduc.date_end" id="" class="form-control form-control-sm" required>
+							</td>
+						</tr>
+
+
 						<!-- Taxable -->
 						<tr>
 							<td></td>
@@ -149,7 +165,6 @@ export default {
 				console.log(err)
 				this.create_udeduc_loading = false
 			})
-
 		},
 
 		taxOption (option) {

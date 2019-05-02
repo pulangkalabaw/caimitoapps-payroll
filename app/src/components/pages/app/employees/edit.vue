@@ -305,30 +305,6 @@
 									<div class="col-md-6">
 
 										<div class="row">
-											<div class="col-md-12">
-												Employment type<br />
-												<select class="form-control form-control-sm" v-model="employee.user_details.employment_type">
-													<option value="probational">Probational</option>
-													<option value="project_based">Project Based</option>
-													<option value="regular">Regular</option>
-												</select>
-											</div>
-										</div>
-										<div class="clearfix"></div><br />
-
-										<div class="row">
-											<div class="col-md-12">
-												Employment type<br />
-												<select class="form-control form-control-sm" v-model="employee.user_details.employment_status">
-													<option value="hired" selected>Hired</option>
-													<option value="resigned">Resigned</option>
-												</select>
-											</div>
-										</div>
-										<div class="clearfix"></div><br />
-
-
-										<div class="row">
 											<div class="col-md-12" v-if="!departments_loading">
 												Department<br />
 												<select class="form-control form-control-sm" v-model="dept_id" required v-if="dept_id != '696969'">
@@ -384,22 +360,30 @@
 
 								<div class="row">
 									<div class="col-md-6">
+
 										<div class="row">
 											<div class="col-md-12">
-												Basic Salary<br />
-												<input type="text" v-model="employee.user_payroll_details.basic_salary" class="form-control form-control-sm">
+												Employment type<br />
+												<select class="form-control form-control-sm" v-model="employee.user_details.employment_type">
+													<option value="probational">Probational</option>
+													<option value="project_based">Project Based</option>
+													<option value="regular">Regular</option>
+												</select>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
 
 										<div class="row">
 											<div class="col-md-12">
-												Loans<br />
-												<select v-model="employee.user_payroll_details.loans" class="form-control form-control-sm" disabled>
+												Employment type<br />
+												<select class="form-control form-control-sm" v-model="employee.user_details.employment_status">
+													<option value="hired" selected>Hired</option>
+													<option value="resigned">Resigned</option>
 												</select>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
 
 										<div class="row">
 											<div class="col-md-12">
@@ -554,7 +538,7 @@ export default {
 			tabs: [
 				{ title: 'Basic Information', value: 'bi' },
 				{ title: 'Other Information', value: 'oi' },
-				{ title: 'Company', value: 'co' },
+				{ title: 'Department', value: 'co' },
 				{ title: 'Payroll Details', value: 'pd' },
 			],
 			currentTab: 'bi',

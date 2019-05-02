@@ -26,6 +26,15 @@
 					<form @submit.prevent="deductionCreate()" method="POST">
 
 						<div class="row">
+							<div class="col-md-2">Code <span class="required">*</span></div>
+							<div class="col-md-4">
+								<input type="text" v-model="deduction.code" class="form-control form-control-sm" required>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+
+
+						<div class="row">
 							<div class="col-md-2">Deduction Name <span class="required">*</span></div>
 							<div class="col-md-4">
 								<input type="text" v-model="deduction.name" class="form-control form-control-sm" required>
@@ -86,6 +95,7 @@ export default {
 	data () {
 		return {
 			deduction: {
+				code: null,
 				name: null,
 				amount: 0,
 				taxable: null,

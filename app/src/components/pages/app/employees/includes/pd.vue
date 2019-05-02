@@ -6,11 +6,19 @@
 		<table class="table">
 			<tbody>
 
-				<!-- Basic Salary -->
+				<!-- Employement Status -->
 				<tr>
-					<td width="20%">Basic Salary</td>
+					<td width="20%">Employement Status</td>
 					<td>
-						{{ employee.user_payroll_details.basic_salary ? employee.user_payroll_details.basic_salary : '-' }}
+						{{ employee.user_details.employment_status ? ucfirst(employee.user_details.employment_status) : '-' }}
+					</td>
+				</tr>
+				
+				<!-- Employement Type -->
+				<tr>
+					<td width="20%">Employement Type</td>
+					<td>
+						{{ employee.user_details.employment_type ? employementType(employee.user_details.employment_type) : '-' }}
 					</td>
 				</tr>
 

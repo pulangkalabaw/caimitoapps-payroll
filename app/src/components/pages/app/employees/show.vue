@@ -52,7 +52,7 @@
 									Other Information
 								</li>
 								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'co'})">
-									Company
+									Department
 								</li>
 								<li class="list-group-item span-link" @click="redirect('employees.show.menu', {id:employee.user_id,menu:'pd'})">
 									Payroll Details
