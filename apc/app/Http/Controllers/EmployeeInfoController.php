@@ -13,8 +13,19 @@ use Illuminate\Http\Request;
 
 class EmployeeInfoController extends Controller
 {
+
+    // Global Variables
+    // this variable can be change that will depend on the law
+    // Future Suggestion: we can create a table management for this
+    private $FINAL_5_DAYS = 5;
+    private $FINAL_6_DAYS = 6;
+    private $FINAL_FIVE_WORKING_DAYS = 21.75;
+    private $FINAL_SIX_WORKING_DAYS = 26.083;
+    private $FINAL_WAGE = 537;
+
     public function index(){
 
+        // Try other ways to make the request faster
         // $test = User::get()->chunk(2);
         // dd($test);
 
@@ -54,9 +65,10 @@ class EmployeeInfoController extends Controller
 
         // Calculation
         $working_days = $user_payroll_details->where('user_id',$user_id)->value('working_days');
-        $work_day_multi = ($working_days == 5) ? 21.75 : 26.083;
-        $min_wage = 537 * $work_day_multi;
+        $work_day_multi = ($working_days == $this->FINAL_5_DAYS) ? $this->FINAL_FIVE_WORKING_DAYS : $this->FINAL_SIX_WORKING_DAYS;
+        $min_wage = $this->FINAL_WAGE * $work_day_multi;
         $basic_pay = $user_compensation->where('user_id',$user_id)->value('amount');
+        // dd($min_wage);
 
         // Check if the basic pay is taxable or not
         if($basic_pay > $min_wage) $taxable = 1;
@@ -86,9 +98,14 @@ class EmployeeInfoController extends Controller
             'tin_number as tin_no',
             'hdmf_number as hdmf',
             'bank_details as bank_info'
-        ]);
+        ])
+        ->map(function ($r) use($user_payroll_details){
+            // decoding the bank details
+            $r['bank_info'] = json_decode($user_payroll_details->value('bank_details'));
+            return $r;
+        });
 
-        return $data[0];
+        return $data;
     }
 
     // show the computation of employees allowances
@@ -118,7 +135,7 @@ class EmployeeInfoController extends Controller
         ->map(function ($r) {
 
             $compensation = new Compensation();
-
+            // Get the name of the compensation base on the id
             $r['name'] = $compensation->where('compensation_id',$r['name'])->value('name');
             return $r;
         });

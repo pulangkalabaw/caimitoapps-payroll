@@ -18,4 +18,7 @@ $router->get('/', function () use ($router) {
 $router->group(['middleware' => ['cors']], function() use ($router){
     // EmployeeInfo
     Route::get('employee-info','EmployeeInfoController@index');
+
+    // Employees Onhold
+    Route::post('employee-onhold','UserOnholdController@store');
 });
