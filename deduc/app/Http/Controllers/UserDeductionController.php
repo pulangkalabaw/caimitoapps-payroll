@@ -55,14 +55,14 @@ class UserDeductionController extends Controller
         foreach($request['user_id'] as $user_id){
             $data[] = [
                 'user_id' => $user_id,
-                'deduction_id' => $request['deduction_id'],
+                'deduction_id' => $request->post('deduction_id'),
                 'name' => $deduction['name'],
                 'amount' => $deduction['amount'],
-                // 'date_start' => Carbon::parse($request['date_start'])->format('d/m/Y'),
-                // 'date_end' => Carbon::parse($request['date_end'])->format('d/m/Y'),
+                'type' => $request->post('type'),
+                // 'date_start' => Carbon::parse($request->post('date_start'))->format('d/m/Y'),
+                // 'date_end' => Carbon::parse($request->post('date_end'))->format('d/m/Y'),
                 // 'interest' => $deduction['interest'],
                 // 'deduction' => $deduction['deduction'],
-                // 'type' => $request->post('type'),
                 // 'tax_type' => $request->post('tax_type'),
                 // 'remarks' => $request->post('remarks'),
             ];
@@ -126,7 +126,7 @@ class UserDeductionController extends Controller
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
 
         $deduction_deduction->where('user_id',$id)->update([
-            'deduction_id' => $request['deduction_id']
+            'deduction_id' => $request->post('deduction_id')
         ]);
     }
 

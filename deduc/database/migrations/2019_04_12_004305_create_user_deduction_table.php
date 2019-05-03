@@ -38,7 +38,7 @@ class CreateUserDeductionTable extends Migration
             $table->string('date_end')->nullable();
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
-            $table->string('type')->nullable();
+            $table->tinyInteger('type')->default(0);
             $table->string('tax_type')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
