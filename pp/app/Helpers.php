@@ -22,7 +22,8 @@
 
     function find_sss_deduction($gross_income)
     {
-        $sss_deduction = sss_deduction();
+        // $sss_deduction = sss_deduction();
+        $sss_deduction = sss_deduction_bak();
 
         foreach($sss_deduction as $sss){
 
@@ -42,7 +43,8 @@
 
     function find_withholding_tax($taxable_income, $wage_type)
     {
-        $withholding_tax = withholding_tax();
+        // $withholding_tax = withholding_tax();
+        $withholding_tax = withholding_tax_bak();
 
         foreach($withholding_tax as $index => $tax){
 

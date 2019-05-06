@@ -17,9 +17,11 @@ class SamplesController extends Controller {
         $basic_pay = $data['basic_pay']['amount'];
         $semi_month = $basic_pay / 2;
 
+        // Compensations
         $compensations['taxable'] = $data['compensations']['taxable'];
         $compensations['non_taxable'] = $data['compensations']['non_taxable'];
         $compensations['total'] = $data['compensations']['total'];
+        $compensations['data'] = $data['compensations']['data'];
 
         if($data['payroll_details']['working_days'] == 5){
 
@@ -39,12 +41,13 @@ class SamplesController extends Controller {
         $under_times = $data['timekeeping']['ut'];
         $under_time_deduction = compute_under_time($basic_pay, $working_days, $under_times);
 
+        $leaves = $data['timekeeping']['leaves'];
+
         $alu = $absent_deduction + $late_deduction + $under_time_deduction;
 
         // $deduction = $data['deductions']['total']; // ?
 
-        // COMPENSATIONS
-        $total_compensations = $data['compensations']['total'];
+        // Overtime
         $ots = $data['timekeeping']['ot'];
         $sum_overtime = 0;
         foreach($ots as $index => $ot){
@@ -54,8 +57,8 @@ class SamplesController extends Controller {
             $sum_overtime += $overtime_comp;
         }
 
-        // GROSS INCOME COMPUTATIONS
-        $gross_income = compute_gross_income($semi_month, $total_compensations, $sum_overtime);
+        // Gross Income Computation
+        $gross_income = compute_gross_income($semi_month, $compensations['total'], $sum_overtime);
 
         // GOVERNMENT DEDUCTION COMPUTATION
         $sss_deduction = find_sss_deduction($gross_income);
@@ -77,39 +80,80 @@ class SamplesController extends Controller {
 
 
         // TOTAL DEDUCTIONS
-        $gov_other_deduction = $data['deductions']['total'];
-        // return $withholding_tax;
-        $total_deductions = $alu + $withholding_tax + $gov_other_deduction + $total_government_deductions;
+        $deductions['other_deductions'] = $data['deductions']['other_deductions'];
+        $deductions['government_loans'] = $data['deductions']['government_loans'];
+        $deductions['total'] = $data['deductions']['total'];
+        $deductions['data'] = $data['deductions']['data'];
+        $total_deductions = $alu + $withholding_tax + $deductions['total'] + $total_government_deductions;
 
         // COMPUTE THE NET PAY (SAHUUUUUUUUUUUUUUUUD)
-        // return $semi_month;
         $net_pay = $compensations['total'] + $semi_month + $sum_overtime - $total_deductions;
 
-        // Net Income
+        // Payroll Details
+        $payroll_details = [
+            'wage_type' => $data['payroll_details']['wage_type'],
+            'tax_computation' => $data['payroll_details']['tax_computation'],
+            'working_days' => $data['payroll_details']['working_days'],
+            'tax_code' => $data['payroll_details']['tax_code'],
+            'sss_no' => $data['payroll_details']['sss_no'],
+            'tin_no' => $data['payroll_details']['tin_no'],
+            'hdmf' => $data['payroll_details']['hdmf'],
+            'bank_info' => $data['payroll_details']['bank_info'],
+        ];
 
-        $total = $taxable_income + $withholding_tax;
+        $other_info = [
+            'date_hired' => $data['payroll_details']['wage_type'],
+        ];
+
+        // Basic Informations
         $result['emp_code'] = $data['emp_code'];
-        $result['basic_salary'] = $basic_pay;
-        $result['gross_income'] = $gross_income;
-        $result['compensation'] = $compensations;
-        $result['deductions'] = $deductions;
+        $result['first_name'] = $data['first_name'];
+        $result['last_name'] = $data['last_name'];
+        $result['email'] = $data['email'];
+
+        $result['basic_pay_type'] = $basic_pay_status;
+        $result['basic_pay'] = $basic_pay;
+
+        // Compensations
+        $result['taxable_compensation'] = $compensations['taxable'];
+        $result['nontaxable_compensation'] = $compensations['non_taxable'];
+        $result['total_compensation'] = $compensations['total'];
+        $result['compensation_data'] = $compensations['data'];
+
+        // Deductions
+        $result['other_deductions'] = $deductions['other_deductions'];
+        $result['government_loans'] = $deductions['government_loans'];
+        $result['total_deductions'] = $deductions['total'];
+        $result['deduction_data'] = $deductions['data'];
+
+        // Government Deductions
         $result['sss_deduction'] = $sss_deduction;
         $result['pagibig_deduction'] = $pagibig_deduction;
         $result['philhealth_deduction'] = $philhealth_deduction;
-        $result['government_loan'] = $data['deductions']['government_loans'];
         $result['total_government_deduction'] = $total_government_deductions;
+
+        // Timekeeping
         $result['lates'] = $late_deduction;
         $result['undertime'] = $under_time_deduction;
         $result['absences'] = $absent_deduction;
         $result['overtime'] = $sum_overtime;
-        $result['taxable'] = $taxable_income;
-        // $result['non_taxable'] = $withholding_tax;
-        $result['tax'] = $withholding_tax;
-        $result['total'] = $gross_income;
+        $result['overtime_data'] = $ots;
+        $result['leaves'] = $leaves;
+
+        $result['taxable_income'] = $taxable_income;
+        $result['withholding_tax'] = $withholding_tax;
+
+        $result['gross_income'] = $gross_income;
+        $result['net_pay'] = $net_pay;
+
+        $result['payroll_details'] = $payroll_details;
+        $result['other_info'] = $other_info;
+
         $result['run_date'] = Carbon::now()->toDateString();
         // return Payroll_Process::all();
+
+        Payroll_Process::create($result);
         return $result;
-        Payroll_Process::create($data);
     }
 
     public function getGovernmentSSSDeduction(){

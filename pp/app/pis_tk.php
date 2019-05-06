@@ -128,11 +128,11 @@
             'absences' => 4,
             'leaves' => [
                 [
-                    'value' => 2, // This is Leave Credit value for Vacation Leave
+                    'value' => 2, // This is the Leave Credit value for Vacation Leave
                     'type' => 'vl',
                 ],
                 [
-                    'value' => 1, // This is Leave Credit value for Vacation Leave
+                    'value' => 1,
                     'type' => 'sl',
                 ],
             ],
