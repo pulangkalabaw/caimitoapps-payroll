@@ -22,9 +22,7 @@ class CreateUserDeductionTable extends Migration
         // * date_end (don't use seeder)
         // * interest (optional)
         // * deduction (don't use seeder)
-        // * type (Goverment or other value: 1 or 0)
         // check first if goverment type is applied
-        // * tax_type (at (after tax) or bt (before tax))
         // * remarks
 
 		Schema::dropIfExists('user_deduction');
@@ -38,8 +36,6 @@ class CreateUserDeductionTable extends Migration
             $table->string('date_end')->nullable();
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
-            $table->tinyInteger('type')->default(0);
-            $table->string('tax_type')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
