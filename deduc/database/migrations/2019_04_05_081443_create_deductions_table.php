@@ -16,20 +16,20 @@ class CreateDeductionsTable extends Migration
         // Deductions
         // * deduction_id
         // * name
-        // * taxable
+        // * taxable (remove this after the meeting)
+        // * type (Goverment or other value: 1 or 0)
         // * amount
-        // * deduction
         // * code
         // * description
-        
+
 		Schema::dropIfExists('deductions');
         Schema::create('deductions', function (Blueprint $table) {
             $table->increments('id');
 			$table->string('deduction_id');
             $table->string('name');
+            $table->tinyInteger('type')->default(0);
 			$table->string('taxable')->default(0);
             $table->float('amount')->decimal('total_amount',2)->nullable();
-            $table->float('deduction')->decimal('total_amount',2)->nullable();
             $table->string('code')->nullable();
             $table->string('description')->nullable();
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

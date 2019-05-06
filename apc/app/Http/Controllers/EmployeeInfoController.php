@@ -22,8 +22,6 @@ class EmployeeInfoController extends Controller
     public function index(){
 
         // Try other ways to make the request faster
-        // $test = User::get()->chunk(2);
-        // dd($test);
 
         foreach(User::get() as $user){
             $data[] = [
