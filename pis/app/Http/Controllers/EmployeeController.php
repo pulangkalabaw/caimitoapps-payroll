@@ -108,6 +108,8 @@ class EmployeeController extends Controller
                 'password' => bcrypt($request->post('password')),
             ]);
 
+            
+
             if($userdata){
                 // Insertion to user_details table only do this if userdata is a success( if is for catching errors)
                 $request['user_id'] = $user_id;
