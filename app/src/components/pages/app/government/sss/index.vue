@@ -14,45 +14,47 @@
 
 			<div class="card">
 				<div class="card-header">
-					<span class="fa fa-users"></span>
+					<span class="fa fa-users"> SSS</span>
 				</div>
-				<div class="card-body">
-					<table class="table table-bordered table-hovered" style="width:100%">
-						<thead>
-							<tr>
-								<th>From</th>
-								<th>To</th>
-								<th>Monthly salary credit</th>
-								<th>Social security er</th>
-								<th>Social security ee</th>
-								<th>Social security total</th>
-								<th>Ec er</th>
-								<th>Total contribution er</th>
-								<th>Total contribution ee</th>
-								<th>Total contribution total</th>
-								<!-- <th class="text-center">Action</th> -->
-							</tr>
-						</thead>
-						<tbody v-for="sssDeduction in sssDeductions" :key="sssDeduction.id">
-							<tr>
-								<td>{{sssDeduction.from}}</td>
-								<td>{{sssDeduction.to}}</td>
-								<td>{{sssDeduction.monthly_salary_credit}}</td>
-								<td>{{sssDeduction.social_security_er}}</td>
-								<td>{{sssDeduction.social_security_ee}}</td>
-								<td>{{sssDeduction.social_security_total}}</td>
-								<td>{{sssDeduction.ec_er}}</td>
-								<td>{{sssDeduction.total_contribution_er}}</td>
-								<td>{{sssDeduction.total_contribution_ee}}</td>
-								<td>{{sssDeduction.total_contribution_total}}</td>
-								<!-- <td class="text-center">
-									<button class="btn btn-warning btn-sm"><span class="fa fa-edit"></span></button>
-									<button class="btn btn-primary btn-sm"><span class="fa fa-eye"></span></button>
-									<button class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
-								</td> -->
-							</tr>
-						</tbody>
-					</table>
+				<div class="card-body" >
+					<div class="table-responsive" style="white-space: nowrap; table-layout: fixed; width: 100%;">
+						<table class="table table-bordered table-hovered" style="width:100%;">
+							<thead>
+								<tr>
+									<th>From</th>
+									<th>To</th>
+									<th >Monthly salary credit</th>
+									<th>Social security er</th>
+									<th>Social security ee</th>
+									<th>Social security total</th>
+									<th>Ec er</th>
+									<th>Total contribution er</th>
+									<th>Total contribution ee</th>
+									<th>Total contribution total</th>
+									<th class="text-center">Action</th>
+								</tr>
+							</thead>
+							<tbody v-for="sssDeduction in sssDeductions" :key="sssDeduction.id">
+								<tr>
+									<td>{{sssDeduction.from}}</td>
+									<td>{{sssDeduction.to}}</td>
+									<td>{{sssDeduction.monthly_salary_credit}}</td>
+									<td>{{sssDeduction.social_security_er}}</td>
+									<td>{{sssDeduction.social_security_ee}}</td>
+									<td>{{sssDeduction.social_security_total}}</td>
+									<td>{{sssDeduction.ec_er}}</td>
+									<td>{{sssDeduction.total_contribution_er}}</td>
+									<td>{{sssDeduction.total_contribution_ee}}</td>
+									<td>{{sssDeduction.total_contribution_total}}</td>
+									<td class="text-center">
+										<button class="btn btn-warning btn-sm"><span class="fa fa-edit"></span></button>
+										<button class="btn btn-primary btn-sm"><span class="fa fa-eye"></span></button>
+										<button class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					<hr><br>
 				</div>
 			</div>
