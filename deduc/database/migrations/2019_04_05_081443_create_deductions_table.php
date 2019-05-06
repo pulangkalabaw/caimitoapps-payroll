@@ -17,7 +17,8 @@ class CreateDeductionsTable extends Migration
         // * deduction_id
         // * name
         // * taxable (remove this after the meeting)
-        // * type (Goverment or other value: 1 or 0)
+        // * deduct_type
+        // * type (Goverment or Company )
         // * amount
         // * code
         // * description
@@ -27,7 +28,8 @@ class CreateDeductionsTable extends Migration
             $table->increments('id');
 			$table->string('deduction_id');
             $table->string('name');
-            $table->tinyInteger('type')->default(0);
+            $table->string('type')->nullabe();
+            $table->string('deduct_type')->nullable();
 			$table->string('taxable')->default(0);
             $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->string('code')->nullable();
