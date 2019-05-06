@@ -2,6 +2,7 @@
 
 use Faker\Generator as Faker;
 use App\Compensation;
+use App\UserDetails;
 use App\UserCompensation;
 use App\UserPayrollDetails;
 
@@ -18,10 +19,10 @@ use App\UserPayrollDetails;
 
 $factory->define(App\User::class, function (Faker $faker) {
 
-    $user_payroll_details = new UserPayrollDetails();
-
+    $user_details = new UserDetails();
     $compensation = new Compensation();
     $user_compensation = new UserCompensation();
+    $user_payroll_details = new UserPayrollDetails();
 
     static $password;
 
@@ -74,6 +75,11 @@ $factory->define(App\User::class, function (Faker $faker) {
         'compensation_id' => $compensation_id,
         'amount' => $compensation_amount,
         'type' => $compensation_type,
+    ]);
+
+    $user_details->insert([
+        'user_id' => $user_id,
+        'date_hired' => $faker->dateTime($max = 'now', $timezone = 'GMT+8')
     ]);
 
     // User seeder
