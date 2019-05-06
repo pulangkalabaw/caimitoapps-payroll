@@ -43,7 +43,7 @@ class UserDeductionController extends Controller
             'date_start' => 'required|date|date_format:Y-m-d'
         ],[
             'user_id.required' => 'Please select one or more employee',
-            'deduction_id.required' => 'Please select a deduction'
+            'deduction_id.required' => 'Please no deduction selected'
         ]);
 
         if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
@@ -64,7 +64,7 @@ class UserDeductionController extends Controller
                 // 'interest' => $deduction['interest'],
                 // 'deduction' => $deduction['deduction'],
                 // 'tax_type' => $request->post('tax_type'),
-                // 'remarks' => $request->post('remarks'),
+                'remarks' => $request->post('remarks'),
             ];
         }
 

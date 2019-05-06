@@ -9,6 +9,7 @@ use App\User;
 use App\Traits\CompensationTrait;
 use App\Traits\PayrollDetailsTrait;
 use App\Traits\DeductionTrait;
+use App\Traits\UserDetailsTrait;
 
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class EmployeeInfoController extends Controller
     use CompensationTrait;
     use PayrollDetailsTrait;
     use DeductionTrait;
+    use UserDetailsTrait;
 
     public function index(){
 
@@ -42,6 +44,8 @@ class EmployeeInfoController extends Controller
                 // Deduction and Goverment
                 'deductions' => $this->userDeduction($user['user_id']),
 
+                // Other info
+                'other_details' => $this->userDetails($user['user_id']),
             ];
         }
 
