@@ -19,7 +19,8 @@ class CreateUserPayrollDetailsTable extends Migration
 
             // Payroll details
             $table->string('wage_type')->default('daily');
-            $table->string('bank_details')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('account_number')->nullable();
             $table->string('payout_type')->default('cash');
             $table->integer('working_days')->default(5);
 

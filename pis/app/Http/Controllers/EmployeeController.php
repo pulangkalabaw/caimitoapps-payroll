@@ -92,6 +92,12 @@ class EmployeeController extends Controller
 
             $duplicateEmail = User::where('email', zencrypt($request->post('email')))->first();
 
+            // check if the bank details have info if the user choose payout_type is bank
+            if($request->post('payout_type') == 'bank'){
+                if(empty($request->post('bank_name')) || empty($request->post('account_number'))) return apiReturn(null, 'Please fillout bank details', 'failed');
+            }
+
+            // check if the email has duplicate entry
             if($duplicateEmail){
                 return apiReturn(null, 'Failure on creation of employee! Email already found!', 'failed');
             }
@@ -108,8 +114,6 @@ class EmployeeController extends Controller
                 'password' => bcrypt($request->post('password')),
             ]);
 
-            
-
             if($userdata){
                 // Insertion to user_details table only do this if userdata is a success( if is for catching errors)
                 $request['user_id'] = $user_id;
@@ -117,14 +121,16 @@ class EmployeeController extends Controller
                     'user_id','mobile_number','present_address','province_address','birth_date','birth_place','religion','marital_status','gender','height','weight','department_id','employment_type','employemnt_status','date_hired'
                 ]));
 
-                // Insertion to UserPayrollDetails
+                //Insertion to UserPayrollDetails
                 $userpayrolldetails = $UserPayrollDetails->insert($request->only([
-                    'user_id','wage_type','bank_details','payout_type','tax_computation','tin_number','sss_number','philhealth_number','hdmf_number'
+                    'user_id','wage_type','bank_name','account_number','payout_type','tax_computation','tin_number','sss_number','philhealth_number','hdmf_number'
                 ]));
+
             }
 
             return apiReturn($userdata, 'Successful on creation of employee!', 'success');
-        }else{
+
+        } else {
             return apiReturn(null, 'Failure on creation of employee!', 'failed', $validator->errors());
         }
 
