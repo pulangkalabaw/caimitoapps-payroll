@@ -17,8 +17,8 @@ class CreateDeductionsTable extends Migration
         // * deduction_id
         // * name
         // * taxable (remove this after the meeting)
-        // * deduct_type
-        // * type (Goverment or Company )
+        // * deduct_type (gd(Goverment deduction) or cd(company deduction) )
+        // * type (fixed or variable)
         // * amount
         // * code
         // * description
