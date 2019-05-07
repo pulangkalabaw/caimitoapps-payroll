@@ -62,6 +62,7 @@ class DeductionController extends Controller
             'amount' => 'required|numeric',
             'type' => 'required',
             'taxable' => 'required|string',
+            'deduct_type' => 'required|string',
             'code' => 'required|unique:deductions|max:30|unique:deductions,code'
         ]);
 
@@ -74,6 +75,7 @@ class DeductionController extends Controller
             'name' => $request->post('name'),
             'amount' => $request->post('amount'),
             'type' => $request->post('type'),
+            'deduct_type' => $request->post('deduct_type'),
             'taxable' => $request->post('taxable'),
             'code' => $request->post('code'),
             // 'interest' => $request->post('interest'),
@@ -114,6 +116,7 @@ class DeductionController extends Controller
             'amount' => 'required|numeric',
 			'taxable' => 'required|string',
 			'type' => 'required',
+            'deduct_type' => 'required|string',
             'code' => 'required|unique:deductions,code,'.$id.',deduction_id|max:30'
         ]);
 
@@ -124,7 +127,11 @@ class DeductionController extends Controller
             'name' => $request->post('name'),
 			'type' => $request->post('type'),
             'amount' => $request->post('amount'),
-			'taxable' => $request->post('taxable'),
+            'type' => $request->post('type'),
+            'deduct_type' => $request->post('deduct_type'),
+            'taxable' => $request->post('taxable'),
+            // 'interest' => $request->post('interest'),
+            // 'deduction' => $request->post('deduction')
         ]);
 
         return apiReturn($request->all(), 'Successful in updating', 'success');
