@@ -45,7 +45,7 @@ trait DeductionTrait
 
             $deduction = new Deductions();
             //
-            $query['status'] = $deduction->where('deduction_id',$query['status'])->value('type');
+            $query['status'] = $deduction->where('deduction_id', $query['status'])->value('type');
             return $query;
         });
 
