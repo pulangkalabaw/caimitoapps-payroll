@@ -28,16 +28,8 @@ $factory->define(App\User::class, function (Faker $faker) {
 
     $user_id = $faker->bothify('***************##########');
 
-    // User Payroll details
-    // $wage_type = array('daily','weekly','semi-montly','montly');
-    // $payout_type = array('cash', 'cheque', 'bank');
-
-    $payout_type = array('bank');
     $wage_type = array('semi-montly');
-    // $user_bank_details = [
-    //     'bank_name' => 'BDO',
-    //     'account_number' => $faker->bothify('###'.'-'.'######'.'-'.'##')
-    // ];
+
     $user_bank_details = collect([
         'bank_name' => 'BDO',
         'account_number' => $faker->bothify('###'.'-'.'######'.'-'.'##')
@@ -49,9 +41,8 @@ $factory->define(App\User::class, function (Faker $faker) {
     UserPayrollDetails::create([
         'user_id' => $user_id,
         'wage_type' => $wage_type[array_rand($wage_type)],
-        // 'payout_type' => 'bank',
-        'bank_details' => $user_bank_details,
-        'payout_type' => $payout_type[array_rand($payout_type)],
+        'payout_type' => 'bank',
+        'bank_details' => $user_payroll_details->bank_details = $user_bank_details,
         'working_days' => $working_days[array_rand($working_days)],
         'tax_code' => $faker->bothify('**##'),
         'tax_computation' => $tax_computation[array_rand($tax_computation)],
