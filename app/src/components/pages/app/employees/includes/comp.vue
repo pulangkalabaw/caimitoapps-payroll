@@ -121,9 +121,9 @@
 
 
 									<tr>
-										<td>Date End <span class="required">*</span></td>
+										<td>Date End</td>
 										<td>
-											<input type="date" v-model="assign_deduc.date_end" id="" class="form-control form-control-sm" required>
+											<input type="date" v-model="assign_deduc.date_end" id="" class="form-control form-control-sm">
 										</td>
 									</tr>
 
@@ -170,9 +170,9 @@
 					</div>
 				</div>
 				<ul>
-					<li>
+					<li v-if="compensationTaxable.length != 0">
 						<b>Taxable</b>
-						<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
+						<table class="table table-sm table-bordered">
 							<thead>
 								<tr>
 									<th width="20%">Code</th>
@@ -201,7 +201,7 @@
 					</li>
 					<li v-if="compensationNonTaxable.length != 0">
 						<b>Non - Taxable</b>
-						<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
+						<table class="table table-sm table-bordered">
 							<thead>
 								<tr>
 									<th width="20%">Code</th>
@@ -263,9 +263,9 @@
 					</div>
 				</div>
 				<ul>
-					<li>
-						<br />
-						<table class="table table-sm table-bordered" v-if="employee.user_deduction.length != 0">
+					<li v-if="deductionCompany.length != 0">
+						<b>Company Deduction</b>
+						<table class="table table-sm table-bordered">
 							<thead>
 								<tr>
 									<th width="20%">Code</th>
@@ -274,13 +274,36 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="ud in employee.user_deduction">
-									<td>{{ ud.get_deduction.code ? ud.get_deduction.code : '-' }}</td>
+								<tr v-for="dc in deductionCompany">
+									<td>{{ dc.get_deduction.code ? dc.get_deduction.code : '-' }}</td>
 									<td>
-										{{ ucfirst(ud.get_deduction.name) }}
+										{{ ucfirst(dc.get_deduction.name) }}
 									</td>
 									<td>
-										{{ number_format(ud.amount) }}
+										{{ number_format(dc.amount) }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+					<li v-if="deductionGovernment.length != 0">
+						<b>Government Deduction</b>
+						<table class="table table-sm table-bordered">
+							<thead>
+								<tr>
+									<th width="20%">Code</th>
+									<th width="40%">Name</th>
+									<th width="40%">Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="dg in deductionGovernment">
+									<td>{{ dg.get_deduction.code ? dg.get_deduction.code : '-' }}</td>
+									<td>
+										{{ ucfirst(dg.get_deduction.name) }}
+									</td>
+									<td>
+										{{ number_format(dg.amount) }}
 									</td>
 								</tr>
 							</tbody>
@@ -383,6 +406,30 @@ export default {
 		estNetPay () {
 			let total = this.compensation_total(this.employee.user_compensation) - this.deduction_total(this.employee.user_deduction)
 			return total.toFixed(2)
+		},
+
+		// deductionCompany
+		deductionCompany () {
+			if (this.employee.user_deduction) {
+				var total = 0;
+				let taxable = this.employee.user_deduction.filter(function(r){
+					return r.get_deduction.type == 'gd'
+				})
+				return taxable
+			}
+			return this.employee.user_deduction;
+		},
+
+		// deductionGovernment
+		deductionGovernment () {
+			if (this.employee.user_deduction) {
+				var total = 0;
+				let taxable = this.employee.user_deduction.filter(function(r){
+					return r.get_deduction.type == 'cd'
+				})
+				return taxable
+			}
+			return this.employee.user_deduction;
 		},
 
 		// CompensationTaxable

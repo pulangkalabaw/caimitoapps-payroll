@@ -60,7 +60,7 @@ class DeductionController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
-            'type' => 'required'
+            'type' => 'required',
             'taxable' => 'required|string',
             'deduct_type' => 'required|string',
             'code' => 'required|unique:deductions|max:30|unique:deductions,code'
@@ -115,7 +115,7 @@ class DeductionController extends Controller
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric',
 			'taxable' => 'required|string',
-            'type' => $request->post('type'),
+			'type' => 'required',
             'deduct_type' => 'required|string',
             'code' => 'required|unique:deductions,code,'.$id.',deduction_id|max:30'
         ]);
@@ -125,6 +125,7 @@ class DeductionController extends Controller
         $deduction->where('deduction_id', $id)->update([
             'code' => $request->post('code'),
             'name' => $request->post('name'),
+			'type' => $request->post('type'),
             'amount' => $request->post('amount'),
             'type' => $request->post('type'),
             'deduct_type' => $request->post('deduct_type'),

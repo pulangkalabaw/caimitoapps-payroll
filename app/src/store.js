@@ -21,7 +21,7 @@ const store =  new Vuex.Store({
 		 */
 
         pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
-         //pis: 'http://localhost/Iplus/caimitoapps-payroll/pis/api/',
+         // pis: 'http://localhost/Iplus/caimitoapps-payroll/pis/api/',
 
 
 		/**
@@ -36,8 +36,8 @@ const store =  new Vuex.Store({
 		 *
 		 */
 
-        // deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
-        deduc: 'http://localhost/Iplus/caimitoapps-payroll/deduc/',
+        deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
+        // deduc: 'http://localhost/Iplus/caimitoapps-payroll/deduc/',
 
 
 

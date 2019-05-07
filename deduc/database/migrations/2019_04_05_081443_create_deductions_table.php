@@ -28,8 +28,8 @@ class CreateDeductionsTable extends Migration
             $table->increments('id');
 			$table->string('deduction_id');
             $table->string('name');
-            $table->string('type')->nullabe();
-            $table->string('deduct_type')->nullable();
+            $table->string('type');
+            $table->string('deduct_type');
 			$table->string('taxable')->default(0);
             $table->float('amount')->decimal('total_amount',2)->nullable();
             $table->string('code')->nullable();
