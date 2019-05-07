@@ -112,6 +112,17 @@
 										<td>fetching</td>
 									</tr>
 
+									<tr v-if="assign_deduc.deduction_id != null && deduction.data.filter(x => x.deduction_id == assign_deduc.deduction_id)[0].deduct_type == 'variable'">
+										<td>Amount <span class="required">*</span></td>
+										<td>
+											<input type="text" v-model="assign_deduc.amount" id="" class="form-control form-control-sm" required>
+											<small>
+												<span class="fa fa-info-circle"></span>
+												this deduction is a variable, amount field is required <span class="required">*</span>
+											</small>
+										</td>
+									</tr>
+
 									<tr>
 										<td>Date Start <span class="required">*</span></td>
 										<td>
@@ -154,6 +165,58 @@
 			</div>
 		</div>
 
+
+		<div class="modal fade" id="compensation_modify" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="compensation_line">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							Edit:
+
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{{ compensation_line }}
+
+						<table class="table table-sm table-bordered">
+							<thead>
+								<tr>
+									<th width="20%">Code</th>
+									<th width="40%">Name</th>
+									<th width="40%">Amount</th>
+								</tr>
+							</thead>
+							<tbody v-if="compensation_line != null">
+								<tr>
+									<td>
+										{{ compensation_line.get_compensation ? compensation_line.get_compensation.code : '-'}}
+									</td>
+									<td>
+										{{ compensation_line.get_compensation ? ucfirst(compensation_line.get_compensation.name) : '-'}}
+									</td>
+									<td>
+										<input type="text" v-model="compensation_line.amount" id="" class="form-control">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="clearfix"></div><br>
+
+						<div class="row">
+							<div class="col-md-12">
+								<button @click="compensationSoftAmountChange(compensation.compensation_id)" class="btn btn-success btn-xs">
+									Submit
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div v-if="!show_employee_loading">
 
 			<!-- List of compensations -->
@@ -182,7 +245,10 @@
 							</thead>
 							<tbody>
 								<tr v-for="uc in compensationTaxable">
-									<td>{{ uc.get_compensation.code.toUpperCase() }}</td>
+									<td v-if="uc.get_compensation.type =='variable'">
+										<span class="fa fa-edit" @click="compensation_line_change(uc.compensation_id)"></span>
+										{{ uc.get_compensation.code.toUpperCase() }}
+									</td>
 									<td>
 										{{ ucfirst(uc.get_compensation.name) }}
 									</td>
@@ -211,7 +277,10 @@
 							</thead>
 							<tbody>
 								<tr v-for="uc in compensationNonTaxable">
-									<td>SKL</td>
+									<td v-if="uc.get_compensation.type =='variable'">
+										<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)"></span>
+										{{ uc.get_compensation.code.toUpperCase() }}
+									</td>
 									<td>
 										{{ ucfirst(uc.get_compensation.name) }}
 									</td>
@@ -366,6 +435,7 @@ export default {
 			employee: {},
 			show_employee_loading: true,
 
+
 			/**
 			* Compensation Data
 			* @type {Array}
@@ -378,6 +448,8 @@ export default {
 				user_id: [],
 				taxable: null,
 			},
+
+			compensation_line: {},
 
 			/**
 			* Deduction Data
@@ -459,6 +531,18 @@ export default {
 	},
 
 	methods: {
+
+		compensationSoftAmountChange (id) {
+			this.employee.user_compensation.filter(x => x.compensation_id == id)[0].amount = this.compensation_line.amount
+		},
+
+		compensation_line_change (id) {
+
+			$("#compensation_modify").modal('show')
+			console.log(this.employee.user_compensation.filter(x => x.compensation_id == id)[0])
+			this.compensation_line = this.employee.user_compensation.filter(x => x.compensation_id == id)[0];
+			// this.compensation_line = this.employee.data.filter(x => x.compensation_id == id)[0];
+		},
 
 		employeeShow () {
 

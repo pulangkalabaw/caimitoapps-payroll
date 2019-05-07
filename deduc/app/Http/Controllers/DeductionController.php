@@ -59,7 +59,7 @@ class DeductionController extends Controller
         // * deduction
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:3',
-            'amount' => 'required|numeric',
+            'amount' => 'nullable|numeric',
             'type' => 'required',
             'taxable' => 'required|string',
             'deduct_type' => 'required|string',
@@ -113,7 +113,7 @@ class DeductionController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:3',
-            'amount' => 'required|numeric',
+            'amount' => 'nullable|numeric',
 			'taxable' => 'required|string',
 			'type' => 'required',
             'deduct_type' => 'required|string',

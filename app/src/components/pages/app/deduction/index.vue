@@ -54,7 +54,7 @@
 						<hr>
 						Total deductions: <b>{{ deductions.total }}</b>
 						<br /><br />
-						<pagination :data="deductions.data" @pagination-change-page="allowancesIndex"></pagination>
+						<pagination :data="deductions.data" @pagination-change-page="deductionIndex"></pagination>
 
 					</div>
 				</div>
@@ -85,7 +85,7 @@ export default {
 	},
 
 	methods: {
-		
+
 		deductionIndex (page = 1) {
 			this.deduction_loading = true
 			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?page=' + page)
