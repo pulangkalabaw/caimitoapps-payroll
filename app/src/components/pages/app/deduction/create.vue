@@ -49,6 +49,7 @@
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
+
 						<div class="row">
 							<div class="col-md-2">Taxable <span class="required">*</span></div>
 							<div class="col-md-4">
@@ -59,6 +60,21 @@
 								<label>
 									<input type="radio" value="at" name="tax" @click="taxOption('at')">
 									After Tax
+								</label>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+
+						<div class="row">
+							<div class="col-md-2">Type <span class="required">*</span></div>
+							<div class="col-md-4">
+								<label>
+									<input type="radio" value="cd" name="type" @click="typeOption('cd')">
+									Company Deduction
+								</label>
+								<label>
+									<input type="radio" value="gd" name="type" @click="typeOption('gd')">
+									Government Deduction
 								</label>
 							</div>
 						</div>
@@ -99,6 +115,7 @@ export default {
 				name: null,
 				amount: 0,
 				taxable: null,
+				type: null,
 			},
 			create_deduction_loading: false,
 			notif: '',
@@ -117,6 +134,10 @@ export default {
 
 		taxOption (option) {
 			this.deduction.taxable = option
+		},
+
+		typeOption (option) {
+			this.deduction.type = option
 		},
 
 		deductionCreate () {

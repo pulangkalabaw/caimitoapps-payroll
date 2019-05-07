@@ -70,6 +70,21 @@
 						</div>
 						<div class="clearfix"></div><br />
 
+						<div class="row">
+							<div class="col-md-2">Type <span class="required">*</span></div>
+							<div class="col-md-4">
+								<label>
+									<input type="radio" value="cd" :checked="deduc.type == 'cd'" :disabled="!edit_mode" name="type" @click="typeOption('cd')">
+									Company Deduction
+								</label>
+								<label>
+									<input type="radio" value="gd" :checked="deduc.type == 'gd'" :disabled="!edit_mode" name="type" @click="typeOption('gd')">
+									Government Deduction
+								</label>
+							</div>
+						</div>
+						<div class="clearfix"></div><br />
+
 
 						<div class="row" v-if="edit_mode">
 							<div class="col-md-4 offset-md-2 text-right">
@@ -150,6 +165,10 @@ export default {
 
 		taxOption (option) {
 			this.deduc.taxable = option
+		},
+
+		typeOption (option) {
+			this.deduc.type = option
 		},
 
 		deducShow () {
