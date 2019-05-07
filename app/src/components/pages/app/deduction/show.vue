@@ -48,12 +48,25 @@
 						<div class="clearfix"></div><br />
 
 						<div class="row">
-							<div class="col-md-2">Amount <span class="required">*</span></div>
+							<div class="col-md-2">Type <span class="required">*</span></div>
 							<div class="col-md-4">
-								<input type="text" v-model="deduc.amount" :disabled="!edit_mode" class="form-control form-control-sm" required>
+								<select v-model="deduc.deduct_type" :disabled="!edit_mode" class="form-control form-control-sm" required>
+									<option value="fixed">Fixed</option>
+									<option value="variable">Variable</option>
+								</select>
 							</div>
 						</div>
 						<div class="clearfix"></div><br />
+
+						<div v-if="deduc.deduct_type == 'fixed'">
+							<div class="row">
+								<div class="col-md-2">Amount <span class="required">*</span></div>
+								<div class="col-md-4">
+									<input type="text" v-model="deduc.amount" :disabled="!edit_mode" class="form-control form-control-sm" required>
+								</div>
+							</div>
+							<div class="clearfix"></div><br />
+						</div>
 
 						<div class="row">
 							<div class="col-md-2">Taxable <span class="required">*</span></div>
