@@ -7,7 +7,7 @@
         <div id="content">
 
             <!-- Modal for update leave -->
-            <div class="modal" tabindex="-1" role="dialog" v-if="modal_data">
+            <div class="modal" tabindex="-1" role="dialog" >
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
