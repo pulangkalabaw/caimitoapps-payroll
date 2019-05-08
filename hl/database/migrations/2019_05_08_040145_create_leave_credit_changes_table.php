@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLeaveCreditsTable extends Migration
+class CreateLeaveCreditChangesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateLeaveCreditsTable extends Migration
      */
     public function up()
     {
-        Schema::create('leave_credits', function (Blueprint $table) {
+        Schema::create('leave_credit_changes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
             $table->string('employee_code');
             $table->string('leave_id');
+            $table->float('credit_change');
+            $table->string('update_type');
             $table->string('reason')->nullable();
-            $table->float('credits');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateLeaveCreditsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leave_credits');
+        Schema::dropIfExists('leave_credit_changes');
     }
 }
