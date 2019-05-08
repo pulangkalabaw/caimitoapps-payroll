@@ -9,4 +9,5 @@ class LeaveCredits extends Model
     //
     protected $table = 'leave_credits';
     protected $guarded = [];
+
 }
