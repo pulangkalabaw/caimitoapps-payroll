@@ -83,6 +83,7 @@ class LeaveCreditController extends Controller
                     $totalcredit = $exists->credits + $request->post('credits');
                 }else{
                     $totalcredit = $exists->credits - $request->post('credits');
+                    ($totalcredit <= 0 ) ? ($totalcredit = 0) : ($totalcredit);
                 }
                 $leave_credit = LeaveCredits::where([
                     'user_id' => $request->post('user_id'),
