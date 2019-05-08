@@ -23,17 +23,15 @@ trait PayrollDetailsTrait
             'wage_type',
             'tax_computation',
             'working_days',
+            'payout_type',
             'tax_code',
+            'bank_name',
+            'account_number',
             'sss_number as sss_no',
             'tin_number as tin_no',
             'hdmf_number as hdmf',
             'bank_details as bank_info'
-        ])
-        ->map(function ($r) use($user_payroll_details){
-            // decoding the bank details
-            $r['bank_info'] = json_decode($user_payroll_details->value('bank_details'));
-            return $r;
-        });
+        ]);
 
         return $data;
     }
