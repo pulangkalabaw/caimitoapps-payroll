@@ -179,6 +179,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
+						{{ compensation_line_amount }}
 						{{ compensation_line }}
 
 						<table class="table table-sm table-bordered">
@@ -198,7 +199,7 @@
 										{{ compensation_line.get_compensation ? ucfirst(compensation_line.get_compensation.name) : '-'}}
 									</td>
 									<td>
-										<input type="text" v-model="compensation_line.amount" id="" class="form-control">
+										<input type="text" v-model="compensation_line_amount" id="" class="form-control">
 									</td>
 								</tr>
 							</tbody>
@@ -207,7 +208,7 @@
 
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="compensationSoftAmountChange(compensation.compensation_id)" class="btn btn-success btn-xs">
+								<button @click="compensationSoftAmountChange(compensation_line.get_compensation.compensation_id, compensation_line_amount)" class="btn btn-success btn-xs">
 									Submit
 								</button>
 							</div>
@@ -219,6 +220,20 @@
 
 		<div v-if="!show_employee_loading">
 
+			<div>
+				<div class="row">
+					<div class="col-md-12">
+						<b>Legend</b> <br />
+						<ul>
+							<li>
+								<label style="width: 15px; height: 15px; border-radius: 50%; background: #ffdf7e">&nbsp;</label> Edited data</li>
+							<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #8fd19e">&nbsp;</label> Total amount of Compensation</li>
+							<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #ed969e">&nbsp;</label> Total amount of Deduction</li>
+							<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #7abaff">&nbsp;</label> Total Estimated Net Pay</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 			<!-- List of compensations -->
 			<div>
 				<div class="row">
@@ -244,9 +259,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="uc in compensationTaxable">
-									<td v-if="uc.get_compensation.type =='variable'">
-										<span class="fa fa-edit" @click="compensation_line_change(uc.compensation_id)"></span>
+								<tr v-for="uc in compensationTaxable" :class="{ 'table-warning' : compensation_line_change_ids.includes(uc.get_compensation.compensation_id)}">
+									<td>
+										<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)" v-if="uc.get_compensation.type =='variable'"></span>
 										{{ uc.get_compensation.code.toUpperCase() }}
 									</td>
 									<td>
@@ -277,8 +292,8 @@
 							</thead>
 							<tbody>
 								<tr v-for="uc in compensationNonTaxable">
-									<td v-if="uc.get_compensation.type =='variable'">
-										<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)"></span>
+									<td>
+										<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)" v-if="uc.get_compensation.type =='variable'"></span>
 										{{ uc.get_compensation.code.toUpperCase() }}
 									</td>
 									<td>
@@ -300,7 +315,7 @@
 					<li>
 						<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
 							<tbody>
-								<tr class="table-success">
+								<tr :class="{ 'table-warning' : compensation_line_change_ids.length != 0, 'table-success' : compensation_line_change_ids.length == 0 }">
 									<td width="60%" class="text-center">
 										<b>
 											Total Compensation
@@ -441,6 +456,7 @@ export default {
 			* @type {Array}
 			*/
 			compensation: [],
+			static_compensation: [],
 			index_compensation_loading: true,
 			create_ucompensation_loading: false,
 			assign_compensation: {
@@ -449,7 +465,9 @@ export default {
 				taxable: null,
 			},
 
+			compensation_line_change_ids: [],
 			compensation_line: {},
+			compensation_line_amount: null,
 
 			/**
 			* Deduction Data
@@ -532,15 +550,18 @@ export default {
 
 	methods: {
 
-		compensationSoftAmountChange (id) {
-			this.employee.user_compensation.filter(x => x.compensation_id == id)[0].amount = this.compensation_line.amount
+		compensationSoftAmountChange (id, softAmount) {
+			this.employee.user_compensation.filter(x => x.compensation_id == id)[0].amount = parseFloat(softAmount)
+			this.compensation_line_change_ids.push(id);
+
+			$("#compensation_modify").modal('toggle')
 		},
 
 		compensation_line_change (id) {
 
-			$("#compensation_modify").modal('show')
-			console.log(this.employee.user_compensation.filter(x => x.compensation_id == id)[0])
+			$("#compensation_modify").modal('toggle')
 			this.compensation_line = this.employee.user_compensation.filter(x => x.compensation_id == id)[0];
+			this.compensation_line_amount = this.compensation_line.amount
 			// this.compensation_line = this.employee.data.filter(x => x.compensation_id == id)[0];
 		},
 
