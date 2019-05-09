@@ -55,9 +55,57 @@ class UserCompensationController extends Controller
 	*/
 	public function store(Request $request)
 	{
+		// $validator = Validator::make($request->all(), [
+		// 	'compensation_id' => 'required',
+		// 	'user_id' => 'required',
+		// 	'user_id.*' => 'required|string|distinct',
+		// 	'date_start' => 'required|date|date_format:Y-m-d',
+		// ]);
+		//
+		// if($validator->fails()) return apiReturn([], 'Validation Failed', 'failed', $validator->errors());
+		//
+		// $compensation = new Compensation();
+		// $user_compensation = new UserCompensation();
+		//
+		// // sets the user compensation id
+		// $request['user_compensation_id'] = $request->post('user_id').'u'.rand(1111,9999);
+		//
+		// // get the selected comepensation of the user
+		// $compensation = $compensation->where('compensation_id', $request->post('compensation_id'))->first();
+		//
+		// // sets the type if variable or fixed
+		// $request['type'] = $compensation['type'];
+		//
+		// // this will check if the given compensation is fixed or variable
+		// if($compensation['type'] == 'fixed'){
+		// 	// if the type is fixed copy the compensation amount
+		// 	$request['amount'] = $compensation['amount'];
+		// } else if($compensation['type'] == 'variable') {
+		// 	// else if the type is variable get the request amount
+		// 	if($request->post('amount') == null) return apiReturn([], 'Error please input amount!', 'error');
+		// 	$request['amount'] = $request->post('amount');
+		// } else {
+		// 	// else show error that compensation type was not set
+		// 	return apiReturn([], 'Error compensation type not set!', 'error');
+		// }
+		//
+		// // Check if this setup is already exist
+		// if (UserCompensation::where(['user_id' => $request->post('user_id'), 'compensation_id' => $request->post('compensation_id')])->first()) {
+		// 	return apiReturn([], 'This context is already exist!', 'failed');
+		// }
+		//
+		// $this->storeHistory($request->all());
+		//
+		// if ($user_compensation->insert($request->all())) {
+		// 	return apiReturn($request->all(), 'Successfully assigned!', 'success');
+		// }
+		// else {
+		// 	return apiReturn([], 'Failed to assign', 'failed');
+		// }
+
 		$validator = Validator::make($request->all(), [
 			'compensation_id' => 'required',
-			'user_id' => 'required',
+			'user_id' => 'required|array',
 			'user_id.*' => 'required|string|distinct',
 			'date_start' => 'required|date|date_format:Y-m-d',
 		]);
@@ -67,26 +115,35 @@ class UserCompensationController extends Controller
 		$compensation = new Compensation();
 		$user_compensation = new UserCompensation();
 
-		// sets the user compensation id
-		$request['user_compensation_id'] = $request->post('user_id').'u'.rand(1111,9999);
-
 		// get the selected comepensation of the user
 		$compensation = $compensation->where('compensation_id', $request->post('compensation_id'))->first();
-
-		// sets the type if variable or fixed
-		$request['type'] = $compensation['type'];
 
 		// this will check if the given compensation is fixed or variable
 		if($compensation['type'] == 'fixed'){
 			// if the type is fixed copy the compensation amount
-			$request['amount'] = $compensation['amount'];
+			$compensation_amount = $compensation['amount'];
 		} else if($compensation['type'] == 'variable') {
 			// else if the type is variable get the request amount
 			if($request->post('amount') == null) return apiReturn([], 'Error please input amount!', 'error');
-			$request['amount'] = $request->post('amount');
+			$compensation_amount = $request->post('amount');
 		} else {
 			// else show error that compensation type was not set
 			return apiReturn([], 'Error compensation type not set!', 'error');
+		}
+
+		$history = $user_compensation->where('user_id', $request->post('user_id'))->get();
+
+		foreach($request->post('user_id') as $user_id){
+
+			$data[] = [
+				'user_id' => $user_id,
+				'compensation_id' => $request->post('compensation_id'),
+				'user_compensation_id' => $user_id.'u'.rand(111,999),
+				'amount' => $compensation_amount,
+				'taxable' => $request->post('taxable'),
+				'type' => $compensation['type'],
+				'date_start' => $request->post('date_start')
+			];
 		}
 
 		// Check if this setup is already exist
@@ -94,14 +151,18 @@ class UserCompensationController extends Controller
 			return apiReturn([], 'This context is already exist!', 'failed');
 		}
 
-		$this->storeHistory($request->all());
+		// Add to CompensationHistory of employee
+		foreach($request->post('user_id') as $user_id){
+			$this->storeMultiHistory($user_id);
+		}
 
-		if ($user_compensation->insert($request->all())) {
-			return apiReturn($request->all(), 'Successfully assigned!', 'success');
+		if ($user_compensation->insert($data)) {
+			return apiReturn($data, 'Successfully assigned!', 'success');
 		}
 		else {
 			return apiReturn([], 'Failed to assign', 'failed');
 		}
+
 
 	}
 
@@ -206,7 +267,6 @@ class UserCompensationController extends Controller
 
 	public function multiStoreUser(Request $request) {
 
-
 		$validator = Validator::make($request->all(), [
 			'compensation_id' => 'required',
 			'user_id' => 'required|array',
@@ -259,7 +319,7 @@ class UserCompensationController extends Controller
 		foreach($request->post('user_id') as $user_id){
 			$this->storeMultiHistory($user_id);
 		}
-		
+
 		if ($user_compensation->insert($data)) {
 			return apiReturn($data, 'Successfully assigned!', 'success');
 		}
