@@ -13,7 +13,7 @@ class CreateLeaveCreditChangesTable extends Migration
      */
     public function up()
     {
-        Schema::create('leave_credit_changes', function (Blueprint $table) {
+        Schema::create('leave_credit_audit', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
             $table->string('employee_code');

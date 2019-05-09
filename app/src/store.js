@@ -20,8 +20,8 @@ const store =  new Vuex.Store({
 		 *
 		 */
 
-        pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
-         // pis: 'http://localhost/cpayroll/pis/api/',
+        // pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
+         pis: 'http://localhost/cpayroll/pis/api/',
 
 
 		/**
@@ -29,16 +29,16 @@ const store =  new Vuex.Store({
 		 *
 		 */
 
-        comp: 'http://localhost/www/iplus/payroll/dev/comp/',
-        // comp: 'http://localhost/cpayroll/comp/',
+        // comp: 'http://localhost/www/iplus/payroll/dev/comp/',
+        comp: 'http://localhost/cpayroll/comp/',
 
 		/**
 		 * Deduction API Tunnel
 		 *
 		 */
 
-        deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
-        // deduc: 'http://localhost/cpayroll/deduc/',
+        // deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
+        deduc: 'http://localhost/cpayroll/deduc/',
 
 
 
