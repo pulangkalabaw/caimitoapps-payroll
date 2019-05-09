@@ -179,8 +179,6 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						{{ compensation_line_amount }}
-						{{ compensation_line }}
 
 						<table class="table table-sm table-bordered">
 							<thead>
@@ -227,495 +225,538 @@
 						<ul>
 							<li>
 								<label style="width: 15px; height: 15px; border-radius: 50%; background: #ffdf7e">&nbsp;</label> Edited data</li>
-							<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #8fd19e">&nbsp;</label> Total amount of Compensation</li>
-							<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #ed969e">&nbsp;</label> Total amount of Deduction</li>
-							<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #7abaff">&nbsp;</label> Total Estimated Net Pay</li>
-						</ul>
+								<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #8fd19e">&nbsp;</label> Total amount of Compensation</li>
+								<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #ed969e">&nbsp;</label> Total amount of Deduction</li>
+								<li><label style="width: 15px; height: 15px; border-radius: 50%; background: #7abaff">&nbsp;</label> Total Estimated Net Pay</li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
-			<!-- List of compensations -->
-			<div>
+				<!-- List of compensations -->
+				<div>
+					<div class="row">
+						<div class="col-md-6">
+							<h5>Compensation</h5>
+						</div>
+						<div class="col-md-6 text-right">
+							<button class="btn btn-primary btn-sm btn-tunch" data-toggle="modal" data-target="#exampleModal">
+								<span class="fa fa-plus-circle"></span>
+								Add
+							</button>
+						</div>
+					</div>
+					<ul>
+						<li v-if="compensationTaxable.length != 0">
+							<b>Taxable</b>
+							<table class="table table-sm table-bordered">
+								<thead>
+									<tr>
+										<th width="20%">Code</th>
+										<th width="40%">Name</th>
+										<th width="40%">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(uc, index) in compensationTaxable" :class="{ 'table-warning' : compensation_line_change_ids.includes(uc.get_compensation.compensation_id)}">
+										<td>
+											<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)" v-if="uc.get_compensation.type =='variable'"></span>
+											{{ uc.get_compensation.code.toUpperCase() }}
+										</td>
+										<td>
+											{{ ucfirst(uc.get_compensation.name) }}
+										</td>
+										<td>
+											<!-- {{ static_employee.data.user_compensation }} -->
+											{{ number_format(uc.amount) }}
+											<span v-if="compensation_line_change_ids.includes(uc.get_compensation.compensation_id)">
+												|
+												<b>
+													<small>
+														<span class="fa fa-history"></span>
+														{{ number_format(static_user_compensation.filter(s => s.compensation_id == uc.get_compensation.compensation_id)[0].amount) }}
+													</small>
+												</b>
+
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td></td> <td></td>
+										<td>
+											<b>Total Taxable:</b> {{ number_format(compensation_total(compensationTaxable)) }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+						<li v-if="compensationNonTaxable.length != 0">
+							<b>Non - Taxable</b>
+							<table class="table table-sm table-bordered">
+								<thead>
+									<tr>
+										<th width="20%">Code</th>
+										<th width="40%">Name</th>
+										<th width="40%">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="uc in compensationNonTaxable" :class="{ 'table-warning' : compensation_line_change_ids.includes(uc.get_compensation.compensation_id)}">
+										<td>
+											<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)" v-if="uc.get_compensation.type =='variable'"></span>
+											{{ uc.get_compensation.code.toUpperCase() }}
+										</td>
+										<td>
+											{{ ucfirst(uc.get_compensation.name) }}
+										</td>
+										<td>
+											{{ number_format(uc.amount) }}
+											<span v-if="compensation_line_change_ids.includes(uc.get_compensation.compensation_id)">
+												|
+												<b>
+													<small>
+														<span class="fa fa-history"></span>
+														{{ number_format(static_user_compensation.filter(s => s.compensation_id == uc.get_compensation.compensation_id)[0].amount) }}
+													</small>
+												</b>
+
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td></td> <td></td>
+										<td>
+											<b>Total Non Taxable:</b> {{ number_format(compensation_total(compensationNonTaxable)) }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+						<li>
+							<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
+								<tbody>
+									<tr :class="{ 'table-warning' : compensation_line_change_ids.length != 0, 'table-success' : compensation_line_change_ids.length == 0 }">
+										<td width="60%" class="text-center">
+											<b>
+												Total Compensation
+											</b>
+										</td>
+										<td width="40%">
+											<b>Total Compensation: (+) {{ number_format(compensation_total(employee.user_compensation)) }}</b>
+											<span v-if="compensation_line_change_ids.length != 0">
+												<br />
+												<b>
+													<small>
+														<span v-if="compensation_total(static_user_compensation) < compensation_total(employee.user_compensation)">
+															increased from
+														</span>
+														<span v-else>
+															decreased from
+														</span>
+														<span class="fa fa-history"></span>
+														{{ number_format(compensation_total(static_user_compensation)) }}
+													</small>
+												</b>
+											</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+				<hr>
+
+				<!-- List of deduction -->
+				<div>
+					<div class="row">
+						<div class="col-md-6">
+							<h5>Deduction</h5>
+						</div>
+						<div class="col-md-6 text-right">
+							<button class="btn btn-primary btn-sm btn-tunch" data-toggle="modal" data-target="#deduction">
+								<span class="fa fa-plus-circle"></span>
+								Add
+							</button>
+						</div>
+					</div>
+					<ul>
+						<li v-if="deductionCompany.length != 0">
+							<b>Company Deduction</b>
+							<table class="table table-sm table-bordered">
+								<thead>
+									<tr>
+										<th width="20%">Code</th>
+										<th width="40%">Name</th>
+										<th width="40%">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="dc in deductionCompany">
+										<td>{{ dc.get_deduction.code ? dc.get_deduction.code : '-' }}</td>
+										<td>
+											{{ ucfirst(dc.get_deduction.name) }}
+										</td>
+										<td>
+											{{ number_format(dc.amount) }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+						<li v-if="deductionGovernment.length != 0">
+							<b>Government Deduction</b>
+							<table class="table table-sm table-bordered">
+								<thead>
+									<tr>
+										<th width="20%">Code</th>
+										<th width="40%">Name</th>
+										<th width="40%">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="dg in deductionGovernment">
+										<td>{{ dg.get_deduction.code ? dg.get_deduction.code : '-' }}</td>
+										<td>
+											{{ ucfirst(dg.get_deduction.name) }}
+										</td>
+										<td>
+											{{ number_format(dg.amount) }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+						<li>
+							<table class="table table-sm table-bordered" v-if="employee.user_deduction.length != 0">
+								<tbody>
+									<tr class="table-danger">
+										<td width="60%" class="text-center">
+											<b>
+												Total Deductions
+											</b>
+										</td>
+										<td width="40%">
+											<b>Total Deductions: (-) {{ number_format(deduction_total(employee.user_deduction)) }}</b>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+					</ul>
+				</div>
+
+				<div class="clearfix"></div>
+				<hr>
+
 				<div class="row">
-					<div class="col-md-6">
-						<h5>Compensation</h5>
-					</div>
-					<div class="col-md-6 text-right">
-						<button class="btn btn-primary btn-sm btn-tunch" data-toggle="modal" data-target="#exampleModal">
-							<span class="fa fa-plus-circle"></span>
-							Add
-						</button>
-					</div>
-				</div>
-				<ul>
-					<li v-if="compensationTaxable.length != 0">
-						<b>Taxable</b>
-						<table class="table table-sm table-bordered">
-							<thead>
-								<tr>
-									<th width="20%">Code</th>
-									<th width="40%">Name</th>
-									<th width="40%">Amount</th>
-								</tr>
-							</thead>
+					<div class="col-md-12">
+						<table class="table table-bordered">
 							<tbody>
-								<tr v-for="uc in compensationTaxable" :class="{ 'table-warning' : compensation_line_change_ids.includes(uc.get_compensation.compensation_id)}">
-									<td>
-										<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)" v-if="uc.get_compensation.type =='variable'"></span>
-										{{ uc.get_compensation.code.toUpperCase() }}
-									</td>
-									<td>
-										{{ ucfirst(uc.get_compensation.name) }}
-									</td>
-									<td>
-										{{ number_format(uc.amount) }}
-									</td>
-								</tr>
-								<tr>
-									<td></td> <td></td>
-									<td>
-										<b>Total Taxable:</b> {{ number_format(compensation_total(compensationTaxable)) }}
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</li>
-					<li v-if="compensationNonTaxable.length != 0">
-						<b>Non - Taxable</b>
-						<table class="table table-sm table-bordered">
-							<thead>
-								<tr>
-									<th width="20%">Code</th>
-									<th width="40%">Name</th>
-									<th width="40%">Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="uc in compensationNonTaxable">
-									<td>
-										<span class="fa fa-edit" @click="compensation_line_change(uc.get_compensation.compensation_id)" v-if="uc.get_compensation.type =='variable'"></span>
-										{{ uc.get_compensation.code.toUpperCase() }}
-									</td>
-									<td>
-										{{ ucfirst(uc.get_compensation.name) }}
-									</td>
-									<td>
-										{{ number_format(uc.amount) }}
-									</td>
-								</tr>
-								<tr>
-									<td></td> <td></td>
-									<td>
-										<b>Total Non Taxable:</b> {{ number_format(compensation_total(compensationNonTaxable)) }}
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</li>
-					<li>
-						<table class="table table-sm table-bordered" v-if="employee.user_compensation.length != 0">
-							<tbody>
-								<tr :class="{ 'table-warning' : compensation_line_change_ids.length != 0, 'table-success' : compensation_line_change_ids.length == 0 }">
-									<td width="60%" class="text-center">
+								<tr class="table-primary">
+
+									<td class="text-right">
 										<b>
-											Total Compensation
+											Estimated Net Pay
 										</b>
 									</td>
-									<td width="40%">
-										<b>Total Compensation: (+) {{ number_format(compensation_total(employee.user_compensation)) }}</b>
+									<td>
+										<b>{{ number_format(estNetPay) }}</b>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-					</li>
-				</ul>
-			</div>
-			<div class="clearfix"></div>
-			<hr>
-
-			<!-- List of deduction -->
-			<div>
-				<div class="row">
-					<div class="col-md-6">
-						<h5>Deduction</h5>
-					</div>
-					<div class="col-md-6 text-right">
-						<button class="btn btn-primary btn-sm btn-tunch" data-toggle="modal" data-target="#deduction">
-							<span class="fa fa-plus-circle"></span>
-							Add
-						</button>
 					</div>
 				</div>
-				<ul>
-					<li v-if="deductionCompany.length != 0">
-						<b>Company Deduction</b>
-						<table class="table table-sm table-bordered">
-							<thead>
-								<tr>
-									<th width="20%">Code</th>
-									<th width="40%">Name</th>
-									<th width="40%">Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="dc in deductionCompany">
-									<td>{{ dc.get_deduction.code ? dc.get_deduction.code : '-' }}</td>
-									<td>
-										{{ ucfirst(dc.get_deduction.name) }}
-									</td>
-									<td>
-										{{ number_format(dc.amount) }}
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</li>
-					<li v-if="deductionGovernment.length != 0">
-						<b>Government Deduction</b>
-						<table class="table table-sm table-bordered">
-							<thead>
-								<tr>
-									<th width="20%">Code</th>
-									<th width="40%">Name</th>
-									<th width="40%">Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="dg in deductionGovernment">
-									<td>{{ dg.get_deduction.code ? dg.get_deduction.code : '-' }}</td>
-									<td>
-										{{ ucfirst(dg.get_deduction.name) }}
-									</td>
-									<td>
-										{{ number_format(dg.amount) }}
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</li>
-					<li>
-						<table class="table table-sm table-bordered" v-if="employee.user_deduction.length != 0">
-							<tbody>
-								<tr class="table-danger">
-									<td width="60%" class="text-center">
-										<b>
-											Total Deductions
-										</b>
-									</td>
-									<td width="40%">
-										<b>Total Deductions: (-) {{ number_format(deduction_total(employee.user_deduction)) }}</b>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</li>
-				</ul>
+
 			</div>
-
-			<div class="clearfix"></div>
-			<hr>
-
-			<div class="row">
-				<div class="col-md-12">
-					<table class="table table-bordered">
-						<tbody>
-							<tr class="table-primary">
-
-								<td class="text-right">
-									<b>
-										Estimated Net Pay
-									</b>
-								</td>
-								<td>
-									<b>{{ number_format(estNetPay) }}</b>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+			<div v-else>
+				fetching..
 			</div>
-
 		</div>
-		<div v-else>
-			fetching..
-		</div>
-	</div>
-</template>
+	</template>
 
-<script>
-export default {
-	data () {
-		return {
-			notif: '',
-			employee: {},
-			show_employee_loading: true,
+	<script>
+	export default {
+		data () {
+			return {
+				notif: '',
+				employee: {},
+				show_employee_loading: true,
 
+				static_user_compensation: [],
 
-			/**
-			* Compensation Data
-			* @type {Array}
-			*/
-			compensation: [],
-			static_compensation: [],
-			index_compensation_loading: true,
-			create_ucompensation_loading: false,
-			assign_compensation: {
-				compensation_id: null,
-				user_id: [],
-				taxable: null,
+				/**
+				* Compensation Data
+				* @type {Array}
+				*/
+				compensation: [],
+				index_compensation_loading: true,
+				create_ucompensation_loading: false,
+				assign_compensation: {
+					compensation_id: null,
+					user_id: [],
+					taxable: null,
+				},
+
+				compensation_line_change_ids: [],
+				compensation_line: {},
+				compensation_line_amount: null,
+
+				/**
+				* Deduction Data
+				* @type {Array}
+				*/
+
+				deduction: [],
+				index_deduc_loading: true,
+				create_deduc_loading: false,
+				assign_deduc: {
+					deduction_id: null,
+					user_id: [],
+					taxable: null,
+				},
+			}
+		},
+		created () {
+			this.employeeShow()
+			this.deductionIndex()
+			this.compensationIndex()
+		},
+
+		computed: {
+
+			// EST. NET PAY
+			estNetPay () {
+				let total = this.compensation_total(this.employee.user_compensation) - this.deduction_total(this.employee.user_deduction)
+				return parseFloat(total.toFixed(2))
 			},
 
-			compensation_line_change_ids: [],
-			compensation_line: {},
-			compensation_line_amount: null,
+			// deductionCompany
+			deductionCompany () {
+				if (this.employee.user_deduction) {
+					var total = 0;
+					let taxable = this.employee.user_deduction.filter(function(r){
+						return r.get_deduction.type == 'gd'
+					})
+					return taxable
+				}
+				return this.employee.user_deduction;
+			},
+
+			// deductionGovernment
+			deductionGovernment () {
+				if (this.employee.user_deduction) {
+					var total = 0;
+					let taxable = this.employee.user_deduction.filter(function(r){
+						return r.get_deduction.type == 'cd'
+					})
+					return taxable
+				}
+				return this.employee.user_deduction;
+			},
+
+			// CompensationTaxable
+			compensationTaxable () {
+				if (this.employee.user_compensation) {
+					var total = 0;
+					let taxable = this.employee.user_compensation.filter(function(r){
+						return r.get_compensation.taxable == 1 || r.get_compensation.taxable
+					})
+					return taxable
+				}
+				return this.employee.user_compensation;
+			},
+
+			// CompensationNon-Taxable
+			compensationNonTaxable () {
+				if (this.employee.user_compensation) {
+					var total = 0;
+					let nontaxable = this.employee.user_compensation.filter(function(r){
+						return r.get_compensation.taxable == 0 || !r.get_compensation.taxable
+					})
+					return nontaxable
+				}
+				return this.employee.user_compensation;
+			},
+
+		},
+
+		methods: {
+
+			compensationSoftAmountChange (id, softAmount) {
+				this.employee.user_compensation.filter(x => x.compensation_id == id)[0].amount = parseFloat(softAmount)
+				this.compensation_line_change_ids.push(id);
+
+				$("#compensation_modify").modal('toggle')
+			},
+
+			compensation_line_change (id) {
+
+				$("#compensation_modify").modal('toggle')
+				this.compensation_line = this.employee.user_compensation.filter(x => x.compensation_id == id)[0];
+				this.compensation_line_amount = this.compensation_line.amount
+				// this.compensation_line = this.employee.data.filter(x => x.compensation_id == id)[0];
+			},
+
+			employeeShow () {
+
+				this.show_employee_loading = true
+				this.axiosRequest ('GET', this.$store.state.pis + 'employee/' + this.$route.params.id)
+				.then (res => {
+
+					this.employee = res.data.data.data
+					this.static_user_compensation = this.employee.user_compensation.map(function (r){
+
+						return {
+							'compensation_id': r.compensation_id,
+							'amount': r.amount,
+						};
+					})
+					this.show_employee_loading = false
+					this.valid = res.data.status == 'success' ? true : false
+
+				})
+				.catch (err => {
+					console.log(err)
+					this.show_employee_loading = false
+				})
+
+			},
 
 			/**
-			* Deduction Data
-			* @type {Array}
+			* Deduction Methods
+			* @type {Number}
 			*/
 
-			deduction: [],
-			index_deduc_loading: true,
-			create_deduc_loading: false,
-			assign_deduc: {
-				deduction_id: null,
-				user_id: [],
-				taxable: null,
+			deduction_total(arr) {
+				if (arr) {
+					var total = 0;
+					arr.map (function (ud) {
+						if (ud.amount != 0 || !ud.amount) {
+							total += ud.amount
+						}
+					})
+					return total.toFixed(2);
+				}
+
+				return 0;
+			},
+
+			addDeduction () {
+
+				this.assign_deduc.user_id = []
+				this.assign_deduc.user_id.push(this.$route.params.id)
+
+				this.create_deduc_loading = true
+				this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction', this.assign_deduc)
+				.then (res => {
+					this.notif = res.data
+					this.tnotif (res)
+					this.create_deduc_loading = false
+					this.employeeShow()
+				})
+				.catch (err => {
+					console.log(err)
+					this.create_deduc_loading = false
+				})
+			},
+
+			deductionIndex () {
+
+				this.index_deduc_loading = true
+				this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?filter=all')
+				.then (res => {
+					this.deduction = res.data.data
+					this.index_deduc_loading = false
+				})
+				.catch (err => {
+					console.log(err)
+					this.index_deduc_loading = false
+				})
+			},
+
+
+			/**
+			* Compensation Methods
+			* @param  {[type]} arr [description]
+			* @return {[type]}     [description]
+			*/
+			compensation_total(arr) {
+				if (arr) {
+					var total = 0;
+					arr.map (function (uc) {
+						if (uc.amount != 0 || !uc.amount) {
+							total += uc.amount
+						}
+					})
+					return total.toFixed(2);
+				}
+
+				return 0;
+			},
+
+			removeCompensation (id) {
+
+				let params = {
+					_method: 'DELETE',
+					uc_id: id,
+				}
+				this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation/' + this.$route.params.id + '/delete', params)
+				.then (res => {
+
+					this.notif = res.data
+					this.tnotif (res)
+					this.employeeShow()
+
+				})
+				.catch (err => {
+					console.log(err)
+				})
+			},
+
+			addCompensation () {
+
+				this.assign_compensation.user_id = []
+				this.assign_compensation.user_id.push(this.$route.params.id)
+
+				this.create_ucompensation_loading = true
+				this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation', this.assign_compensation)
+				.then (res => {
+
+					this.notif = res.data
+					this.tnotif (res)
+					this.create_ucompensation_loading = false
+					this.employeeShow()
+				})
+				.catch (err => {
+					console.log(err)
+					this.create_ucompensation_loading = false
+				})
+
+			},
+
+			compensationIndex () {
+
+				this.index_compensation_loading = true
+				this.axiosRequest ('GET', this.$store.state.comp + 'compensation?filter=all')
+				.then (res => {
+					this.compensation = res.data.data
+					this.index_compensation_loading = false
+
+
+				})
+				.catch (err => {
+					console.log(err)
+					this.index_compensation_loading = false
+				})
 			},
 		}
-	},
-	created () {
-		this.employeeShow()
-		this.deductionIndex()
-		this.compensationIndex()
-	},
-
-	computed: {
-
-		// EST. NET PAY
-		estNetPay () {
-			let total = this.compensation_total(this.employee.user_compensation) - this.deduction_total(this.employee.user_deduction)
-			return total.toFixed(2)
-		},
-
-		// deductionCompany
-		deductionCompany () {
-			if (this.employee.user_deduction) {
-				var total = 0;
-				let taxable = this.employee.user_deduction.filter(function(r){
-					return r.get_deduction.type == 'gd'
-				})
-				return taxable
-			}
-			return this.employee.user_deduction;
-		},
-
-		// deductionGovernment
-		deductionGovernment () {
-			if (this.employee.user_deduction) {
-				var total = 0;
-				let taxable = this.employee.user_deduction.filter(function(r){
-					return r.get_deduction.type == 'cd'
-				})
-				return taxable
-			}
-			return this.employee.user_deduction;
-		},
-
-		// CompensationTaxable
-		compensationTaxable () {
-			if (this.employee.user_compensation) {
-				var total = 0;
-				let taxable = this.employee.user_compensation.filter(function(r){
-					return r.get_compensation.taxable == 1 || r.get_compensation.taxable
-				})
-				return taxable
-			}
-			return this.employee.user_compensation;
-		},
-
-		// CompensationNon-Taxable
-		compensationNonTaxable () {
-			if (this.employee.user_compensation) {
-				var total = 0;
-				let nontaxable = this.employee.user_compensation.filter(function(r){
-					return r.get_compensation.taxable == 0 || !r.get_compensation.taxable
-				})
-				return nontaxable
-			}
-			return this.employee.user_compensation;
-		},
-
-	},
-
-	methods: {
-
-		compensationSoftAmountChange (id, softAmount) {
-			this.employee.user_compensation.filter(x => x.compensation_id == id)[0].amount = parseFloat(softAmount)
-			this.compensation_line_change_ids.push(id);
-
-			$("#compensation_modify").modal('toggle')
-		},
-
-		compensation_line_change (id) {
-
-			$("#compensation_modify").modal('toggle')
-			this.compensation_line = this.employee.user_compensation.filter(x => x.compensation_id == id)[0];
-			this.compensation_line_amount = this.compensation_line.amount
-			// this.compensation_line = this.employee.data.filter(x => x.compensation_id == id)[0];
-		},
-
-		employeeShow () {
-
-			this.show_employee_loading = true
-			this.axiosRequest ('GET', this.$store.state.pis + 'employee/' + this.$route.params.id)
-			.then (res => {
-
-				this.employee = res.data.data.data
-				this.show_employee_loading = false
-				this.valid = res.data.status == 'success' ? true : false
-
-			})
-			.catch (err => {
-				console.log(err)
-				this.show_employee_loading = false
-			})
-
-		},
-
-		/**
-		* Deduction Methods
-		* @type {Number}
-		*/
-
-		deduction_total(arr) {
-			if (arr) {
-				var total = 0;
-				arr.map (function (ud) {
-					if (ud.amount != 0 || !ud.amount) {
-						total += ud.amount
-					}
-				})
-				return total.toFixed(2);
-			}
-
-			return 0;
-		},
-
-		addDeduction () {
-
-			this.assign_deduc.user_id = []
-			this.assign_deduc.user_id.push(this.$route.params.id)
-
-			this.create_deduc_loading = true
-			this.axiosRequest ('POST', this.$store.state.deduc + 'assign-deduction', this.assign_deduc)
-			.then (res => {
-				this.notif = res.data
-				this.tnotif (res)
-				this.create_deduc_loading = false
-				this.employeeShow()
-			})
-			.catch (err => {
-				console.log(err)
-				this.create_deduc_loading = false
-			})
-		},
-
-		deductionIndex () {
-
-			this.index_deduc_loading = true
-			this.axiosRequest ('GET', this.$store.state.deduc + 'deduction?filter=all')
-			.then (res => {
-				this.deduction = res.data.data
-				this.index_deduc_loading = false
-			})
-			.catch (err => {
-				console.log(err)
-				this.index_deduc_loading = false
-			})
-		},
-
-
-		/**
-		* Compensation Methods
-		* @param  {[type]} arr [description]
-		* @return {[type]}     [description]
-		*/
-		compensation_total(arr) {
-			if (arr) {
-				var total = 0;
-				arr.map (function (uc) {
-					if (uc.amount != 0 || !uc.amount) {
-						total += uc.amount
-					}
-				})
-				return total.toFixed(2);
-			}
-
-			return 0;
-		},
-
-		removeCompensation (id) {
-
-			let params = {
-				_method: 'DELETE',
-				uc_id: id,
-			}
-			this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation/' + this.$route.params.id + '/delete', params)
-			.then (res => {
-
-				this.notif = res.data
-				this.tnotif (res)
-				this.employeeShow()
-
-			})
-			.catch (err => {
-				console.log(err)
-			})
-		},
-
-		addCompensation () {
-
-			this.assign_compensation.user_id = []
-			this.assign_compensation.user_id.push(this.$route.params.id)
-
-			this.create_ucompensation_loading = true
-			this.axiosRequest ('POST', this.$store.state.comp + 'assign-compensation', this.assign_compensation)
-			.then (res => {
-
-				this.notif = res.data
-				this.tnotif (res)
-				this.create_ucompensation_loading = false
-				this.employeeShow()
-			})
-			.catch (err => {
-				console.log(err)
-				this.create_ucompensation_loading = false
-			})
-
-		},
-
-		compensationIndex () {
-
-			this.index_compensation_loading = true
-			this.axiosRequest ('GET', this.$store.state.comp + 'compensation?filter=all')
-			.then (res => {
-				this.compensation = res.data.data
-				this.index_compensation_loading = false
-
-
-			})
-			.catch (err => {
-				console.log(err)
-				this.index_compensation_loading = false
-			})
-		},
 	}
-}
-</script>
+	</script>
 
-<style lang="css" scoped>
-ul {
-	list-style: none;
-}
-</style>
+	<style lang="css" scoped>
+	ul {
+		list-style: none;
+	}
+	</style>
