@@ -31,5 +31,4 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->get('assign-compensation/{id}','UserCompensationController@show');
     $router->put('assign-compensation/{user_compensation_id}','UserCompensationController@update');
     $router->delete('assign-compensation/{id}/delete','UserCompensationController@destroy');
-    $router->post('assign-multi-compensation','UserCompensationController@multiStoreUser');
 });
