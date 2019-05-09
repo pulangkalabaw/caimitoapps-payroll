@@ -8,4 +8,5 @@ class LeaveCreditAudit extends Model
 {
     //
     protected $table = 'leave_credit_audit';
+    protected $guarded = [];
 }

@@ -10,8 +10,13 @@ use App\LibLeave;
 use App\LeaveCredits;
 use App\Users;
 
+// Controllers
+use App\Http\Controllers\LeaveCreditAuditController;
+
+
 class LeaveCreditController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -73,6 +78,8 @@ class LeaveCreditController extends Controller
                 ];
                 $leave_credit = LeaveCredits::create($datatotinsert);
                 if($leave_credit){
+                    $leave_audit = new LeaveCreditAuditController();
+                    $leave_audit->store($request);
                     return apiReturn($leave_credit, 'Assigning of leave credit successful!', 'success');
                 }else{
                     return apiReturn(null, 'Failed on leave credit insertion', 'success');
@@ -85,6 +92,8 @@ class LeaveCreditController extends Controller
                     $totalcredit = $exists->credits - $request->post('credits');
                     ($totalcredit <= 0 ) ? ($totalcredit = 0) : ($totalcredit);
                 }
+                $leave_audit = new LeaveCreditAuditController();
+                $leave_audit->store($request);
                 $leave_credit = LeaveCredits::where([
                     'user_id' => $request->post('user_id'),
                     'employee_code' => $request->post('employee_code'),
