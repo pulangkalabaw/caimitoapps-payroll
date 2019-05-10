@@ -31,4 +31,9 @@ $router->group(['middleware' => ['cors']], function() use ($router)
     $router->get('leave_credit/{user_id}', 'LeaveCreditController@show');
     $router->put('leave_credit/{id}', 'LeaveCreditController@update');
 
+    // Leave Credit Audit
+    $router->get('leave_credit_audit', 'LeaveCreditAuditController@index');
+    $router->post('leave_credit_audit', 'LeaveCreditAuditController@store');
+    $router->get('leave_credit_audit/{id}', 'LeaveCreditAuditController@show');
+
 });
