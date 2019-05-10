@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payroll_Process extends Model
 {
     protected $table = "payroll_master";
-    
+
     protected $guarded = [];
 
 
