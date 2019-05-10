@@ -108,7 +108,7 @@ class EmployeeController extends Controller
                 'password' => bcrypt($request->post('password')),
             ]);
 
-            
+
 
             if($userdata){
                 // Insertion to user_details table only do this if userdata is a success( if is for catching errors)
@@ -147,7 +147,9 @@ class EmployeeController extends Controller
 			'UserCompensation',
 			'UserCompensation.getCompensation',
 			'UserDeduction',
-			'UserDeduction.getDeduction'
+			'UserDeduction.getDeduction',
+            'UserCompensationHistory',
+            'UserCompensationHistory.getCompensation'
 			])->where('user_id', $id)->first();
 
         if($userdata){
