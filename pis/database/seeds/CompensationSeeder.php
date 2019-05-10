@@ -11,6 +11,6 @@ class CompensationSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Compensation::class, 1)->create();
+        factory(App\Compensation::class, 10)->create();
     }
 }

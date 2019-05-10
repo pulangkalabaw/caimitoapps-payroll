@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 // Models
+use App\User;
 use App\Compensation;
 use App\UserCompensation;
+use App\UserCompensationHistory;
 
 // Traits
 use App\Traits\CompensationHistoryTrait;
@@ -125,24 +127,7 @@ class UserCompensationController extends Controller
 	*/
 	public function show($id)
 	{
-		// give the compensation id
-		$user_compensation = new UserCompensation();
-
-		$data['data'] = $user_compensation
-		->where('compensation_id',$id)
-		->with(['getUser','getCompensation'])
-		->get();
-
-		if(count($data) != 0) {
-			$message = 'Success!';
-			$status = 'success';
-		} else {
-			$data = null;
-			$message = 'Failed no assign compensation!';
-			$status = 'failed';
-		}
-
-		return apiReturn($data, $message, $status);
+		// 
 	}
 
 	/**

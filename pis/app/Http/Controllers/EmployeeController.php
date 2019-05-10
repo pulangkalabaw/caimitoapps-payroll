@@ -153,7 +153,9 @@ class EmployeeController extends Controller
 			'UserCompensation',
 			'UserCompensation.getCompensation',
 			'UserDeduction',
-			'UserDeduction.getDeduction'
+			'UserDeduction.getDeduction',
+            'UserCompensationHistory',
+            'UserCompensationHistory.getCompensation'
 			])->where('user_id', $id)->first();
 
         if($userdata){
