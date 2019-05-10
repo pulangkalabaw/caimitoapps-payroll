@@ -2,6 +2,12 @@
 * Author: Tunechi aka Pulang Kalabaw
 * @type {[type]}
 */
+.circle-xs {
+	height: 10px;
+	weight: 100px;
+	border-radius: 50%;
+}
+
 .fa-xx {
 	font-size: 10px
 }

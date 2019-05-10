@@ -53,12 +53,27 @@ class UserDeductionController extends Controller
 
         $deduction = $deduction->where('deduction_id', $request['deduction_id'])->first();
 
+
+		// this will check if the given compensation is fixed or variable
+		if($deduction['deduct_type'] == 'fixed'){
+			// if the type is fixed copy the compensation amount
+			$deduction_amount = $deduction['amount'];
+		} else if($deduction['deduct_type'] == 'variable') {
+			// else if the type is variable get the request amount
+			if($request->post('amount') == null) return apiReturn([], 'Error please input amount!', 'error');
+			$deduction_amount = $request->post('amount');
+		} else {
+			// else show error that compensation type was not set
+			return apiReturn([], 'Error compensation type not set!', 'error');
+		}
+
+
         foreach($request['user_id'] as $user_id){
             $data[] = [
                 'user_id' => $user_id,
                 'deduction_id' => $request->post('deduction_id'),
                 'name' => $deduction['name'],
-                'amount' => $deduction['amount'],
+                'amount' => $deduction_amount,
                 'date_start' => $request->post('date_start'),
                 // 'date_end' => $request->post('date_end'),
                 // 'interest' => $deduction['interest'],

@@ -21,7 +21,7 @@ const store =  new Vuex.Store({
 		 */
 
         pis: 'http://localhost/www/iplus/payroll/dev/pis/api/',
-         // pis: 'http://localhost/Iplus/caimitoapps-payroll/pis/api/',
+         // pis: 'http://localhost/cpayroll/pis/api/',
 
 
 		/**
@@ -30,6 +30,7 @@ const store =  new Vuex.Store({
 		 */
 
         comp: 'http://localhost/www/iplus/payroll/dev/comp/',
+        // comp: 'http://localhost/cpayroll/comp/',
 
 		/**
 		 * Deduction API Tunnel
@@ -37,7 +38,7 @@ const store =  new Vuex.Store({
 		 */
 
         deduc: 'http://localhost/www/iplus/payroll/dev/deduc/',
-        // deduc: 'http://localhost/Iplus/caimitoapps-payroll/deduc/',
+        // deduc: 'http://localhost/cpayroll/deduc/',
 
 
 
@@ -54,7 +55,7 @@ const store =  new Vuex.Store({
          *
          */
 
-        hl: 'http://localhost/www/iplus/payroll/dev/hl/',
+        hl: 'http://localhost/cpayroll/hl/',
 
 
 
