@@ -24,11 +24,13 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->put('compensation/{id}','CompensationController@update');
     $router->delete('compensation/{id}/delete','CompensationController@destroy');
 
-
-    // User Allowance
+    // User Compensation
     $router->get('assign-compensation','UserCompensationController@index');
     $router->post('assign-compensation','UserCompensationController@store');
     $router->get('assign-compensation/{id}','UserCompensationController@show');
     $router->put('assign-compensation/{user_compensation_id}','UserCompensationController@update');
     $router->delete('assign-compensation/{id}/delete','UserCompensationController@destroy');
+
+    // User Compensation History
+    $router->get('compensation-history/{id}','UserCompHistoryController@show');
 });
