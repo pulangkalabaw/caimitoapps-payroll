@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\UserDetails;
 use App\UserPayrollDetails;
+use App\UserCompensationHistory;
 
 class EmployeeController extends Controller
 {
@@ -154,9 +155,11 @@ class EmployeeController extends Controller
 			'UserCompensation.getCompensation',
 			'UserDeduction',
 			'UserDeduction.getDeduction',
-            'UserCompensationHistory',
-            'UserCompensationHistory.getCompensation'
-			])->where('user_id', $id)->first();
+            'UserCompensationHistory' => function ($query) {
+                $query->select('user_id','batch_id')->distinct('batch_id');
+            }])
+            ->where('user_id', $id)
+            ->first();
 
         if($userdata){
             return apiReturn($userdata, 'Success', 'success');
