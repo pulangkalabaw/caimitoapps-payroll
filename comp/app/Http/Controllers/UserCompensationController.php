@@ -128,15 +128,16 @@ class UserCompensationController extends Controller
 		// give the compensation id
 		$user_compensation = new UserCompensation();
 
-		if(count($user_compensation) != 0) {
-			$data['data'] = $user_compensation
-			->where('compensation_id',$id)
-			->with(['getUser','getCompensation'])
-			->get();
+		$data['data'] = $user_compensation
+		->where('compensation_id',$id)
+		->with(['getUser','getCompensation'])
+		->get();
+
+		if(count($data) != 0) {
 			$message = 'Success!';
 			$status = 'success';
 		} else {
-			$user_compensation = null;
+			$data = null;
 			$message = 'Failed no assign compensation!';
 			$status = 'failed';
 		}
