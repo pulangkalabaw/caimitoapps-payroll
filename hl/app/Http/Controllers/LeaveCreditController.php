@@ -22,15 +22,26 @@ class LeaveCreditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // Should get employees with their leave
         $users = Users::with(['LeaveCredits'])->paginate(10);
+
+        if($request->search != null){
+            $users = Users::with(['LeaveCredits'])
+            ->where('fname', 'LIKE', "%{$request->search}%")
+            ->orWhere('lname', 'LIKE', "%{$request->search}%")
+            ->orWhere('mname', 'LIKE', "%{$request->search}%")
+            ->orWhere('employee_code', 'LIKE', "%{$request->search}%")
+            ->orWhere('email', 'LIKE', "%{$request->search}%")
+            ->paginate(10);
+        }
 
         $datatoreturn = [
             'data' => $users,
             'total' => $users->where('status',1)->count()
         ];
+
         return apiReturn($datatoreturn, 'Success on getting employees with leave credit', 'success');
 
 
@@ -79,6 +90,7 @@ class LeaveCreditController extends Controller
                 $leave_credit = LeaveCredits::create($datatotinsert);
                 if($leave_credit){
                     $leave_audit = new LeaveCreditAuditController();
+                    $request['credits_before'] = 0;
                     $leave_audit->store($request);
                     return apiReturn($leave_credit, 'Assigning of leave credit successful!', 'success');
                 }else{
@@ -93,6 +105,7 @@ class LeaveCreditController extends Controller
                     ($totalcredit <= 0 ) ? ($totalcredit = 0) : ($totalcredit);
                 }
                 $leave_audit = new LeaveCreditAuditController();
+                $request['credits_before'] = $exists->credits;
                 $leave_audit->store($request);
                 $leave_credit = LeaveCredits::where([
                     'user_id' => $request->post('user_id'),

@@ -22,6 +22,7 @@ class CreateLeaveCreditAuditTable extends Migration
             $table->string('employee_code');
             $table->string('leave_id');
             $table->float('credits');
+            $table->float('credits_before');
             $table->string('update_type');
             $table->string('reason')->nullable();
             $table->timestamps();

@@ -110,5 +110,17 @@ export default Vue.mixin({
 			return instance;
 		},
 
+
+
+		/**
+		* Paul Mixins
+		*/
+
+		// Convert float hours to days
+		hoursToDay (value){
+			return value;
+		}
+
+		// END OF MIXINS
 	}
 })

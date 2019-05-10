@@ -12,6 +12,7 @@ class LeaveCreditAuditController extends Controller
 {
     //
     public function index(){
+        return LeaveCreditAudit::where(['user_id' => $request->user])->get();
         return 'index';
     }
 
@@ -21,6 +22,7 @@ class LeaveCreditAuditController extends Controller
             'employee_code' => "required|exists:users,employee_code",
             'leave_id' => "required|exists:lib_leave,leave_id",
             'credits' => "required|numeric|between:0,9999.99",
+            'credits_before' => "required|numeric|between:0,9999.99",
             'update_type' => "required",
             'reason' => "required",
         ]);
@@ -37,5 +39,16 @@ class LeaveCreditAuditController extends Controller
         }else{
             return apireturn(null, 'failed', 'failed', $validator->errors());
         }
+    }
+
+    public function show($user_id){
+        if($user_id){
+            $leave_credits = LeaveCreditAudit::where(['user_id' => $user_id])->with('Leave')->orderBy('created_at', 'DESC')->paginate(10);
+            return apiReturn($leave_credits, 'Success on getting leave credit history', 'success');
+        }else{
+            // $leave_credits = LeaveCreditAudit::where(['user_id' => $request->user_id])->get();
+            return 'no data is here';
+        }
+
     }
 }

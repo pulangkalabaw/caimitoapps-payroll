@@ -47,6 +47,7 @@ import leavesShow from '@/components/pages/app/leaves/show'
 // Leave Credit
 import leaveCreditIndex from '@/components/pages/app/leavecredits/index'
 import leaveCreditAssign from '@/components/pages/app/leavecredits/assign'
+import leaveCreditAudit from '@/components/pages/app/leavecredits/Audit'
 
 // Sss Management
 import sssgovtIndex from '@/components/pages/app/government/sss/index'
@@ -56,7 +57,6 @@ import sssgovtCreate from '@/components/pages/app/government/sss/create'
 import taxgovtIndex from '@/components/pages/app/government/tax/index'
 import taxgovtCreate from '@/components/pages/app/government/tax/create'
 import taxgovtShow from '@/components/pages/app/government/tax/show'
-
 
 
 import page404 from '@/components/pages/extras/page404'
@@ -256,6 +256,12 @@ let web_routes = [
 	},
 	{
 		path: '/app/assign-leavecredits', name: 'leavecredit.assign', component: leaveCreditAssign,
+		meta: {
+			auth: true
+		},
+	},
+	{
+		path: '/app/leave_history/:user_id', name: 'leavecredit.audit', component: leaveCreditAudit,
 		meta: {
 			auth: true
 		},
