@@ -16,13 +16,14 @@
                                 <b>Leave Credit Auditrails</b>
                             </div>
                             <div class="card-body">
-                                <b>{{ employee.fname + ' ' + employee.mname + ' ' + employee.lname }} <small><{{ employee.employee_code }}></small></b>
+                                <b v-if="employee">{{ employee.fname + ' ' + employee.mname + ' ' + employee.lname }} <small><{{ employee.employee_code }}></small></b>
+                                <span v-else><i class="fa fa-circle-o-notch fa-spin"></i></span>
 
 
                                 <!-- Table -->
-                                <div class="row  mt-4">
+                                <div class="row  mt-4" v-if="employee">
                                     <div class="col-lg-12 table-responsive">
-                                        <table class="table">
+                                        <table class="table" v-if="audit">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Date</th>
@@ -62,7 +63,7 @@
 
 
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" v-if="audit">
                                         <pagination :data="audit" @pagination-change-page="getEdtr"></pagination>
                                     </div>
                                 </div>
@@ -117,21 +118,37 @@
 
 
             getEmployee(){
-                this.axiosRequest ('GET', this.$store.state.hl + 'leave_credit')
-                .then (res => {
-                    this.employee = res.data.data.data.data[0]
-                    // this.employees_loading = false
-                })
-                .catch (err => {
-                    console.log(err)
-                    // this.employees_loading = false
-                })
+                this.axiosRequest ('GET', this.$store.state.pis + 'employee/' + this.$route.params.user_id)
+    			.then (res => {
+
+    				this.employee = res.data.data.data
+    				this.employees_loading = false
+
+                    console.log(res);
+
+
+    			})
+    			.catch (err => {
+    				console.log(err)
+    				this.employees_loading = false
+    			})
             },
+
+            // getEmployee(){
+            //     this.axiosRequest ('GET', this.$store.state.hl + 'leave_credit')
+            //     .then (res => {
+            //         this.employee = res.data.data.data.data[0]
+            //         // this.employees_loading = false
+            //     })
+            //     .catch (err => {
+            //         console.log(err)
+            //         // this.employees_loading = false
+            //     })
+            // },
 
             getEdtr(page = 1){
                 this.axiosRequest ('GET', this.$store.state.hl + 'leave_credit_audit/' + this.$route.params.user_id + '?page=' + page)
                 .then (res => {
-                    console.log(res);
                     this.audit = res.data.data;
                     // this.employees_loading = false
                 })
