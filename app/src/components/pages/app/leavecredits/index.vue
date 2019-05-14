@@ -89,7 +89,8 @@
 
             <!-- pagination -->
             <div class="row">
-                <div class="col-lg-4 offset-lg-5">
+                <!-- <div class="col-lg-4 offset-lg-5"> -->
+                <div class="col-lg-4">
                     <pagination :data="employees" @pagination-change-page="getEmployees"></pagination>
                 </div>
             </div>
@@ -163,28 +164,34 @@
 
             // Update
             doUpdateCredit(modal_data, credit, typeofupdate, reason){
-                let params = {
-                    'user_id': modal_data.user_id,
-                    'leave_id': modal_data.leave.leave_id,
-                    'employee_code': modal_data.employee_code,
-                    'credits': credit,
-                    'update_type': typeofupdate,
-                    'reason': reason,
-                };
+                let conf = confirm("Are you sure you want to update" + modal_data.fname + ' ' + modal_data.mname + ' ' + modal_data.lname + ' leave');
 
-                console.log(params);
-                this.axiosRequest('post', this.$store.state.hl + 'leave_credit', params)
-                .then(res => {
-                    if(res.data.status == 'success'){
-                        this.getEmployees();
-                    }
-                    this.notif = res.data;
-                    this.tnotif (res)
-                    console.log(res.data.status == 'success');
-                })
-                .catch(err => {
+                // If user click ok
+                if(conf){
+                    let params = {
+                        'user_id': modal_data.user_id,
+                        'leave_id': modal_data.leave.leave_id,
+                        'employee_code': modal_data.employee_code,
+                        'credits': credit,
+                        'update_type': typeofupdate,
+                        'reason': reason,
+                    };
 
-                });
+                    console.log(params);
+                    this.axiosRequest('post', this.$store.state.hl + 'leave_credit', params)
+                    .then(res => {
+                        if(res.data.status == 'success'){
+                            this.getEmployees();
+                        }
+                        this.notif = res.data;
+                        this.tnotif (res)
+                        console.log(res.data.status == 'success');
+                    })
+                    .catch(err => {
+
+                    });
+                }
+
             },
 
             // Open Modal on click of hoverable**********************************

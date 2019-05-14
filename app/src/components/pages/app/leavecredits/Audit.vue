@@ -24,7 +24,7 @@
                                 <div class="row  mt-4" v-if="employee">
                                     <div class="col-lg-12 table-responsive">
                                         <table class="table" v-if="audit">
-                                            <thead class="thead-dark">
+                                            <thead class="text-white" style="background-color:#2A3F54;">
                                                 <tr>
                                                     <th>Date</th>
                                                     <th>Leave Type</th>
