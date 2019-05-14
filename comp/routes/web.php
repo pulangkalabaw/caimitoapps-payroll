@@ -31,5 +31,5 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->delete('assign-compensation/{id}/delete','UserCompensationController@destroy');
 
     // User Compensation History
-    $router->get('compensation-history/{id}','UserCompHistoryController@show');
+    $router->post('compensation-history/{id}','UserCompHistoryController@show');
 });
