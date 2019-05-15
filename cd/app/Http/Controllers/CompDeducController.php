@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class CompDeducController extends Controller
 {
-    //
+    public function historyComDeduc($id){
+
+    }
 }
