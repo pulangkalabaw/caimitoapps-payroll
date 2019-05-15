@@ -12,6 +12,7 @@ class SssTableSeeder extends Seeder
      */
     public function run()
     {
+        $government_deductions[0]['sss_code'] = 'sss001';
         $government_deductions[0]['from'] = 0.00;
         $government_deductions[0]['to'] = 2250;
         $government_deductions[0]['monthly_salary_credit'] = 2000.00;
@@ -23,6 +24,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[0]['total_contribution_ee'] = 80.00;
         $government_deductions[0]['total_contribution_total'] = 250.00;
 
+
+        $government_deductions[1]['sss_code'] = 'sss001';
         $government_deductions[1]['from'] = 2251.00;
         $government_deductions[1]['to'] = 2749.99;
         $government_deductions[1]['monthly_salary_credit'] = 2500.00;
@@ -34,6 +37,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[1]['total_contribution_ee'] = 100.00;
         $government_deductions[1]['total_contribution_total'] = 310.00;
 
+
+        $government_deductions[2]['sss_code'] = 'sss001';
         $government_deductions[2]['from'] = 2750.00;    
         $government_deductions[2]['to'] = 3249.99;
         $government_deductions[2]['monthly_salary_credit'] = 3000.00;
@@ -45,6 +50,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[2]['total_contribution_ee'] = 120.00;
         $government_deductions[2]['total_contribution_total'] = 370.00;
 
+
+        $government_deductions[3]['sss_code'] = 'sss001';
         $government_deductions[3]['from'] = 3250.00;
         $government_deductions[3]['to'] = 3749.99;
         $government_deductions[3]['monthly_salary_credit'] = 3500.00;
@@ -56,6 +63,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[3]['total_contribution_ee'] = 140.00;
         $government_deductions[3]['total_contribution_total'] = 430.00;
 
+
+        $government_deductions[4]['sss_code'] = 'sss001';
         $government_deductions[4]['from'] = 3750.00;
         $government_deductions[4]['to'] = 4249.99;
         $government_deductions[4]['monthly_salary_credit'] = 4000.00;
@@ -67,6 +76,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[4]['total_contribution_ee'] = 160.00;
         $government_deductions[4]['total_contribution_total'] = 490.00;
 
+
+        $government_deductions[5]['sss_code'] = 'sss001';
         $government_deductions[5]['from'] = 4250.00;
         $government_deductions[5]['to'] = 4749.99;
         $government_deductions[5]['monthly_salary_credit'] = 4500.00;
@@ -78,6 +89,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[5]['total_contribution_ee'] = 180.00;
         $government_deductions[5]['total_contribution_total'] = 550.00;
 
+
+        $government_deductions[6]['sss_code'] = 'sss001';
         $government_deductions[6]['from'] = 4750.00;
         $government_deductions[6]['to'] = 5249.99;
         $government_deductions[6]['monthly_salary_credit'] = 5000.00;
@@ -89,6 +102,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[6]['total_contribution_ee'] = 200.00;
         $government_deductions[6]['total_contribution_total'] = 610.00;
 
+
+        $government_deductions[7]['sss_code'] = 'sss001';
         $government_deductions[7]['from'] = 5250.00;
         $government_deductions[7]['to'] = 5749.99;
         $government_deductions[7]['monthly_salary_credit'] = 5500.00;
@@ -100,6 +115,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[7]['total_contribution_ee'] = 220.00;
         $government_deductions[7]['total_contribution_total'] = 670.00;
 
+
+        $government_deductions[8]['sss_code'] = 'sss001';
         $government_deductions[8]['from'] = 5750.00;
         $government_deductions[8]['to'] = 6249.99;
         $government_deductions[8]['monthly_salary_credit'] = 6000.00;
@@ -111,6 +128,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[8]['total_contribution_ee'] = 240.00;
         $government_deductions[8]['total_contribution_total'] = 730.00;
 
+
+        $government_deductions[9]['sss_code'] = 'sss001';
         $government_deductions[9]['from'] = 6250.00;
         $government_deductions[9]['to'] = 6479.99;
         $government_deductions[9]['monthly_salary_credit'] = 6500.00;
@@ -122,6 +141,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[9]['total_contribution_ee'] = 260.00;
         $government_deductions[9]['total_contribution_total'] = 790.00;
 
+
+        $government_deductions[10]['sss_code'] = 'sss001';
         $government_deductions[10]['from'] = 6750.00;
         $government_deductions[10]['to'] = 7249.99;
         $government_deductions[10]['monthly_salary_credit'] = 7000.00;
@@ -133,6 +154,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[10]['total_contribution_ee'] = 280.00;
         $government_deductions[10]['total_contribution_total'] = 850.00;
 
+
+        $government_deductions[11]['sss_code'] = 'sss001';
         $government_deductions[11]['from'] = 7250.00;
         $government_deductions[11]['to'] = 7749.99;
         $government_deductions[11]['monthly_salary_credit'] = 7500.00;
@@ -144,6 +167,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[11]['total_contribution_ee'] = 300.00;
         $government_deductions[11]['total_contribution_total'] = 910.00;
 
+
+        $government_deductions[12]['sss_code'] = 'sss001';
         $government_deductions[12]['from'] = 7750.00;
         $government_deductions[12]['to'] = 8249.99;
         $government_deductions[12]['monthly_salary_credit'] = 8000.00;
@@ -155,6 +180,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[12]['total_contribution_ee'] = 320.00;
         $government_deductions[12]['total_contribution_total'] = 970.00;
 
+
+        $government_deductions[13]['sss_code'] = 'sss001';
         $government_deductions[13]['from'] = 8250.00;
         $government_deductions[13]['to'] = 8749.99;
         $government_deductions[13]['monthly_salary_credit'] = 8500.00;
@@ -166,6 +193,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[13]['total_contribution_ee'] = 340.00;
         $government_deductions[13]['total_contribution_total'] = 1030.00;
 
+
+        $government_deductions[14]['sss_code'] = 'sss001';
         $government_deductions[14]['from'] = 8750.00;
         $government_deductions[14]['to'] = 9249.99;
         $government_deductions[14]['monthly_salary_credit'] = 9000.00;
@@ -177,6 +206,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[14]['total_contribution_ee'] = 360.00;
         $government_deductions[14]['total_contribution_total'] = 1090.00;
 
+
+        $government_deductions[15]['sss_code'] = 'sss001';
         $government_deductions[15]['from'] = 9250.00;
         $government_deductions[15]['to'] = 9749.99;
         $government_deductions[15]['monthly_salary_credit'] = 9500.00;
@@ -188,6 +219,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[15]['total_contribution_ee'] = 380.00;
         $government_deductions[15]['total_contribution_total'] = 1150.00;
 
+
+        $government_deductions[16]['sss_code'] = 'sss001';
         $government_deductions[16]['from'] = 9750.00;
         $government_deductions[16]['to'] = 10249.99;
         $government_deductions[16]['monthly_salary_credit'] = 10000.00;
@@ -199,6 +232,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[16]['total_contribution_ee'] = 400.00;
         $government_deductions[16]['total_contribution_total'] = 1210.00;
 
+
+        $government_deductions[17]['sss_code'] = 'sss001';
         $government_deductions[17]['from'] = 10250.00;
         $government_deductions[17]['to'] = 10749.99;
         $government_deductions[17]['monthly_salary_credit'] = 10500.00;
@@ -210,6 +245,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[17]['total_contribution_ee'] = 420.00;
         $government_deductions[17]['total_contribution_total'] = 1270.00;
 
+
+        $government_deductions[18]['sss_code'] = 'sss001';
         $government_deductions[18]['from'] = 10750.00;
         $government_deductions[18]['to'] = 11249.99;
         $government_deductions[18]['monthly_salary_credit'] = 11000.00;
@@ -221,6 +258,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[18]['total_contribution_ee'] = 440.00;
         $government_deductions[18]['total_contribution_total'] = 1330.00;
 
+
+        $government_deductions[19]['sss_code'] = 'sss001';
         $government_deductions[19]['from'] = 11250.00;
         $government_deductions[19]['to'] = 11749.99;
         $government_deductions[19]['monthly_salary_credit'] = 11500.00;
@@ -232,6 +271,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[19]['total_contribution_ee'] = 460.00;
         $government_deductions[19]['total_contribution_total'] = 1390.00;
 
+
+        $government_deductions[20]['sss_code'] = 'sss001';
         $government_deductions[20]['from'] = 11750.00;
         $government_deductions[20]['to'] = 12249.99;
         $government_deductions[20]['monthly_salary_credit'] = 12000.00;
@@ -243,6 +284,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[20]['total_contribution_ee'] = 480.00;
         $government_deductions[20]['total_contribution_total'] = 1450.00;
 
+
+        $government_deductions[21]['sss_code'] = 'sss001';
         $government_deductions[21]['from'] = 12250.00;
         $government_deductions[21]['to'] = 12749.99;
         $government_deductions[21]['monthly_salary_credit'] = 12500.00;
@@ -254,6 +297,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[21]['total_contribution_ee'] = 500.00;
         $government_deductions[21]['total_contribution_total'] = 1510.00;
 
+
+        $government_deductions[22]['sss_code'] = 'sss001';
         $government_deductions[22]['from'] = 12750.00;
         $government_deductions[22]['to'] = 13249.99;
         $government_deductions[22]['monthly_salary_credit'] = 13000.00;
@@ -265,6 +310,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[22]['total_contribution_ee'] = 520.00;
         $government_deductions[22]['total_contribution_total'] = 1570.00;
 
+
+        $government_deductions[23]['sss_code'] = 'sss001';
         $government_deductions[23]['from'] = 13250.00;
         $government_deductions[23]['to'] = 13749.99;
         $government_deductions[23]['monthly_salary_credit'] = 13500.00;
@@ -276,6 +323,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[23]['total_contribution_ee'] = 540.00;
         $government_deductions[23]['total_contribution_total'] = 1630.00;
 
+
+        $government_deductions[24]['sss_code'] = 'sss001';
         $government_deductions[24]['from'] = 13750.00;
         $government_deductions[24]['to'] = 14249.99;
         $government_deductions[24]['monthly_salary_credit'] = 14000.00;
@@ -287,6 +336,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[24]['total_contribution_ee'] = 560.00;
         $government_deductions[24]['total_contribution_total'] = 1690.00;
 
+
+        $government_deductions[25]['sss_code'] = 'sss001';
         $government_deductions[25]['from'] = 14250.00;
         $government_deductions[25]['to'] = 14749.99;
         $government_deductions[25]['monthly_salary_credit'] = 14500.00;
@@ -298,6 +349,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[25]['total_contribution_ee'] = 580.00;
         $government_deductions[25]['total_contribution_total'] = 1750.00;
 
+
+        $government_deductions[26]['sss_code'] = 'sss001';
         $government_deductions[26]['from'] = 14750.00;
         $government_deductions[26]['to'] = 15249.99;
         $government_deductions[26]['monthly_salary_credit'] = 15000.00;
@@ -309,6 +362,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[26]['total_contribution_ee'] = 600.00;
         $government_deductions[26]['total_contribution_total'] = 1830.00;
 
+
+        $government_deductions[27]['sss_code'] = 'sss001';
         $government_deductions[27]['from'] = 15250.00;
         $government_deductions[27]['to'] = 15749.99;
         $government_deductions[27]['monthly_salary_credit'] = 15500.00;
@@ -320,6 +375,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[27]['total_contribution_ee'] = 620.00;
         $government_deductions[27]['total_contribution_total'] = 1890.00;
 
+
+        $government_deductions[28]['sss_code'] = 'sss001';
         $government_deductions[28]['from'] = 15750.00;
         $government_deductions[28]['to'] = 16249.99;
         $government_deductions[28]['monthly_salary_credit'] = 16000.00;
@@ -331,6 +388,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[28]['total_contribution_ee'] = 640.00;
         $government_deductions[28]['total_contribution_total'] = 1950.00;
 
+
+        $government_deductions[29]['sss_code'] = 'sss001';
         $government_deductions[29]['from'] = 16250.00;
         $government_deductions[29]['to'] = 16749.99;
         $government_deductions[29]['monthly_salary_credit'] = 16500.00;
@@ -342,6 +401,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[29]['total_contribution_ee'] = 660.00;
         $government_deductions[29]['total_contribution_total'] = 2010.00;
 
+
+        $government_deductions[30]['sss_code'] = 'sss001';
         $government_deductions[30]['from'] = 16750.00;
         $government_deductions[30]['to'] = 17249.99;
         $government_deductions[30]['monthly_salary_credit'] = 17000.00;
@@ -353,6 +414,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[30]['total_contribution_ee'] = 680.00;
         $government_deductions[30]['total_contribution_total'] = 2070.00;
 
+
+        $government_deductions[31]['sss_code'] = 'sss001';
         $government_deductions[31]['from'] = 17250.00;
         $government_deductions[31]['to'] = 17749.99;
         $government_deductions[31]['monthly_salary_credit'] = 17500.00;
@@ -364,6 +427,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[31]['total_contribution_ee'] = 700.00;
         $government_deductions[31]['total_contribution_total'] = 2130.00;
 
+
+        $government_deductions[32]['sss_code'] = 'sss001';
         $government_deductions[32]['from'] = 17750.00;
         $government_deductions[32]['to'] = 18249.99;
         $government_deductions[32]['monthly_salary_credit'] = 18000.00;
@@ -375,6 +440,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[32]['total_contribution_ee'] = 720.00;
         $government_deductions[32]['total_contribution_total'] = 2190.00;
 
+
+        $government_deductions[33]['sss_code'] = 'sss001';
         $government_deductions[33]['from'] = 18250.00;
         $government_deductions[33]['to'] = 18749.99;
         $government_deductions[33]['monthly_salary_credit'] = 18500.00;
@@ -386,6 +453,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[33]['total_contribution_ee'] = 740.00;
         $government_deductions[33]['total_contribution_total'] = 2250.00;
 
+
+        $government_deductions[34]['sss_code'] = 'sss001';
         $government_deductions[34]['from'] = 18750.00;
         $government_deductions[34]['to'] = 19249.99;
         $government_deductions[34]['monthly_salary_credit'] = 19000.00;
@@ -397,6 +466,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[34]['total_contribution_ee'] = 760.00;
         $government_deductions[34]['total_contribution_total'] = 2310.00;
 
+
+        $government_deductions[35]['sss_code'] = 'sss001';
         $government_deductions[35]['from'] = 19250.00;
         $government_deductions[35]['to'] = 19749.99;
         $government_deductions[35]['monthly_salary_credit'] = 19500.00;
@@ -408,6 +479,8 @@ class SssTableSeeder extends Seeder
         $government_deductions[35]['total_contribution_ee'] = 780.00;
         $government_deductions[35]['total_contribution_total'] = 2370.00;
 
+
+        $government_deductions[36]['sss_code'] = 'sss001';
         $government_deductions[36]['from'] = 19750.00;
         $government_deductions[36]['to'] = 'and above';
         $government_deductions[36]['monthly_salary_credit'] = 20000.00;
