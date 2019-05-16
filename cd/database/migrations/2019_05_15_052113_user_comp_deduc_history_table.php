@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserDeductionTable extends Migration
+class UserCompDeducHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,34 +13,29 @@ class CreateUserDeductionTable extends Migration
      */
     public function up()
     {
-        // User Deduction
-        // * user_id
-        // * deduction_id
-        // * name
-        // * amount
-        // * date_start (don't use seeder)
-        // * date_end (don't use seeder)
-        // * interest (optional)
-        // * deduction (don't use seeder)
-        // check first if goverment type is applied
-        // * remarks
-
-		Schema::dropIfExists('user_deduction');
-        Schema::create('user_deduction', function (Blueprint $table) {
+        Schema::create('user_comp_deduc_history', function (Blueprint $table) {
+            // Common fields
             $table->increments('id');
+            $table->string('batch_id');
             $table->string('user_id');
-            $table->string('deduction_id');
-            $table->string('name');
-            $table->float('amount')->decimal('total_amount',2)->nullable();
+            $table->string('comp_deduc_id');
+            $table->string('history_type')->nullable(); // deduc or comp
+            $table->float('amount')->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
+            // Input for compensation
+            $table->string('user_compensation_id');
+            $table->boolean('taxable')->nullable();
+            $table->string('type')->default('fixed'); // fixed or variable
+            // Input for deduction
             $table->float('interest')->decimal('total_amount',2)->nullable();
             $table->float('deduction')->decimal('total_amount',2)->nullable();
             $table->string('remarks')->nullable();
+            // Timestamps
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
-       });
+        });
     }
 
     /**
@@ -50,6 +45,6 @@ class CreateUserDeductionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_deduction');
+        Schema::dropIfExists('user_comp_deduc_history');
     }
 }

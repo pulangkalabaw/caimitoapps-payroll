@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserCompensationHistoryTable extends Migration
+class CreateUserCompensationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateUserCompensationHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_compensation_history', function (Blueprint $table) {
+        Schema::create('user_compensation', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('batch_id');
             $table->string('user_compensation_id');
             $table->string('user_id');
             $table->string('compensation_id');
@@ -36,6 +35,6 @@ class CreateUserCompensationHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_compensation_history');
+        Schema::dropIfExists('user_compensation');
     }
 }

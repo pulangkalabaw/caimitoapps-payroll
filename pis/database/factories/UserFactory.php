@@ -30,19 +30,15 @@ $factory->define(App\User::class, function (Faker $faker) {
 
     $wage_type = array('semi-montly');
 
-    $user_bank_details = collect([
-        'bank_name' => 'BDO',
-        'account_number' => $faker->bothify('###'.'-'.'######'.'-'.'##')
-    ]);
-
     $tax_computation = array('annual','table','none');
     $working_days = array(5, 6);
 
-    UserPayrollDetails::create([
+    UserPayrollDetails::insert([
         'user_id' => $user_id,
         'wage_type' => $wage_type[array_rand($wage_type)],
         'payout_type' => 'bank',
-        'bank_details' => $user_payroll_details->bank_details = $user_bank_details,
+        'bank_name' => 'BDO',
+        'account_number' => $faker->bothify('****#######'),
         'working_days' => $working_days[array_rand($working_days)],
         'tax_code' => $faker->bothify('**##'),
         'tax_computation' => $tax_computation[array_rand($tax_computation)],
