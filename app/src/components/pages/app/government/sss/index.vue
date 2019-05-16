@@ -22,6 +22,7 @@
 						<table class="table table-bordered table-hovered" style="width:100%;">
 							<thead>
 								<tr>
+
 									<th>Range of Compensation</th>
 									<th>Monthly Salary Credit</th>
 									<th colspan="3">Employer - Employee</th>
@@ -50,7 +51,31 @@
 									<td>{{sssDeduction.monthly_salary_credit}}</td>
 
 									<!-- <td>{{sssDeduction.from}}</td>
+
+									<th colspan="2" rowspan="3">RANGE <br>OF<p>COMPENSATION</p></th>
+									<th rowspan="3">MONTHLY<br> SALARY <p>CREADIT</p></th>
+									<th colspan="8">EMPLOYER - EMPLOYEE</th>
+								</tr>
+								<tr>
+									<th colspan="3">SOCIAL SECURITY</th>
+									<th colspan="1">EC</th>
+									<th colspan="3">TOTAL CONTRIBUTION</th>
+								</tr>
+								<tr>
+									<th>ER</th>
+									<th>EE</th>
+									<th>TOTAL</th>
+									<th>ER</th>
+									<th>ER</th>
+									<th>EE</th>
+									<th>TOTAL</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="sssDeduction in sssDeductions" :key="sssDeduction.id">
+
 									<td>{{sssDeduction.to}}</td>
+									<td>{{sssDeduction.from}}</td>
 									<td>{{sssDeduction.monthly_salary_credit}}</td>
 									<td>{{sssDeduction.social_security_er}}</td>
 									<td>{{sssDeduction.social_security_ee}}</td>
@@ -58,12 +83,6 @@
 									<td>{{sssDeduction.ec_er}}</td>
 									<td>{{sssDeduction.total_contribution_er}}</td>
 									<td>{{sssDeduction.total_contribution_ee}}</td>
-									<td>{{sssDeduction.total_contribution_total}}</td> -->
-									<!-- <td class="text-center btn">
-										<button class="btn btn-warning btn-sm"><span class="fa fa-edit"></span></button>
-										<button class="btn btn-primary btn-sm"><span class="fa fa-eye"></span></button>
-										<button class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
-									</td> -->
 								</tr>
 							</tbody>
 						</table>
