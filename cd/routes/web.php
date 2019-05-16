@@ -16,9 +16,6 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['middleware' => ['cors']], function() use ($router){
-  // Compensation and Deduction History Controller
-    $router->get('assing-comp-deduc','CompDeducController@store');
-
     // Compensation
     $router->get('compensation', 'CompensationController@index');
     $router->post('compensation','CompensationController@store');
@@ -31,6 +28,9 @@ $router->group(['middleware' => ['cors']], function() use ($router){
     $router->post('assign-compensation','UserCompensationController@store');
     $router->put('assign-compensation/{user_compensation_id}','UserCompensationController@update');
     $router->delete('assign-compensation/{id}/delete','UserCompensationController@destroy');
+
+    // User Compensation History
+    $router->post('compensation-history/{id}','UserCompHistoryController@show');
 
     // Deduction
     $router->get('deduction','DeductionController@index');
