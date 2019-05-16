@@ -187,6 +187,13 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<span @click="redirect('payroll.run')" class="span-link" :class="{ 'active': $route.name.includes('payroll.run')}">
+						<i class="fa fa-tasks"></i> &nbsp;
+						Payroll Run Dev
+						<!-- <i class="float-right fa fa-chevron-down"></i> -->
+					</span>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -194,34 +201,39 @@
 
 <script>
 export default {
-	methods: {
-		logout () {
-			this.$session.destroy()
-			window.location.href = this.$store.state.app_url
-		}
-	}
+  methods: {
+    logout() {
+      this.$session.destroy()
+      window.location.href = this.$store.state.app_url
+    }
+  }
 }
 </script>
 <style media="screen">
 .title {
-	display: block;
-	color: #fff;
-	padding: 16px;
-	text-decoration: none;
+  display: block;
+  color: #fff;
+  padding: 16px;
+  text-decoration: none;
 }
-.mainmenu, .submenu {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-.mainmenu li:hover .submenu {
-	display: block;
-	max-height: 300px;
-	padding-left: 30px;outline: 0;
-}
+
+.mainmenu,
 .submenu {
-	overflow: hidden;
-	max-height: 0;
-	-webkit-transition: all 0.5s ease-out;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mainmenu li:hover .submenu {
+  display: block;
+  max-height: 300px;
+  padding-left: 30px;
+  outline: 0;
+}
+
+.submenu {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: all 0.5s ease-out;
 }
 </style>

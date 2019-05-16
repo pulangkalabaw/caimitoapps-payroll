@@ -6,7 +6,7 @@
 
   <div id="content">
 
-    <button class="btn btn-primary btn-sm btn-tunch" @click.prevent="redirect('leaves.create')"><i class="fa fa-plus-circle"></i> Create Leave Type</button>
+    <button class="btn btn-primary btn-sm btn-tunch" @click.prevent="redirect('leaves.create')"><i class="fa fa-plus-circle"></i>Payroll Run</button>
 
     <!-- List of Leave Type -->
     <div class="row mt-4">
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       links: [{
-        'label': 'Payroll Run',
+        'label': 'Leaves',
         'route': 'leaves.index',
         'params': {}
       }],

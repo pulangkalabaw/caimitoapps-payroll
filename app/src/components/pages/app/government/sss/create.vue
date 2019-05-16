@@ -8,7 +8,7 @@
 			<span @click="redirect('government.sss.index')" class="btn btn-default btn-sm btn-tunch-default">
 				<span class="fa fa-th-list"></span>
 				View all
-			</span>	
+			</span>
 			<div class="clearfix"></div><br />
 
 			<div class="card">
@@ -63,7 +63,7 @@
 								</div>
 								<div class="clearfix"></div><br />
 							</div>
-							
+
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-12">Social security total <span class="required">*</span></div>
@@ -129,41 +129,39 @@
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				sss: {},
-				notif: '',
-				create_sss_loading: false,
-				links: [
-					{
-						'label': 'SSS',
-						'route': 'government.sss.create',
-						'params': {}
-					}
-				]
-			}
-		},
-		methods: {
-			sssCreate(){
-				this.create_sss_loading = true
-				this.axiosRequest ('POST', this.$store.state.deduc + 'sss-deductions/store', this.sss)
-				.then(res => {
-					console.log(res.data.data)
-					this.create_sss_loading = false
-					this.notif = res.data
-					this.tnotif (res)
-				})
-				.catch(err => {
-					console.log(err)
-					this.create_sss_loading = false
-				})
-			},
-		}
-	}
+export default {
+  data() {
+    return {
+      sss: {},
+      notif: '',
+      create_sss_loading: false,
+      links: [{
+        'label': 'SSS',
+        'route': 'government.sss.create',
+        'params': {}
+      }]
+    }
+  },
+  methods: {
+    sssCreate() {
+      this.create_sss_loading = true
+      this.axiosRequest('POST', this.$store.state.deduc + 'sss-deductions/store', this.sss)
+        .then(res => {
+          console.log(res.data.data)
+          this.create_sss_loading = false
+          this.notif = res.data
+          this.tnotif(res)
+        })
+        .catch(err => {
+          console.log(err)
+          this.create_sss_loading = false
+        })
+    },
+  }
+}
 </script>
 
 <style>
-	
+
 
 </style>

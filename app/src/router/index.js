@@ -58,6 +58,8 @@ import taxgovtIndex from '@/components/pages/app/government/tax/index'
 import taxgovtCreate from '@/components/pages/app/government/tax/create'
 import taxgovtShow from '@/components/pages/app/government/tax/show'
 
+// Payroll
+import payrollRun from '@/components/pages/app/payroll/run'
 
 import page404 from '@/components/pages/extras/page404'
 
@@ -296,6 +298,14 @@ let web_routes = [
 	},
 	{
 		path: '/app/government/tax/:id', name: 'government.tax.show', component: taxgovtShow,
+		meta: {
+			auth: true
+		},
+	},
+
+	// Payroll
+	{
+		path: '/app/payroll/run', name: 'payroll.run', component: payrollRun,
 		meta: {
 			auth: true
 		},

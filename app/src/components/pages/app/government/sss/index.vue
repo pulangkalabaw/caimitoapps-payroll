@@ -64,36 +64,34 @@
 
 <script>
 export default {
-	data () {
-		return {
+  data() {
+    return {
 
-			sssDeductions: [],
-			links: [
-				{
-					'label': 'SSS',
-					'route': 'government.sss.index',
-					'params': {}
-				}
-			]
-		}
-	},
+      sssDeductions: [],
+      links: [{
+        'label': 'SSS',
+        'route': 'government.sss.index',
+        'params': {}
+      }]
+    }
+  },
 
-	created(){
-		this.sssIndex();
-	},
+  created() {
+    this.sssIndex();
+  },
 
-	methods: {
-		sssIndex(){
-			this.axiosRequest ('GET', this.$store.state.deduc + 'sss-deductions')
-			.then(res => {
-				this.sssDeductions = res.data.data
-				console.log(res)
-			})
-			.catch(err => {
-				console.log(err)
-			})
-		}
-	}
+  methods: {
+    sssIndex() {
+      this.axiosRequest('GET', this.$store.state.deduc + 'sss-deductions')
+        .then(res => {
+          this.sssDeductions = res.data.data
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 
