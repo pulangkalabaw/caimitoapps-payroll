@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SssDeduction;
+use Illuminate\Support\Facades\Input;
 
 class SssController extends Controller
 {
@@ -14,19 +15,25 @@ class SssController extends Controller
     }
 
     public function store(Request $request){
-
-        $sss_deduction = SssDeduction::create([
-            'from' => $request->from,
-            'to' => $request->to,
-            'monthly_salary_credit' => $request->monthly_salary_credit,
-            'social_security_er' => $request->social_security_er,
-            'social_security_ee' => $request->social_security_ee,
-            'social_security_total' => $request->social_security_total,
-            'ec_er' => $request->ec_er,
-            'total_contribution_er' => $request->total_contribution_er,
-            'total_contribution_ee' => $request->total_contribution_ee,
-            'total_contribution_total' => $request->total_contribution_total,
-        ]);
+        $sss = SssDeduction::where('sss_code', '=', Input::get('sss_code'))->first();
+        if($sss === null){
+            $sss_deduction = SssDeduction::create([
+                'sss_code' => $request->sss_code,
+                'from' => $request->from,
+                'to' => $request->to,
+                'monthly_salary_credit' => $request->monthly_salary_credit,
+                'social_security_er' => $request->social_security_er,
+                'social_security_ee' => $request->social_security_ee,
+                'social_security_total' => $request->social_security_total,
+                'ec_er' => $request->ec_er,
+                'total_contribution_er' => $request->total_contribution_er,
+                'total_contribution_ee' => $request->total_contribution_ee,
+                'total_contribution_total' => $request->total_contribution_total,
+            ]);
+        }else{
+            return "code is already exist";
+        }
+        
         return apiReturn($sss_deduction, 'Successfully assigned Deduction!', 'success');
     }
 
@@ -44,25 +51,32 @@ class SssController extends Controller
     }
 
     public function update(Request $request, $id){
-        $sss_deduction = SssDeduction::findOrFail($id)
-        ->update([  
-            'from' => $request->from,
-            'to' => $request->to,
-            'monthly_salary_credit' => $request->monthly_salary_credit,
-            'social_security_er' => $request->social_security_er,
-            'social_security_ee' => $request->social_security_ee,
-            'social_security_total' => $request->social_security_total,
-            'ec_er' => $request->ec_er,
-            'total_contribution_er' => $request->total_contribution_er,
-            'total_contribution_ee' => $request->total_contribution_ee,
-            'total_contribution_total' => $request->total_contribution_total,
-        ]);
 
-        if($sss_deduction){
-            return apiReturn($sss_deduction, 'SSS has been updated Successfully', 'success');
+        $sss = SssDeduction::where('sss_code', '=', Input::get('sss_code'))->first();
+        if($sss === null){
+            $sss_deduction = SssDeduction::findOrFail($id)
+            ->update([  
+                'sss_code' => $request->sss_code,
+                'from' => $request->from,
+                'to' => $request->to,
+                'monthly_salary_credit' => $request->monthly_salary_credit,
+                'social_security_er' => $request->social_security_er,
+                'social_security_ee' => $request->social_security_ee,
+                'social_security_total' => $request->social_security_total,
+                'ec_er' => $request->ec_er,
+                'total_contribution_er' => $request->total_contribution_er,
+                'total_contribution_ee' => $request->total_contribution_ee,
+                'total_contribution_total' => $request->total_contribution_total,
+            ]);
+            if($sss_deduction){
+                return apiReturn($sss_deduction, 'SSS has been updated Successfully', 'success');
+            }else{
+                return apiReturn(null, 'Updating failed');
+            }
         }else{
-            return apiReturn(null, 'Updating failed');
+            return "sss_code already exist";
         }
+
     }
 
      public function destroy($id){

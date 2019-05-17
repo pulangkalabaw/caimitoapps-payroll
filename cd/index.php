@@ -11,11 +11,11 @@
 |
 */
 
-$app = require __DIR__.'/../bootstrap/app.php';
+$app = require __DIR__.'/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
-| Run The Application
+| Run The <Application></Application>
 |--------------------------------------------------------------------------
 |
 | Once we have the application, we can handle the incoming request
